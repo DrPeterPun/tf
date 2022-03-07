@@ -5,6 +5,7 @@
 
 import logging
 import threading
+import random
 from concurrent.futures import ThreadPoolExecutor
 from ms import send, receiveAll, reply, exitOnError
 
@@ -14,98 +15,160 @@ executor=ThreadPoolExecutor(max_workers=1)
 #key -> (value,timestamp)
 dict = {}
 
-global lock = threading.Lock
-global timestamp = 0
-
-global watingfor = 0
-global arrived = 0
-global currentValue
-global currentTS
-global inquisitorMsg
-global quor
-
-
 def handle(msg):
     # State
     global node_id, node_ids
+    global lock
+    lock= threading.Lock()
+    global timestamp
+    timestamp = 0
+
+    global watingfor
+    waitingfor = 0
+    global arrived
+    arrived = 0
+    global currentValue
+    global currentTS
+    global inquisitorMsg
+    global quor
+
     # Message handlers
     if msg.body.type == 'init':
         node_id = msg.body.node_id
         node_ids = msg.body.node_ids
         logging.info('node %s initialized', node_id)
         reply(msg, type='init_ok')
-
+            # message from "outside" with a read order
+    # gets a read quorum
     elif msg.body.type == 'read':
-        #COMECA O READ QUORUM
-        n = divideRU(node_ids.len(),2)
-        if waitingfor!=arrived:
-            #mandar mensagem de erro ao inquisitor node
-            reply(inquisitorMsg, type='error', code = 11)
-
-        #resset das variaveis
-        inquisitorMsg = msg
-        waitingfor = n
-        arrived = 0
-        quor = getQuor(node_ids,n)
+        quor = getQuor(node_ids)
         key = msg.body.key
-        getWriteQuorum(quor,key)
+        getReadQ(quor,node_id,key,msg)
 
+    # message from "outside" with a write order
+    # get a write quorum and write to it
     elif msg.body.type == 'write':
-        # escreve o key value pair 
+        quor = getQuor(node_ids)
+        key = msg.body.key
+        getWriteQ(quor,node_id,key,msg)
+
+    elif msg.body.type == 'MyWrite':
+        ts = msg.body.timestamp
         key = msg.body.key
         value = msg.body.value
-        dict.update( {key : {value,timestamp} } )
-        reply(msg, type='write_ok')
+        dict.update(key,(value,timestamp))
+        lock.release()
 
-        for dest in node_ids:
-            if dest != node_id:
-                send(node_id, dest, type='MyWrite', key=key, value=value)
-
-    elif msg.body.type == 'GetQ':
-        if lock.aquire(False):
+    #getQuorum message, this node tries to get a lock and replyes with the current value
+    elif msg.body.type == 'GetReadLock':
+        if not lock.acquire():
             reply(msg, type='GetQReplyFailed')
         key =  msg.body.key
         valuepair = dict[key]
-        reply(msg, type='GetQReply', value=valuepair)
+        reply(msg, type='GetReadReply', value=valuepair)
 
-    elif msg.body.type == 'GetQReply':
+    elif msg.body.type == 'GetWrit  Lock':
+        if not lock.acquire():
+            reply(msg, type='GetQWriteFailed')
+        key =  msg.body.key
+        valuepair = dict[key]
+        reply(msg, type='GetWriteReply', value=valuepair)
+
+    #replyes to original get Quorum message; received by the node that started the transaction
+    #checks if the number of messages is ==n, and if it is the read was successful
+    elif msg.body.type == 'GetReadReply':
         if arrived == waitingfor:
             ##responder ao gajo original com o ultimo valor
             reply(inquisitorMsg, type='read_ok', value = currentValue)
+            freeLocks(node_id,quor)
             #free aos lpcks
 
-        {value,ts} = msg.body.value
-        arrived++
+        (value,ts) = msg.body.value
+        arrived+=1
         if arrived == 1 or currentTS<ts:
             currentTS=ts
             currentValue=value
 
+    elif msg.body.type == 'GetWriteReply':
+        if arrived == waitingfor:
+            # mandar ao quorum pedidos de escrita
+            currentTS+=1
+            writeToQuor(quor,node_id)
+            reply(inquisitorMsg, type='write_ok', value = currentValue)
+
+        (value,ts) = msg.body.value
+        arrived+=1
+        if arrived == 1 or currentTS<ts:
+            currentTS=ts
+
+    #order to release the lock
     elif msg.body.type == 'ReleaseLock':
         #releases self lock
         lock.release()
 
-   else:
+    else:
         logging.warning('unknown message type %s', msg.body.type)
 
-#send a message to a Write Quorum
-def sendToWriteQ(Wq, message, node_id, key, value):
-    for dest in Wq:
-        send(node_id,dest, type='WriteQ', key=key, value=value)
+def getReadQ(Wq, node_id, key,msg):
+    #COMECA O READ QUORUM
+    n = divideRU(len(node_ids),2)
+    #resset das variaveis
+    inquisitorMsg = msg
+    waitingfor = n
+    arrived = 0
+    quor = getQuor(node_ids)
+    key = msg.body.key
+    if waitingfor!=arrived:
+        #recebeu uma mensagem de write mas uma escrita esta em progresso
+        #mandar mensagem de erro a cena que perguntou
+        reply(msg, type='error', code = 11)
 
-def getWriteQ(Wq, node_id, key):
-    for dest in Wq:
-        send(node_id,dest, type='GetQ', key=key)
+    getReadLocks(node_id,quor,key)
+
+def getWriteQ(Rq, node_id, key, msg):
+    #COMECA O WRITE QUORUM
+    n = divideRU(len(node_ids),2)
+    #resset das variaveis
+    inquisitorMsg = msg
+    waitingfor = n
+    arrived = 0
+    quor = getQuor(node_ids)
+    key = msg.body.key
+    writeValue = msg.body.value
+    if waitingfor!=arrived:
+        #recebeu uma mensagem de write mas uma escrita esta em progresso
+        #mandar mensagem de erro a cena que perguntou
+        reply(msg, type='error', code = 11)
+
+    getWriteLocks(node_id,quor,key)
+
+def writeToQuor(Wq, node_id):
+    for q in Wq:
+        send(node_id, q, type='MyWrite',key=key, value=currentValue,timestamp = currentTS)
 
 # get n elements at ranom from the list, With excepion of its own
-def getQuor(nodes, int n):
-    random.shuffle(nodes)[:n]
+def getQuor(nodes):
+    n = divideRU(len(nodes),2)
+    logging.info("n: " +  str(n))
+    random.shuffle(nodes)
+    return nodes[:n]
 
-def divideRU(int n, int d):
-    return (n + (d-1))/d
+def divideRU( n,  d):
+    return int((n + (d-1))/d)
 
 def freeLocks(node_id,quor):
     for q in quor:
         send(node_id,q,type='ReleaseLock')
+
+def getReadLocks(node_id,quor,key):
+    for q in quor:
+        send(node_id,q,type='GetReadLock',key=key)
+
+def getWriteLocks(node_id,quor):
+    for q in quor:
+        send(node_id,q,type='GetWriteLock')
+
+
 
 # Main loop
 executor.map(lambda msg: exitOnError(handle, msg), receiveAll())
