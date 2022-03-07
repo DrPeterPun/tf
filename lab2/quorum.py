@@ -24,10 +24,11 @@ global currentTS
 global inquisitorMsg
 global quor
 
+
 def handle(msg):
     # State
     global node_id, node_ids
-        # Message handlers
+    # Message handlers
     if msg.body.type == 'init':
         node_id = msg.body.node_id
         node_ids = msg.body.node_ids
@@ -36,11 +37,10 @@ def handle(msg):
 
     elif msg.body.type == 'read':
         #COMECA O READ QUORUM
-        n = node_ids.len()*2/3
+        n = divideRU(node_ids.len(),2)
         if waitingfor!=arrived:
             #mandar mensagem de erro ao inquisitor node
             reply(inquisitorMsg, type='error', code = 11)
-            pass
 
         #resset das variaveis
         inquisitorMsg = msg
@@ -72,6 +72,7 @@ def handle(msg):
         if arrived == waitingfor:
             ##responder ao gajo original com o ultimo valor
             reply(inquisitorMsg, type='read_ok', value = currentValue)
+            #free aos lpcks
 
         {value,ts} = msg.body.value
         arrived++
@@ -91,7 +92,6 @@ def sendToWriteQ(Wq, message, node_id, key, value):
     for dest in Wq:
         send(node_id,dest, type='WriteQ', key=key, value=value)
 
-
 def getWriteQ(Wq, node_id, key):
     for dest in Wq:
         send(node_id,dest, type='GetQ', key=key)
@@ -99,6 +99,13 @@ def getWriteQ(Wq, node_id, key):
 # get n elements at ranom from the list, With excepion of its own
 def getQuor(nodes, int n):
     random.shuffle(nodes)[:n]
+
+def divideRU(int n, int d):
+    return (n + (d-1))/d
+
+def freeLocks(node_id,quor):
+    for q in quor:
+        send(node_id,q,type='ReleaseLock')
 
 # Main loop
 executor.map(lambda msg: exitOnError(handle, msg), receiveAll())
