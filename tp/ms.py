@@ -22,7 +22,7 @@ def receiveAll():
     while data := stdin.readline():
         logging.debug("received %s", data.strip())
         yield loads(data, object_hook=lambda x: sn(**x))
-    
+
 def exitOnError(fn, *args):
     try:
         fn(*args)
