@@ -110,7 +110,18 @@ def handle(msg):
         else:
             nextIndex[msg.src] -=1
             send(node_id, msg.src, type='AppendEntries', term=current_term, value=log[nextIndex[dest]:])
+        # verifica se ja ha um consenso de replies
+        flag = True
+        maxn = commitIndex
+        majority = len(node_ids)/2+1
+        #poe em maxn o N maximo tal que existe um consenso de que commitIndex=N
+        while(flag):
+            if countCommitIndexConsensus(maxn+1)>majority:
+                maxn+=1
+            else:
+                flag=False
 
+        commitIndex = maxn
     else:
         logging.warning('unknown message type %s', msg.body.type)
 
@@ -124,6 +135,13 @@ def not_leader(msg=None):
         return False
     return True
 
+#conta o nr de nodos com commit index maior do que n
+def countCommitIndexConsensus(n,log):
+    count = 0
+    for l in log
+        if l[1]>n:
+            count +=1
+    return count
 
 # schedule deferred work with:
 # executor.submit(exitOnError, myTask, args...)
