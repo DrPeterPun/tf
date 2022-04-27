@@ -6,6 +6,7 @@
 import logging
 from concurrent.futures import ThreadPoolExecutor
 from ms import send, receiveAll, reply, exitOnError
+from threading import Timer
 
 logging.getLogger().setLevel(logging.DEBUG)
 executor=ThreadPoolExecutor(max_workers=1)
@@ -30,6 +31,13 @@ lasApplied = 0
 nextIndex = None
 #indice da entrada com indice maior REPLICADA em casa servidor (init a 0)
 matchIndex = None
+#timeout dict,guarda: (node_id : timestamp)
+timeout_dict= {}
+#tempo maximo sem resposta de um nodo para o considerar ofline 0.1s
+MAX_TIME_DIF = 100000000
+MIN_HB = MAX_TIME_DIF/5
+MAX_HB = MAX_TIME_DIF/2
+
 
 def handle(msg):
     # State
@@ -41,9 +49,13 @@ def handle(msg):
         node_ids = msg.body.node_ids
         logging.info('node %s initialized', node_id)
         reply(msg, type='init_ok')
-        if (not_leader()):
+        if (not is_leader()):
             return
 
+        init_timestamps(node_ids)
+        for node in node_ids:
+            if not node==leader_id:
+                recursive_heartbeats(node,MIN_HB,MAX_HB)
         nextIndex = [len(log) for _ in range(len(node_ids))]
         matchIndex = [0 for _ in range(len(node_ids))]]
 
@@ -51,7 +63,7 @@ def handle(msg):
     #key, value; key and value to insert
     elif msg.body.type == 'write':
         # se nao for o leader devolver erro 
-        if (not_leader(msg)):
+        if (not is_leader(msg)):
             return
 
         key = key.body.key
@@ -102,6 +114,7 @@ def handle(msg):
     #(bool) res; description if write was sucessfull or not
     #(int) next; tamanho do log enviado para o cliente
     elif msg.body.type == 'AppendEntriesRes':
+        add_timestamp(msg.src)
         if (msg.body.res):
             #update next index and match index
             nextIndex[msg.src] += msg.body.next
@@ -117,13 +130,35 @@ def handle(msg):
 # Main loop
 executor.map(lambda msg: exitOnError(handle, msg), receiveAll())
 
-def not_leader(msg=None):
+#checks if current node is the leader, returns True if it IS the leadder
+#not the leader -> reply with error code 11 and return false
+def is_leader(msg=None):
     if(node_id != leader_id):
         if (msg!=None):
             reply(msg, type="error",code=11 )
         return False
     return True
 
+#timestamp_dict , node_id
+def check_timestamp(node_id):
+    return timeout_dict[node_id]-time.time_ns()<MAX_TIME_DIF
+
+def add_timestamp(node_id):
+    timeout_dict[node_id]=time.time_ns()
+
+def init_timestamps(node_ids):
+    t = time.time_ns()
+    for id in node_ids:
+        timeout_dict[id]=t
+
+def heartbeat(dest):
+    send(node_id, dest, type='AppendEntries', term=current_term,prevLogIndex = nextIndex[dest]-1 ,entries=log[nextIndex[dest]:],commit=commitIndex)
+
+def recursive_heartbeats(dest,min_time,max_time):
+    if node_id==leader_id:
+        heartbeat(dest)
+        sec = randrange(min_time,max_time)
+        Timer(sec, lambda: executor.submit(reccursive_heartbeats,min_time,max_time))
 
 # schedule deferred work with:
 # executor.submit(exitOnError, myTask, args...)
