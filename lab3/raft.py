@@ -49,12 +49,13 @@ def handle(msg):
         node_ids = msg.body.node_ids
         logging.info('node %s initialized', node_id)
         reply(msg, type='init_ok')
+        init_timestamps(node_ids)
         if (not is_leader()):
+            leader_alive_checker()
             return
 
-        init_timestamps(node_ids)
         for node in node_ids:
-            if not node==leader_id:
+            if not is_leader():
                 recursive_heartbeats(node,MIN_HB,MAX_HB)
         nextIndex = [len(log) for _ in range(len(node_ids))]
         matchIndex = [0 for _ in range(len(node_ids))]]
@@ -81,15 +82,17 @@ def handle(msg):
     #prevLogIndex; indice do Log imediatamente antes ao primeiro enviado
     #prevLogTerm; termo da primeira entrada do prevLogIndex
     #commit; commitIndex do lidera
-    #not present yet //////////// leaderID
+    #not present yet //////////// leaderID, Se receberes uma msg com um leader id diferente alteras o leader id para ser esse? ( caso o term seja maior do que o que tens atualmente)
+    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     elif msg.body.type == 'AppendEntries':
+        add_timestamp(msg.src)
         #term receives less than current term
-        if msg.body.term<currentTerm:
-            msg.reply(type='AppendEntriesRes',res=False,term=currentTerm)
+        if msg.body.term<current_term:
+            msg.reply(type='AppendEntriesRes',res=False,term=current_term)
             return
         # terms not matching
         else if log[msg.body.prevLogIndex][1]!=msg.body.entries[0][1]
-            msg.reply(type='AppendEntriesRes',res=False,term=currentTerm)
+            msg.reply(type='AppendEntriesRes',res=False,term=current_term)
             return
 
         #check if any existing entries have diferent terms than the received ones
@@ -105,10 +108,12 @@ def handle(msg):
             log.append(msg.body.entries[dif+i])
 
         # if leadercommit > commitIndex set commitIndex = min(leadercommit , index of last new entry)
+        #log[-1][1])quase a certeza  que isto esta mal, mas nao estou abem a ver oqq devia ser, to be fixed in the future
+        #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if msg.body.commit>commitIndex:
             commitIndex=min(msg.body.commit, log[-1][1])
 
-        msg.reply(type='AppendEntries',res=True,term=CurrentTerm,next=len(msg.body.entries))
+        msg.reply(type='AppendEntries',res=True,term=current_term,next=len(msg.body.entries))
 
     #leader
     #(bool) res; description if write was sucessfull or not
@@ -119,16 +124,33 @@ def handle(msg):
             #update next index and match index
             nextIndex[msg.src] += msg.body.next
             matchIndex[msg.src] = commitIndex
-            pass
         else:
             nextIndex[msg.src] -=1
             send(node_id, msg.src, type='AppendEntries', term=current_term, value=log[nextIndex[dest]:])
+
+    #candidate
+    #term
+    #candidateId
+    #lastLogIndex
+    #lasLogTerm
+    elif msg.body.type == 'RequestVote':
+        add_timestamp(msg.src)
+        if msg.term<current_term:
+            msg.reply(type='RequestVoteRes', term=current_term, res= False)
+        else:
+            if ( votedFor != None or votedFor==msg.src ) and msg.lastLofIndex==len(log) and msg.lastLogTerm == log[-1][1]:
+                voteFor = msg.src
+
 
     else:
         logging.warning('unknown message type %s', msg.body.type)
 
 # Main loop
 executor.map(lambda msg: exitOnError(handle, msg), receiveAll())
+
+#list of active nodes
+def active_nodes():
+    return list(filter(lambda elem: check_timestamp(elem), node_ids))
 
 #checks if current node is the leader, returns True if it IS the leadder
 #not the leader -> reply with error code 11 and return false
@@ -140,25 +162,42 @@ def is_leader(msg=None):
     return True
 
 #timestamp_dict , node_id
+#check if a node is alive
 def check_timestamp(node_id):
     return timeout_dict[node_id]-time.time_ns()<MAX_TIME_DIF
 
+#updates a node's timestamp
 def add_timestamp(node_id):
     timeout_dict[node_id]=time.time_ns()
 
+#starts all timestamps to current time
 def init_timestamps(node_ids):
     t = time.time_ns()
     for id in node_ids:
         timeout_dict[id]=t
 
+#sends a heartbeat to a node
 def heartbeat(dest):
-    send(node_id, dest, type='AppendEntries', term=current_term,prevLogIndex = nextIndex[dest]-1 ,entries=log[nextIndex[dest]:],commit=commitIndex)
+    send(node_id, dest, type='AppendEntries', term=current_term,prevLogIndex = nextIndex[dest]-1 ,entries=[],commit=commitIndex)
 
+#while leader, pereodicly sends heartbeats to a node. Period between heartbeats is variable as to not cause network congestion
 def recursive_heartbeats(dest,min_time,max_time):
-    if node_id==leader_id:
+    if is_leader():
         heartbeat(dest)
         sec = randrange(min_time,max_time)
         Timer(sec, lambda: executor.submit(reccursive_heartbeats,min_time,max_time))
+
+#periodicly checls if the leadder is alive. if its not starts a vote for new leader
+def leader_alive_checker():
+    if not is_leader():
+        if not check_timestamp(leader_id):
+            request_vote()
+        sec = randrange(min_time,max_time)
+        Timer(sec, lambda: executor.submit(leader_alive_checker,min_time,max_time))
+
+#starts a neew vote as
+def request_vote():
+    send(node_id, dest, type='RequestVote', term=current_term,prevLogIndex = nextIndex[dest]-1 ,entries=log[nextIndex[dest]:], candidateId=node_id)
 
 # schedule deferred work with:
 # executor.submit(exitOnError, myTask, args...)
