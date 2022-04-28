@@ -58,7 +58,7 @@ def handle(msg):
             if not is_leader():
                 recursive_heartbeats(node,MIN_HB,MAX_HB)
         nextIndex = [len(log) for _ in range(len(node_ids))]
-        matchIndex = [0 for _ in range(len(node_ids))]]
+        matchIndex = [0 for _ in range(len(node_ids)) ]
 
     #leader
     #key, value; key and value to insert
@@ -91,7 +91,7 @@ def handle(msg):
             msg.reply(type='AppendEntriesRes',res=False,term=current_term)
             return
         # terms not matching
-        else if log[msg.body.prevLogIndex][1]!=msg.body.entries[0][1]
+        elif log[msg.body.prevLogIndex][1]!=msg.body.entries[0][1]:
             msg.reply(type='AppendEntriesRes',res=False,term=current_term)
             return
 
