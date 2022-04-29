@@ -20,8 +20,7 @@ kvstore = {}
 current_term = 0
 #lista de pares (pedido, current term)
 log = []
-log.append( ('pass',current_term) )
-currentIndex = 1
+log.append( ( ( 'pass',None) ,current_term) )
 #em que lider votou, (candidateId)
 votedFor = None
 # indice da maior entrada que foi commited
@@ -40,21 +39,24 @@ timeout_dict= {}
 nextIndex = None
 #indice da entrada com indice maior REPLICADA em casa servidor (init a 0)
 matchIndex = None
-#tempo maximo sem resposta de um nodo para o considerar ofline 0.1s
+#dict de log_index: msg; tem todas as msgs que ainda nao foram respondidas
+unanswered = None
+#tempo maximo sem resposta de um nodo para o considerar ofline 0.1s || in ns
 MAX_TIME_DIF = 100_000_000
-MIN_HB = MAX_TIME_DIF/5
-MAX_HB = MAX_TIME_DIF/2
+# hb time varia entre 0.02 e 0.05 ||in sec
+MIN_HB = MAX_TIME_DIF/5*0.000000001
+MAX_HB = MAX_TIME_DIF/2*0.000000001
+
+
 
 #//////////////////
 #degub stuff
-def megaprint(s):
-    print("//////////////////////////////////")
-    print("//////////////////////////////////")
-    print(s) 
-    print("//////////////////////////////////")
-    print("//////////////////////////////////")
+def buildString(n):
+    s = ""
+    for a in n:
+        s+= str(a) + "\n"
+    raise Exception(s)
 
-#degub stuff
 #//////////////////
 
 #list of active nodes
@@ -66,25 +68,26 @@ def active_nodes():
 def is_leader(msg=None):
     if(node_id != leader_id):
         if (msg!=None):
-            reply(msg, type="error",code=11 )
+            reply(msg, type="error",code=11,text='Not Leader' )
         return False
     return True
 
-#conta o nr de nodos com commit index maior do que n
+#conta o nr de nodos com commit index maior ou igual do que n; aka ja deram commit a entrada com indice n
 #WRONG! 
-def count_commit_index_consensus(n,log):
+def count_commit_index_consensus(n):
+    global matchIndex
     count = 0
-    for i in matchIndex:
-        if i>n:
+    for i in matchIndex.values():
+        if i>=n:
             count +=1
     return count
 
 #timestamp_dict , node_id
 #check if a node is alive
+#returns true if node is alive
 def check_timestamp(node_id):
     if timeout_dict.get(node_id) != None:
-        megaprint(timeout_dict)     
-        return timeout_dict[node_id]-time.time_ns()<MAX_TIME_DIF
+        return time.time_ns()-timeout_dict[node_id]<MAX_TIME_DIF
 
 #updates a node's timestamp
 def add_timestamp(node_id):
@@ -98,13 +101,17 @@ def init_timestamps(node_ids):
 
 #sends a heartbeat to a node
 def heartbeat(dest):
-    send(node_id, dest, type='AppendEntries', term=current_term,prevLogIndex = nextIndex[dest]-1 ,entries=[],commit=commitIndex)
+    global nextIndex, log, commitIndex
+    #send(node_id, dest, type='AppendEntries', term=current_term,prevLogIndex = nextIndex[dest]-1 ,entries=[],commit=commitIndex)
+    prevIndex = nextIndex[dest]-1
+    prevTerm=log[nextIndex[dest]-1][1]
+    send(node_id, dest, type='AppendEntries', term=current_term, prevIndex = prevIndex,prevTerm=prevTerm ,entries=log,commit=commitIndex)
 
 #while leader, pereodicly sends heartbeats to a node. Period between heartbeats is variable as to not cause network congestion
 def recursive_heartbeats(dest,min_time,max_time):
     if is_leader():
         heartbeat(dest)
-        sec = random.randrange(min_time,max_time)
+        sec = random.uniform(min_time,max_time)
         Timer(sec, lambda: executor.submit(reccursive_heartbeats,min_time,max_time))
 
 #periodicly checks if the leadder is alive. if its not starts a vote for new leader
@@ -113,8 +120,8 @@ def leader_alive_checker():
         if not check_timestamp(leader_id):
             start_vote()
         else:
-            sec = random.randrange(min_time,max_time)
-            Timer(sec, lambda: executor.submit(leader_alive_checker,min_time,max_time))
+            sec = random.uniform(MIN_HB,MAX_HB)
+            Timer(sec, lambda: executor.submit(leader_alive_checker))
 
 #cases: election ended and this node won, this node won, election still ongoing
 #node won : nothing to do, end recurtion; should be handeled when receiving the fisrt hb from new leadder
@@ -134,7 +141,7 @@ def start_vote():
     #provisional values
     min_time = MIN_HB
     max_time = MAX_HB
-    sec = random.randrange(min_time,max_time)
+    sec = random.uniform(min_time,max_time)
     Timer(sec, lambda: executor.submit(election_checker))
 
 #starts a new vote and sets itself as candidate
@@ -153,7 +160,14 @@ def end_vote():
     votedFor=None
 
 def become_leader():
-    pass
+    global matchIndex, nextIndex, unanswered, leader_id, node_ids, log
+    nextIndex = {id :len(log) for id in node_ids}
+    matchIndex = {id:0 for id in node_ids}
+    unanswered = {}
+    leader_id = node_id
+    for node in node_ids:
+        if node != leader_id:
+            recursive_heartbeats(node,MIN_HB,MAX_HB)
 
 def restore_kv_state():
     for i in range(1,commitIndex):
@@ -162,18 +176,24 @@ def restore_kv_state():
 def commit_command(command):
     if command[0]=='write':
         kvstore[command[1][0]]=command[1][1]
+        return None
     elif command[0]=='cas':
         frm = command[1][1][0]
         to = command[1][1][1]
         key = command[1][0]
-        if kvstore[key]==frm:
+        if kvstore.get(key,None)==None:
+            return 20
+        elif kvstore[key]==frm:
             kvstore[key]=to
+            return None
+        else:
+            return 22
     elif command[0]=='pass':
-        pass
+        return None
 
 def handle(msg):
     # State
-    global node_id, node_ids, current_term, kv_store, log, currentIndex, votedFor, commitIndex, lastApplied, candidate, votes, timeout_dict
+    global node_id, node_ids, current_term, kv_store, log, votedFor, commitIndex, lastApplied, candidate, votes, timeout_dict, leader_id, nextIndex, matchIndex ,unanswered
 
     # Message handlers
     if msg.body.type == 'init':
@@ -187,12 +207,10 @@ def handle(msg):
             leader_alive_checker()
             return
 
-        for node in node_ids:
-            if not is_leader():
-                recursive_heartbeats(node,MIN_HB,MAX_HB)
-        nextIndex = [len(log) for _ in range(len(node_ids))]
-        matchIndex = [0 for _ in range(len(node_ids)) ]
-
+        #becoming leader
+        #send hb to everyone, 
+        become_leader()
+        
     #leader
     #key, value; key and value to insert
     elif msg.body.type == 'write':
@@ -200,14 +218,15 @@ def handle(msg):
         if (not is_leader(msg)):
             return
 
-        key = key.body.key
+        key = msg.body.key
         value = msg.body.value
         
         log.append( ( 'write' ,(key,value) ,current_term) )
-        lastLogIndex = len(log)
+        lastLogIndex = len(log)-1
+        unanswered[lastLogIndex] = msg
         for dest in node_ids:
-            if dest != node_id and lastLogindex>= nextIndex[dest]:
-                send(node_id, dest, type='AppendEntries', term=current_term,prevLogIndex = nextIndex[dest]-1 ,entries=log[nextIndex[dest]:],commit=commitIndex)
+            if dest != node_id and lastLogIndex>= nextIndex[dest]:
+                send(node_id, dest, type='AppendEntries', term=current_term, prevIndex = nextIndex[dest]-1,prevTerm=log[nextIndex[dest]-1][1] ,entries=log[nextIndex[dest]:],commit=commitIndex)
     
     #leader
     #key, value; key and value to insert
@@ -216,15 +235,16 @@ def handle(msg):
         if (not is_leader(msg)):
             return
 
-        key = key.body.key
+        key = msg.body.key
         frm = getattr(msg.body, 'from')
         to = msg.body.to
         
-        log.append( ( 'cas' ,(key,(frm,to)) ,current_term) )
-        lastLogIndex = len(log)
+        log.append( ( 'cas' ,(key,(frm,to)) ,current_term ) )
+        lastLogIndex = len(log)-1
+        unanswered[lastLogIndex] = msg
         for dest in node_ids:
-            if dest != node_id and lastLogindex>= nextIndex[dest]:
-                send(node_id, dest, type='AppendEntries', term=current_term,prevLogIndex = nextIndex[dest]-1 ,entries=log[nextIndex[dest]:],commit=commitIndex)
+            if dest != node_id and lastLogIndex>= nextIndex[dest]:
+                send(node_id, dest, type='AppendEntries', term=current_term, prevIndex = nextIndex[dest]-1,prevTerm=log[nextIndex[dest]-1][1] ,entries=log[nextIndex[dest]:],commit=commitIndex)
 
     #leader
     #since the leader is setting the log anyway, this can be answered to right away
@@ -232,8 +252,10 @@ def handle(msg):
         # se nao for o leader devolver erro 
         if (not is_leader(msg)):
             return
-
-        reply(msg,type='read_ok', value=kvstore[msg.body.key])
+        if kvstore.get(msg.body.key,None) != None:
+            reply(msg,type='read_ok', value=kvstore[msg.body.key])
+        else:
+            reply(msg, type='error', code=20, text='Invalid Key')
 
     #follower
     #entries; list og logs to commit to local log
@@ -241,14 +263,24 @@ def handle(msg):
     #prevLogIndex; indice do Log imediatamente antes ao primeiro enviado
     #prevLogTerm; termo da primeira entrada do prevLogIndex
     #commit; commitIndex do lider
+    #################################################WRONG######################################
     elif msg.body.type == 'AppendEntries':
-        add_timestamp(msg.body.src)
+        add_timestamp(msg.src)
+        #raise Exception(log[msg.body.prevIndex])
+        #buildString([ msg.body.prevIndex,log,log[msg.body.prevIndex]])    
+
         #term receives less than current term
         if msg.body.term<current_term:
             reply(msg,type='AppendEntriesRes',res=False,term=current_term)
             return
-        # terms not matching
-        elif log[msg.body.prevLogIndex][1]!=msg.body.entries[0][1]:
+        # terms not matching in last log entry not sent
+        a=[]
+        try:
+            a = log[msg.body.prevIndex]
+        except:
+            buildString([ "280",log,msg.body.prevIndex,commitIndex,node_id,msg.body.entries])    
+        if a[1]!=msg.body.prevTerm:
+        #elif log[msg.body.prevIndex][1]!=msg.body.prevTerm:
             reply(msg,type='AppendEntriesRes',res=False,term=current_term)
             return
 
@@ -257,63 +289,100 @@ def handle(msg):
             end_vote()
             nextIndex=None
             matchIndex=None
+            unanswered = None
             leader_id=msg.body.src
             current_term=msg.body.term
 
         #check if any existing entries have diferent terms than the received ones
-        for i in range(len(msg.body.entries)):
-            if log[msg.body.preLogIndex+i][1]!=msg.body.entries[i][1]:
-                #delete everything in front
-                log = log[:msg.body.preLogIndex+i-1]
-                #redoo all the operations!! from the begining
-                restore_kv_state()
-                break
+        newstart=0
+        if len(msg.body.entries)>0:
+            for i in range(1,len(msg.body.entries)):
+                if len(log)-1<=msg.body.prevIndex+i and log[msg.body.prevIndex+i][1]!=msg.body.entries[i-1][1]:
+                    buildString([ "301", log,msg.body.entries ,msg.body.prevIndex ,commitIndex ,node_id, log[msg.body.prevIndex+i], msg.body.entries[i-1] ,i ])
+                    #delete everything in front
+                    log = log[:msg.body.prevIndex+i-1]
+                    newstart=i-1
+                    commitIndex = len(log)-1
+                    lastApplied = len(log)-1
+                    #redoo all the operations!! from the begining
+                    restore_kv_state()
+                    break
 
-        dif = msg.body.prevLogIndex-len(log)
+        dif = msg.body.prevIndex-len(log)
         #para cada elemento das entries a pardir do "fim" do log, dar append e fazer a opecarao
-        for i in range(len(msg.body.entries[dif:])):
-            command=msg.body.entries[dif+i]
-            log.append(command)
-            commit_command(command)
+        for entry in msg.body.entries[newstart:]:
+            #buildString([ "313",log,msg.body.prevIndex,commitIndex,node_id,entry])
+            log.append(entry)
+            commit_command(entry)
+        #for i in range(len(msg.body.entries[dif:])-1):
+        #    command=msg.body.entries[dif+i]
+        #    buildString([ "308",log,msg.body.prevIndex,commitIndex,node_id,entry])
+        #    log.append(command)
+        #    commit_command(command)
 
         # if leadercommit > commitIndex set commitIndex = min(leadercommit , index of last new entry)
         #log[-1][1] quase a certeza  que isto esta mal, mas nao estou abem a ver oqq devia ser, to be fixed in the future
         if msg.body.commit>commitIndex:
             #commitIndex=min(msg.body.commit, log[-1][1])
+            buildString([ "326",log,msg.body.prevIndex,commitIndex,node_id])
             commitIndex=min(msg.body.commit, len(log))
             restore_kv_state()
 
-        reply(msg,type='AppendEntries',res=True,term=current_term,next=len(msg.body.entries))
+        reply(msg,type='AppendEntriesRes',res=True,term=current_term,next=len(log),commit=commitIndex)
 
     #leader
     #(bool) res; description if write was sucessfull or not
     #(int) next; tamanho do log enviado para o cliente
     elif msg.body.type == 'AppendEntriesRes':
-        add_timestamp(msg.body.src)
+        add_timestamp(msg.src)
         if not is_leader(msg):
             #talvez retornar um codigo de erro aqui
             # a is_leader retorna o proprio codigo de erro
+            buildString([ "1",log,unanswered,commitIndex])    
             return
 
         if (msg.body.res):
             #update next index and match index
-            nextIndex[msg.body.src] += msg.body.next
-            matchIndex[msg.body.src] = commitIndex
+            nextIndex[msg.src] = msg.body.next
+            matchIndex[msg.src] = msg.body.commit
+            
         else:
             nextIndex[msg.src] -=1
-            send(node_id, msg.src, type='AppendEntries', term=current_term, value=log[nextIndex[dest]:])
+            dest = msg.src
+            send(node_id, dest, type='AppendEntries', term=current_term, prevIndex = nextIndex[dest]-1,prevTerm=log[nextIndex[dest]-1][1] ,entries=log[nextIndex[dest]:],commit=commitIndex)
+       
         # verifica se ja ha um consenso de replies
+        #buildString([ "2",log,unanswered,commitIndex])    
         flag = True
         maxn = commitIndex
-        majority = len(node_ids)/2+1
+        majority = len(active_nodes())//2+1
         #poe em maxn o N maximo tal que existe um consenso de que commitIndex=N
-        # E PRECISO RESPONDER AO GAJO QUE FEZ O PEDIDO!!!!!!!!!!!!!!!!!!
-        # Probably adicionar uma q de pedidos/msg que fez o pedido/ com timestamps e um handler que periodicamente checa todos para ver se ja pode responder OU se ja morreu por isso manda que falhou
-        while(flag):
+        #aka da commit a tods os comands para os quais existe um consenso.
+
+        #nao faz sentido ver se mudaram cenas se o que recebeu um falso
+        while(flag and msg.body.res):
+            #buildString([ "3",log,unanswered,commitIndex,matchIndex,majority,count_commit_index_consensus(maxn+1)])    
             #se ha consenso deste commit, da tbm o lider o commit
-            if count_commit_index_consensus(maxn+1)>majority:
+            if count_commit_index_consensus(maxn+1)>=majority:
+                buildString([ "3",log,unanswered,commitIndex,matchIndex,majority,count_commit_index_consensus(maxn+1)])    
                 maxn+=1
-                commit_command(log[maxn])
+                buildString([ "3",log,unanswered,commitIndex])    
+                # aplies the command, changing the local kv_store to reflect the new operation
+                error_code = commit_command(log[maxn])
+                #reply with wth is the correct reply
+                rmsg = unanswered.pop(maxn)
+                command=log[maxn]
+                if command[0]=='write':
+                    reply(rmsg, type='write_ok')
+                elif command[0]=='cas':
+                    if error_code!=None:
+                        reply(rmsg,type='cas_ok')
+                    else:
+                        error_text = 'Invalid Key' if code == 20 else 'Invalid From'
+                        reply(rmsg,code=error_code, text=error_text)
+                else:
+                    #algo corrreu mal
+                    pass
             else:
                 flag=False
         commitIndex = maxn
@@ -332,6 +401,16 @@ def handle(msg):
                 votedFor = msg.body.src
                 current_term=msg.body.term
                 reply(msg,type='RequestVoteRes',term=current_term,res=False)
+
+    elif msg.body.type == 'RequestVoteRes':
+        add_timestamp(msg.src)
+        if msg.body.res:
+            votes+=1
+        
+        majority = len(active_nodes())/2+1
+        if votes>majority:
+            #become leader
+            become_leader()
 
     else:
         logging.warning('unknown message type %s', msg.body.type)
