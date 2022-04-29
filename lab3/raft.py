@@ -171,8 +171,6 @@ def commit_command(command):
     elif command[0]=='pass':
         pass
 
-
-
 def handle(msg):
     # State
     global node_id, node_ids, current_term, kv_store, log, currentIndex, votedFor, commitIndex, lastApplied, candidate, votes, timeout_dict
@@ -229,7 +227,7 @@ def handle(msg):
                 send(node_id, dest, type='AppendEntries', term=current_term,prevLogIndex = nextIndex[dest]-1 ,entries=log[nextIndex[dest]:],commit=commitIndex)
 
     #leader
-    #since the leader is setting the log anyway, this can be responded right away
+    #since the leader is setting the log anyway, this can be answered to right away
     elif msg.body.type == 'read' :
         # se nao for o leader devolver erro 
         if (not is_leader(msg)):
@@ -242,9 +240,7 @@ def handle(msg):
     #term; termo do lider
     #prevLogIndex; indice do Log imediatamente antes ao primeiro enviado
     #prevLogTerm; termo da primeira entrada do prevLogIndex
-    #commit; commitIndex do lidera
-    #not present yet //////////// leaderID, Se receberes uma msg com um leader id diferente alteras o leader id para ser esse? ( caso o term seja maior do que o que tens atualmente)
-    #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    #commit; commitIndex do lider
     elif msg.body.type == 'AppendEntries':
         add_timestamp(msg.body.src)
         #term receives less than current term
@@ -294,6 +290,11 @@ def handle(msg):
     #(int) next; tamanho do log enviado para o cliente
     elif msg.body.type == 'AppendEntriesRes':
         add_timestamp(msg.body.src)
+        if not is_leader(msg):
+            #talvez retornar um codigo de erro aqui
+            # a is_leader retorna o proprio codigo de erro
+            return
+
         if (msg.body.res):
             #update next index and match index
             nextIndex[msg.body.src] += msg.body.next
@@ -306,6 +307,8 @@ def handle(msg):
         maxn = commitIndex
         majority = len(node_ids)/2+1
         #poe em maxn o N maximo tal que existe um consenso de que commitIndex=N
+        # E PRECISO RESPONDER AO GAJO QUE FEZ O PEDIDO!!!!!!!!!!!!!!!!!!
+        # Probably adicionar uma q de pedidos/msg que fez o pedido/ com timestamps e um handler que periodicamente checa todos para ver se ja pode responder OU se ja morreu por isso manda que falhou
         while(flag):
             #se ha consenso deste commit, da tbm o lider o commit
             if count_commit_index_consensus(maxn+1)>majority:
