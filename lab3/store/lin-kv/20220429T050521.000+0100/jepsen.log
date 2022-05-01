@@ -1,0 +1,187 @@
+2022-04-29 05:05:21,144{GMT}	INFO	[jepsen test runner] jepsen.core: Test version 0d4ff421833ec2c381c8673966f9f458bcc47975 (plus uncommitted changes)
+2022-04-29 05:05:21,144{GMT}	INFO	[jepsen test runner] jepsen.core: Command line:
+lein run test --workload lin-kv --bin raft.py --time-limit 2
+2022-04-29 05:05:21,206{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+{:remote #jepsen.control.SSHRemote{:session nil}
+ :log-net-send false
+ :node-count nil
+ :max-txn-length 4
+ :concurrency 5
+ :db
+ #object[maelstrom.db$db$reify__16747
+         "0x5ae06c93"
+         "maelstrom.db$db$reify__16747@5ae06c93"]
+ :max-writes-per-key 16
+ :leave-db-running? false
+ :name "lin-kv"
+ :logging-json? false
+ :net-journal #object[clojure.lang.Atom "0x2227c82d" {:status :ready, :val []}]
+ :start-time
+ #object[org.joda.time.DateTime "0x1b9075c9" "2022-04-29T05:05:21.000+01:00"]
+ :nemesis-interval 10
+ :net
+ #object[maelstrom.net$jepsen_adapter$reify__15560
+         "0x11a88d87"
+         "maelstrom.net$jepsen_adapter$reify__15560@11a88d87"]
+ :client
+ #object[maelstrom.workload.lin_kv$client$reify__17524
+         "0xce24a98"
+         "maelstrom.workload.lin_kv$client$reify__17524@ce24a98"]
+ :barrier
+ #object[java.util.concurrent.CyclicBarrier
+         "0x496101d1"
+         "java.util.concurrent.CyclicBarrier@496101d1"]
+ :log-stderr false
+ :pure-generators true
+ :ssh {:dummy? true}
+ :rate 5
+ :checker
+ #object[jepsen.checker$compose$reify__8612
+         "0x19858f26"
+         "jepsen.checker$compose$reify__8612@19858f26"]
+ :argv ("test" "--workload" "lin-kv" "--bin" "raft.py" "--time-limit" "2")
+ :nemesis
+ (jepsen.nemesis.ReflCompose
+  {:fm {:start-partition 0,
+        :stop-partition 0,
+        :kill 1,
+        :start 1,
+        :pause 1,
+        :resume 1},
+   :nemeses [#unprintable "jepsen.nemesis.combined$partition_nemesis$reify__17019@4c14ed24"
+             #unprintable "jepsen.nemesis.combined$db_nemesis$reify__17000@523cc8b4"]})
+ :active-histories
+ #object[clojure.lang.Atom "0x139224ab" {:status :ready, :val #{}}]
+ :nodes ["n1" "n2" "n3" "n4" "n5"]
+ :test-count 1
+ :latency {:mean 0, :dist :constant}
+ :bin "raft.py"
+ :generator
+ (jepsen.generator.TimeLimit
+  {:limit 2000000000,
+   :cutoff nil,
+   :gen (jepsen.generator.Any
+         {:gens [(jepsen.generator.OnThreads {:f #{:nemesis}, :gen nil})
+                 (jepsen.generator.OnThreads
+                  {:f #object[clojure.core$complement$fn__5654
+                              "0x53bf791"
+                              "clojure.core$complement$fn__5654@53bf791"],
+                   :gen (jepsen.generator.Stagger
+                         {:dt 400000000,
+                          :next-time nil,
+                          :gen (jepsen.generator.OnThreads
+                                {:f #object[clojure.core$complement$fn__5654
+                                            "0x1bc6a43c"
+                                            "clojure.core$complement$fn__5654@1bc6a43c"],
+                                 :gen (jepsen.independent.ConcurrentGenerator
+                                       {:n 10,
+                                        :fgen #object[jepsen.tests.linearizable_register$test$fn__17324
+                                                      "0x5f3fa154"
+                                                      "jepsen.tests.linearizable_register$test$fn__17324@5f3fa154"],
+                                        :group->threads nil,
+                                        :thread->group nil,
+                                        :keys (0 1 2 3 4 5 6 7 ...),
+                                        :gens nil})})})})]})})
+ :log-net-recv false
+ :os
+ #object[jepsen.os$reify__2490 "0x3bced0d2" "jepsen.os$reify__2490@3bced0d2"]
+ :time-limit 2
+ :workload :lin-kv
+ :consistency-models [:strict-serializable]
+ :topology :grid}
+
+2022-04-29 05:05:21,213{GMT}	INFO	[jepsen test runner] jepsen.db: Tearing down DB
+2022-04-29 05:05:21,216{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up DB
+2022-04-29 05:05:21,218{GMT}	INFO	[jepsen node n2] maelstrom.db: Setting up n2
+2022-04-29 05:05:21,218{GMT}	INFO	[jepsen node n4] maelstrom.db: Setting up n4
+2022-04-29 05:05:21,218{GMT}	INFO	[jepsen node n5] maelstrom.db: Setting up n5
+2022-04-29 05:05:21,218{GMT}	INFO	[jepsen node n3] maelstrom.db: Setting up n3
+2022-04-29 05:05:21,219{GMT}	INFO	[jepsen node n2] maelstrom.process: launching raft.py nil
+2022-04-29 05:05:21,219{GMT}	INFO	[jepsen node n5] maelstrom.process: launching raft.py nil
+2022-04-29 05:05:21,219{GMT}	INFO	[jepsen node n4] maelstrom.process: launching raft.py nil
+2022-04-29 05:05:21,219{GMT}	INFO	[jepsen node n3] maelstrom.process: launching raft.py nil
+2022-04-29 05:05:21,222{GMT}	INFO	[jepsen node n1] maelstrom.service: Starting services: (lin-kv lin-tso lww-kv seq-kv)
+2022-04-29 05:05:21,233{GMT}	INFO	[jepsen node n1] maelstrom.db: Setting up n1
+2022-04-29 05:05:21,235{GMT}	INFO	[jepsen node n1] maelstrom.process: launching raft.py nil
+2022-04-29 05:05:21,281{GMT}	INFO	[jepsen test runner] jepsen.core: Relative time begins now
+2022-04-29 05:05:21,326{GMT}	INFO	[jepsen node n2] maelstrom.db: Tearing down n2
+2022-04-29 05:05:21,326{GMT}	INFO	[jepsen node n3] maelstrom.db: Tearing down n3
+2022-04-29 05:05:21,326{GMT}	INFO	[jepsen node n5] maelstrom.db: Tearing down n5
+2022-04-29 05:05:21,326{GMT}	INFO	[jepsen node n1] maelstrom.db: Tearing down n1
+2022-04-29 05:05:21,336{GMT}	INFO	[jepsen node n4] maelstrom.db: Tearing down n4
+2022-04-29 05:05:23,269{GMT}	WARN	[main] jepsen.core: Test crashed!
+clojure.lang.ExceptionInfo: Generator threw java.lang.AssertionError - Assert failed: With 5 worker threads, this jepsen.concurrent/concurrent-generator cannot run a key with 10 threads concurrently. Consider raising your test's :concurrency to at least 10.
+(<= group-size thread-count) when asked for an operation. Generator:
+jepsen.generator.TimeLimit{
+  :limit 2000000000,
+  :cutoff nil,
+  :gen jepsen.generator.Any{
+    :gens [jepsen.generator.OnThreads{
+             :f #{:nemesis}, :gen nil}
+           jepsen.generator.OnThreads{
+             :f #object[clojure.core$complement$fn__5654 0x53bf791 "clojure.core$complement$fn__5654@53bf791"],
+             :gen jepsen.generator.Stagger{
+               :dt 400000000,
+               :next-time nil,
+               :gen jepsen.generator.OnThreads{
+                 :f #object[clojure.core$complement$fn__5654 0x1bc6a43c "clojure.core$complement$fn__5654@1bc6a43c"],
+                 :gen jepsen.independent.ConcurrentGenerator{
+                   :n 10,
+                   :fgen #object[jepsen.tests.linearizable_register$test$fn__17324 0x5f3fa154 "jepsen.tests.linearizable_register$test$fn__17324@5f3fa154"],
+                   :group->threads nil,
+                   :thread->group nil,
+                   :keys (0 1 2 3 4 5 6 7 8 9 ...),
+                   :gens nil}}}}]}}
+
+Context:
+
+{:time 10197422,
+ :free-threads
+ #object[io.lacuna.bifurcan.Set 0x57cc7d9e "{0, 1, 2, 3, 4, :nemesis}"],
+ :workers {0 0, 1 1, 2 2, 3 3, 4 4, :nemesis :nemesis}}
+
+	at slingshot.support$stack_trace.invoke(support.clj:201)
+	at jepsen.generator.FriendlyExceptions.op(generator.clj:685)
+	at jepsen.generator.Validate.op(generator.clj:625)
+	at jepsen.generator.interpreter$run_BANG_.invokeStatic(interpreter.clj:248)
+	at jepsen.generator.interpreter$run_BANG_.invoke(interpreter.clj:181)
+	at jepsen.core$run_case_BANG_.invokeStatic(core.clj:223)
+	at jepsen.core$run_case_BANG_.invoke(core.clj:215)
+	at jepsen.core$run_BANG_$fn__9881$fn__9884$fn__9889.invoke(core.clj:369)
+	at jepsen.core$run_BANG_$fn__9881$fn__9884.invoke(core.clj:365)
+	at jepsen.core$run_BANG_$fn__9881.invoke(core.clj:363)
+	at jepsen.core$run_BANG_.invokeStatic(core.clj:351)
+	at jepsen.core$run_BANG_.invoke(core.clj:278)
+	at jepsen.cli$single_test_cmd$fn__10648.invoke(cli.clj:393)
+	at jepsen.cli$run_BANG_.invokeStatic(cli.clj:326)
+	at jepsen.cli$run_BANG_.invoke(cli.clj:255)
+	at maelstrom.core$_main.invokeStatic(core.clj:226)
+	at maelstrom.core$_main.doInvoke(core.clj:224)
+	at clojure.lang.RestFn.applyTo(RestFn.java:137)
+	at maelstrom.core.main(Unknown Source)
+Caused by: java.lang.AssertionError: Assert failed: With 5 worker threads, this jepsen.concurrent/concurrent-generator cannot run a key with 10 threads concurrently. Consider raising your test's :concurrency to at least 10.
+(<= group-size thread-count)
+	at jepsen.independent$group_threads.invokeStatic(independent.clj:57)
+	at jepsen.independent$group_threads.invoke(independent.clj:49)
+	at jepsen.independent$make_group__GT_threads.invokeStatic(independent.clj:82)
+	at jepsen.independent$make_group__GT_threads.invoke(independent.clj:78)
+	at jepsen.independent.ConcurrentGenerator.op(independent.clj:118)
+	at jepsen.generator.OnThreads.op(generator.clj:867)
+	at jepsen.generator.Stagger.op(generator.clj:1268)
+	at jepsen.generator.OnThreads.op(generator.clj:867)
+	at jepsen.generator.Any$fn__3887.invoke(generator.clj:936)
+	at clojure.core$map_indexed$mapi__8533$fn__8534.invoke(core.clj:7308)
+	at clojure.lang.LazySeq.sval(LazySeq.java:42)
+	at clojure.lang.LazySeq.seq(LazySeq.java:51)
+	at clojure.lang.RT.seq(RT.java:531)
+	at clojure.core$seq__5387.invokeStatic(core.clj:137)
+	at clojure.core.protocols$seq_reduce.invokeStatic(protocols.clj:24)
+	at clojure.core.protocols$fn__8131.invokeStatic(protocols.clj:75)
+	at clojure.core.protocols$fn__8131.invoke(protocols.clj:75)
+	at clojure.core.protocols$fn__8073$G__8068__8086.invoke(protocols.clj:13)
+	at clojure.core$reduce.invokeStatic(core.clj:6828)
+	at clojure.core$reduce.invoke(core.clj:6810)
+	at jepsen.generator.Any.op(generator.clj:940)
+	at jepsen.generator.TimeLimit.op(generator.clj:1242)
+	at jepsen.generator.FriendlyExceptions.op(generator.clj:682)
+	... 17 common frames omitted

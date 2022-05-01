@@ -1,0 +1,11 @@
+DEBUG:root:received {"dest":"n2","body":{"type":"init","node_id":"n2","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c3","id":3}
+INFO:root:node n2 initialized
+DEBUG:root:sending {"dest": "c3", "src": "n2", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n2","src":"n1","body":{"msg_id":2,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":10}
+DEBUG:root:sending {"dest": "n1", "src": "n2", "body": {"msg_id": 2, "in_reply_to": 2, "type": "AppendEntriesRes", "res": true, "term": 0, "next": 1, "commit": 0}}
+DEBUG:root:received {"dest":"n2","body":{"key":0,"from":2,"to":1,"type":"cas","msg_id":1},"src":"c15","id":30}
+DEBUG:root:sending {"dest": "c15", "src": "n2", "body": {"msg_id": 3, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n2","body":{"key":0,"from":3,"to":4,"type":"cas","msg_id":2},"src":"c15","id":32}
+DEBUG:root:sending {"dest": "c15", "src": "n2", "body": {"msg_id": 4, "in_reply_to": 2, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n2","src":"n1","body":{"msg_id":7,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[["cas",[1,[0,1]],0]],"commit":0},"id":35}
+DEBUG:root:sending {"dest": "n1", "src": "n2", "body": {"msg_id": 5, "in_reply_to": 7, "type": "AppendEntriesRes", "res": true, "term": 0, "next": 1, "commit": 0}}

@@ -1,0 +1,25 @@
+DEBUG:root:received {"dest":"n3","body":{"type":"init","node_id":"n3","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c1","id":1}
+INFO:root:node n3 initialized
+DEBUG:root:sending {"dest": "c1", "src": "n3", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n3","src":"n1","body":{"msg_id":3,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":11}
+DEBUG:root:sending {"dest": "n1", "src": "n3", "body": {"msg_id": 2, "in_reply_to": 3, "type": "AppendEntriesRes", "res": true, "term": 0, "next": 1, "commit": 0}}
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1009, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 1371, in run
+    self.function(*self.args, **self.kwargs)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 59, in buildString
+    raise Exception(s)
+Exception: ('n1', 1651437479384185231)
+('n2', 1651437479373141777)
+('n3', 1651437479373141777)
+('n4', 1651437479373141777)
+('n5', 1651437479373141777)
+
+DEBUG:root:received {"dest":"n3","body":{"key":1,"from":4,"to":1,"type":"cas","msg_id":1},"src":"c18","id":33}
+DEBUG:root:sending {"dest": "c18", "src": "n3", "body": {"msg_id": 3, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n3","body":{"key":1,"from":0,"to":1,"type":"cas","msg_id":2},"src":"c18","id":51}
+DEBUG:root:sending {"dest": "c18", "src": "n3", "body": {"msg_id": 4, "in_reply_to": 2, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n3","body":{"key":0,"from":3,"to":4,"type":"cas","msg_id":1},"src":"c25","id":62}
+DEBUG:root:sending {"dest": "c25", "src": "n3", "body": {"msg_id": 5, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}

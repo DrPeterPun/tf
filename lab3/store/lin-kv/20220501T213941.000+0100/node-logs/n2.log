@@ -1,0 +1,31 @@
+DEBUG:root:received {"dest":"n2","body":{"type":"init","node_id":"n2","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c1","id":1}
+INFO:root:node n2 initialized
+DEBUG:root:sending {"dest": "c1", "src": "n2", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n2","src":"n1","body":{"msg_id":2,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":10}
+DEBUG:root:sending {"dest": "n1", "src": "n2", "body": {"msg_id": 2, "in_reply_to": 2, "type": "AppendEntriesRes", "res": true, "term": 0, "next": 1, "commit": 0}}
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1009, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 1371, in run
+    self.function(*self.args, **self.kwargs)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 59, in buildString
+    raise Exception(s)
+Exception: ('n1', 1651437581519984685)
+('n2', 1651437581500840765)
+('n3', 1651437581500840765)
+('n4', 1651437581500840765)
+('n5', 1651437581500840765)
+
+DEBUG:root:received {"dest":"n2","body":{"key":1,"from":2,"to":3,"type":"cas","msg_id":1},"src":"c12","id":23}
+DEBUG:root:sending {"dest": "c12", "src": "n2", "body": {"msg_id": 3, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n2","body":{"key":0,"type":"read","msg_id":1},"src":"c14","id":28}
+DEBUG:root:sending {"dest": "c14", "src": "n2", "body": {"msg_id": 4, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n2","body":{"key":1,"value":2,"type":"write","msg_id":2},"src":"c12","id":31}
+DEBUG:root:sending {"dest": "c12", "src": "n2", "body": {"msg_id": 5, "in_reply_to": 2, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n2","body":{"key":1,"value":3,"type":"write","msg_id":3},"src":"c12","id":46}
+DEBUG:root:sending {"dest": "c12", "src": "n2", "body": {"msg_id": 6, "in_reply_to": 3, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n2","body":{"key":0,"from":1,"to":2,"type":"cas","msg_id":1},"src":"c22","id":49}
+DEBUG:root:sending {"dest": "c22", "src": "n2", "body": {"msg_id": 7, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n2","body":{"key":1,"value":3,"type":"write","msg_id":1},"src":"c25","id":54}
+DEBUG:root:sending {"dest": "c25", "src": "n2", "body": {"msg_id": 8, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}

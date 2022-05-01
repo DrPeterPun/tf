@@ -1,0 +1,326 @@
+2022-04-29 19:38:46,189{GMT}	INFO	[jepsen test runner] jepsen.core: Test version bae23d6808e2deaccba225c2d38d2b71755056ed (plus uncommitted changes)
+2022-04-29 19:38:46,189{GMT}	INFO	[jepsen test runner] jepsen.core: Command line:
+lein run test --workload lin-kv --bin raft.py --time-limit 2 --concurrency 4n
+2022-04-29 19:38:46,263{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+{:remote #jepsen.control.SSHRemote{:session nil}
+ :log-net-send false
+ :node-count nil
+ :max-txn-length 4
+ :concurrency 20
+ :db
+ #object[maelstrom.db$db$reify__16747
+         "0x3a5812dc"
+         "maelstrom.db$db$reify__16747@3a5812dc"]
+ :max-writes-per-key 16
+ :leave-db-running? false
+ :name "lin-kv"
+ :logging-json? false
+ :net-journal #object[clojure.lang.Atom "0x1b9075c9" {:status :ready, :val []}]
+ :start-time
+ #object[org.joda.time.DateTime "0x75be6796" "2022-04-29T19:38:46.000+01:00"]
+ :nemesis-interval 10
+ :net
+ #object[maelstrom.net$jepsen_adapter$reify__15560
+         "0xce24a98"
+         "maelstrom.net$jepsen_adapter$reify__15560@ce24a98"]
+ :client
+ #object[maelstrom.workload.lin_kv$client$reify__17524
+         "0x496101d1"
+         "maelstrom.workload.lin_kv$client$reify__17524@496101d1"]
+ :barrier
+ #object[java.util.concurrent.CyclicBarrier
+         "0x19858f26"
+         "java.util.concurrent.CyclicBarrier@19858f26"]
+ :log-stderr false
+ :pure-generators true
+ :ssh {:dummy? true}
+ :rate 5
+ :checker
+ #object[jepsen.checker$compose$reify__8612
+         "0x4c14ed24"
+         "jepsen.checker$compose$reify__8612@4c14ed24"]
+ :argv
+ ("test"
+  "--workload"
+  "lin-kv"
+  "--bin"
+  "raft.py"
+  "--time-limit"
+  "2"
+  "--concurrency"
+  "4n")
+ :nemesis
+ (jepsen.nemesis.ReflCompose
+  {:fm {:start-partition 0,
+        :stop-partition 0,
+        :kill 1,
+        :start 1,
+        :pause 1,
+        :resume 1},
+   :nemeses [#unprintable "jepsen.nemesis.combined$partition_nemesis$reify__17019@523cc8b4"
+             #unprintable "jepsen.nemesis.combined$db_nemesis$reify__17000@139224ab"]})
+ :active-histories
+ #object[clojure.lang.Atom "0x26db7540" {:status :ready, :val #{}}]
+ :nodes ["n1" "n2" "n3" "n4" "n5"]
+ :test-count 1
+ :latency {:mean 0, :dist :constant}
+ :bin "raft.py"
+ :generator
+ (jepsen.generator.TimeLimit
+  {:limit 2000000000,
+   :cutoff nil,
+   :gen (jepsen.generator.Any
+         {:gens [(jepsen.generator.OnThreads {:f #{:nemesis}, :gen nil})
+                 (jepsen.generator.OnThreads
+                  {:f #object[clojure.core$complement$fn__5654
+                              "0x1bc6a43c"
+                              "clojure.core$complement$fn__5654@1bc6a43c"],
+                   :gen (jepsen.generator.Stagger
+                         {:dt 400000000,
+                          :next-time nil,
+                          :gen (jepsen.generator.OnThreads
+                                {:f #object[clojure.core$complement$fn__5654
+                                            "0x5f3fa154"
+                                            "clojure.core$complement$fn__5654@5f3fa154"],
+                                 :gen (jepsen.independent.ConcurrentGenerator
+                                       {:n 10,
+                                        :fgen #object[jepsen.tests.linearizable_register$test$fn__17324
+                                                      "0x6193340e"
+                                                      "jepsen.tests.linearizable_register$test$fn__17324@6193340e"],
+                                        :group->threads nil,
+                                        :thread->group nil,
+                                        :keys (0 1 2 3 4 5 6 7 ...),
+                                        :gens nil})})})})]})})
+ :log-net-recv false
+ :os
+ #object[jepsen.os$reify__2490 "0x158774d3" "jepsen.os$reify__2490@158774d3"]
+ :time-limit 2
+ :workload :lin-kv
+ :consistency-models [:strict-serializable]
+ :topology :grid}
+
+2022-04-29 19:38:46,272{GMT}	INFO	[jepsen test runner] jepsen.db: Tearing down DB
+2022-04-29 19:38:46,274{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up DB
+2022-04-29 19:38:46,275{GMT}	INFO	[jepsen node n2] maelstrom.db: Setting up n2
+2022-04-29 19:38:46,275{GMT}	INFO	[jepsen node n4] maelstrom.db: Setting up n4
+2022-04-29 19:38:46,275{GMT}	INFO	[jepsen node n5] maelstrom.db: Setting up n5
+2022-04-29 19:38:46,275{GMT}	INFO	[jepsen node n3] maelstrom.db: Setting up n3
+2022-04-29 19:38:46,276{GMT}	INFO	[jepsen node n4] maelstrom.process: launching raft.py nil
+2022-04-29 19:38:46,276{GMT}	INFO	[jepsen node n5] maelstrom.process: launching raft.py nil
+2022-04-29 19:38:46,276{GMT}	INFO	[jepsen node n3] maelstrom.process: launching raft.py nil
+2022-04-29 19:38:46,276{GMT}	INFO	[jepsen node n2] maelstrom.process: launching raft.py nil
+2022-04-29 19:38:46,278{GMT}	INFO	[jepsen node n1] maelstrom.service: Starting services: (lin-kv lin-tso lww-kv seq-kv)
+2022-04-29 19:38:46,299{GMT}	INFO	[jepsen node n1] maelstrom.db: Setting up n1
+2022-04-29 19:38:46,299{GMT}	INFO	[jepsen node n1] maelstrom.process: launching raft.py nil
+2022-04-29 19:38:46,355{GMT}	INFO	[jepsen test runner] jepsen.core: Relative time begins now
+2022-04-29 19:38:46,393{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:invoke	:write	[1 1]
+2022-04-29 19:38:46,400{GMT}	INFO	[jepsen worker 11] jepsen.util: 11	:info	:write	[1 1]	[:unknown "Not Leader"]
+2022-04-29 19:38:46,499{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:write	[0 0]
+2022-04-29 19:38:46,500{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:info	:write	[0 0]	[:unknown "Not Leader"]
+2022-04-29 19:38:46,783{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:invoke	:cas	[0 [1 2]]
+2022-04-29 19:38:46,789{GMT}	INFO	[jepsen worker 9] jepsen.util: 9	:info	:cas	[0 [1 2]]	[:unknown "Not Leader"]
+2022-04-29 19:38:46,823{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:write	[1 4]
+2022-04-29 19:38:46,828{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:info	:write	[1 4]	[:unknown "Not Leader"]
+2022-04-29 19:38:46,961{GMT}	INFO	[jepsen worker 12] jepsen.util: 32	:invoke	:cas	[1 [1 2]]
+2022-04-29 19:38:46,965{GMT}	INFO	[jepsen worker 12] jepsen.util: 32	:info	:cas	[1 [1 2]]	[:unknown "Not Leader"]
+2022-04-29 19:38:47,264{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:write	[0 3]
+2022-04-29 19:38:47,268{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:info	:write	[0 3]	[:unknown "Not Leader"]
+2022-04-29 19:38:47,320{GMT}	INFO	[jepsen worker 12] jepsen.util: 52	:invoke	:cas	[1 [3 2]]
+2022-04-29 19:38:47,324{GMT}	INFO	[jepsen worker 12] jepsen.util: 52	:info	:cas	[1 [3 2]]	[:unknown "Not Leader"]
+2022-04-29 19:38:47,551{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	[0 nil]
+2022-04-29 19:38:47,556{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-04-29 19:38:47,614{GMT}	INFO	[jepsen worker 6] jepsen.util: 26	:invoke	:cas	[0 [3 2]]
+2022-04-29 19:38:47,615{GMT}	INFO	[jepsen worker 6] jepsen.util: 26	:info	:cas	[0 [3 2]]	[:unknown "Not Leader"]
+2022-04-29 19:38:47,662{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:invoke	:cas	[1 [0 2]]
+2022-04-29 19:38:47,925{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:cas	[0 [0 0]]
+2022-04-29 19:38:48,009{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:cas	[1 [2 4]]
+2022-04-29 19:38:48,011{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:info	:cas	[1 [2 4]]	[:unknown "Not Leader"]
+2022-04-29 19:38:48,144{GMT}	INFO	[jepsen worker 12] jepsen.util: 72	:invoke	:write	[1 3]
+2022-04-29 19:38:48,149{GMT}	INFO	[jepsen worker 12] jepsen.util: 72	:info	:write	[1 3]	[:unknown "Not Leader"]
+2022-04-29 19:38:48,252{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	[0 nil]
+2022-04-29 19:38:48,253{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-04-29 19:38:48,663{GMT}	INFO	[jepsen worker 10] jepsen.util: 10	:info	:cas	[1 [0 2]]	:net-timeout
+2022-04-29 19:38:48,925{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:info	:cas	[0 [0 0]]	:net-timeout
+2022-04-29 19:38:48,934{GMT}	INFO	[jepsen node n1] maelstrom.db: Tearing down n1
+2022-04-29 19:38:48,935{GMT}	INFO	[jepsen node n2] maelstrom.db: Tearing down n2
+2022-04-29 19:38:48,935{GMT}	INFO	[jepsen node n3] maelstrom.db: Tearing down n3
+2022-04-29 19:38:48,935{GMT}	INFO	[jepsen node n4] maelstrom.db: Tearing down n4
+2022-04-29 19:38:48,935{GMT}	INFO	[jepsen node n5] maelstrom.db: Tearing down n5
+2022-04-29 19:38:50,316{GMT}	INFO	[jepsen test runner] jepsen.core: Run complete, writing
+2022-04-29 19:38:50,364{GMT}	INFO	[jepsen test runner] jepsen.core: Analyzing...
+2022-04-29 19:38:50,397{GMT}	WARN	[clojure-agent-send-off-pool-0] jepsen.checker: Error while checking history:
+java.lang.IllegalStateException: Error rendering plot, verify gnuplot is installed and reachable
+	at jepsen.checker.perf$plot_BANG_.invokeStatic(perf.clj:480)
+	at jepsen.checker.perf$plot_BANG_.invoke(perf.clj:417)
+	at jepsen.checker.perf$point_graph_BANG_.invokeStatic(perf.clj:511)
+	at jepsen.checker.perf$point_graph_BANG_.invoke(perf.clj:484)
+	at jepsen.checker$latency_graph$reify__8824.check(checker.clj:803)
+	at jepsen.checker$check_safe.invokeStatic(checker.clj:78)
+	at jepsen.checker$check_safe.invoke(checker.clj:71)
+	at jepsen.checker$compose$reify__8612$fn__8614.invoke(checker.clj:94)
+	at clojure.core$pmap$fn__8447$fn__8448.invoke(core.clj:7022)
+	at clojure.core$binding_conveyor_fn$fn__5739.invoke(core.clj:2030)
+	at clojure.lang.AFn.call(AFn.java:18)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1128)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:628)
+	at java.base/java.lang.Thread.run(Thread.java:829)
+Caused by: java.io.IOException: Cannot run program "gnuplot": error=2, No such file or directory
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1128)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1071)
+	at java.base/java.lang.Runtime.exec(Runtime.java:592)
+	at clojure.java.shell$sh.invokeStatic(shell.clj:113)
+	at clojure.java.shell$sh.doInvoke(shell.clj:79)
+	at clojure.lang.RestFn.invoke(RestFn.java:512)
+	at gnuplot.core$run_BANG_.invokeStatic(core.clj:76)
+	at gnuplot.core$run_BANG_.invoke(core.clj:66)
+	at gnuplot.core$raw_plot_BANG_.invokeStatic(core.clj:106)
+	at gnuplot.core$raw_plot_BANG_.invoke(core.clj:91)
+	... 15 common frames omitted
+Caused by: java.io.IOException: error=2, No such file or directory
+	at java.base/java.lang.ProcessImpl.forkAndExec(Native Method)
+	at java.base/java.lang.ProcessImpl.<init>(ProcessImpl.java:340)
+	at java.base/java.lang.ProcessImpl.start(ProcessImpl.java:271)
+	at java.base/java.lang.ProcessBuilder.start(ProcessBuilder.java:1107)
+	... 24 common frames omitted
+2022-04-29 19:38:50,450{GMT}	INFO	[clojure-agent-send-pool-0] jepsen.independent: Wrote /home/peter/Documents/tf/lab3/store/lin-kv/20220429T193846.000+0100/independent/0/results.edn
+2022-04-29 19:38:50,452{GMT}	INFO	[clojure-agent-send-pool-0] jepsen.independent: Wrote /home/peter/Documents/tf/lab3/store/lin-kv/20220429T193846.000+0100/independent/0/history.edn
+2022-04-29 19:38:50,459{GMT}	INFO	[clojure-agent-send-pool-1] jepsen.independent: Wrote /home/peter/Documents/tf/lab3/store/lin-kv/20220429T193846.000+0100/independent/1/results.edn
+2022-04-29 19:38:50,461{GMT}	INFO	[clojure-agent-send-pool-1] jepsen.independent: Wrote /home/peter/Documents/tf/lab3/store/lin-kv/20220429T193846.000+0100/independent/1/history.edn
+2022-04-29 19:38:50,461{GMT}	INFO	[jepsen test runner] jepsen.core: Analysis complete
+2022-04-29 19:38:50,490{GMT}	INFO	[jepsen results] jepsen.store: Wrote /home/peter/Documents/tf/lab3/store/lin-kv/20220429T193846.000+0100/results.edn
+2022-04-29 19:38:50,523{GMT}	INFO	[jepsen test runner] jepsen.core: {:perf {:latency-graph {:valid? :unknown,
+                        :error "java.lang.IllegalStateException: Error rendering plot, verify gnuplot is installed and reachable\n at jepsen.checker.perf$plot_BANG_.invokeStatic (perf.clj:480)\n    jepsen.checker.perf$plot_BANG_.invoke (perf.clj:417)\n    jepsen.checker.perf$point_graph_BANG_.invokeStatic (perf.clj:511)\n    jepsen.checker.perf$point_graph_BANG_.invoke (perf.clj:484)\n    jepsen.checker$latency_graph$reify__8824.check (checker.clj:803)\n    jepsen.checker$check_safe.invokeStatic (checker.clj:78)\n    jepsen.checker$check_safe.invoke (checker.clj:71)\n    jepsen.checker$compose$reify__8612$fn__8614.invoke (checker.clj:94)\n    clojure.core$pmap$fn__8447$fn__8448.invoke (core.clj:7022)\n    clojure.core$binding_conveyor_fn$fn__5739.invoke (core.clj:2030)\n    clojure.lang.AFn.call (AFn.java:18)\n    java.util.concurrent.FutureTask.run (FutureTask.java:264)\n    java.util.concurrent.ThreadPoolExecutor.runWorker (ThreadPoolExecutor.java:1128)\n    java.util.concurrent.ThreadPoolExecutor$Worker.run (ThreadPoolExecutor.java:628)\n    java.lang.Thread.run (Thread.java:829)\nCaused by: java.io.IOException: Cannot run program \"gnuplot\": error=2, No such file or directory\n at java.lang.ProcessBuilder.start (ProcessBuilder.java:1128)\n    java.lang.ProcessBuilder.start (ProcessBuilder.java:1071)\n    java.lang.Runtime.exec (Runtime.java:592)\n    clojure.java.shell$sh.invokeStatic (shell.clj:113)\n    clojure.java.shell$sh.doInvoke (shell.clj:79)\n    clojure.lang.RestFn.invoke (RestFn.java:512)\n    gnuplot.core$run_BANG_.invokeStatic (core.clj:76)\n    gnuplot.core$run_BANG_.invoke (core.clj:66)\n    gnuplot.core$raw_plot_BANG_.invokeStatic (core.clj:106)\n    gnuplot.core$raw_plot_BANG_.invoke (core.clj:91)\n    jepsen.checker.perf$plot_BANG_.invokeStatic (perf.clj:480)\n    jepsen.checker.perf$plot_BANG_.invoke (perf.clj:417)\n    jepsen.checker.perf$point_graph_BANG_.invokeStatic (perf.clj:511)\n    jepsen.checker.perf$point_graph_BANG_.invoke (perf.clj:484)\n    jepsen.checker$latency_graph$reify__8824.check (checker.clj:803)\n    jepsen.checker$check_safe.invokeStatic (checker.clj:78)\n    jepsen.checker$check_safe.invoke (checker.clj:71)\n    jepsen.checker$compose$reify__8612$fn__8614.invoke (checker.clj:94)\n    clojure.core$pmap$fn__8447$fn__8448.invoke (core.clj:7022)\n    clojure.core$binding_conveyor_fn$fn__5739.invoke (core.clj:2030)\n    clojure.lang.AFn.call (AFn.java:18)\n    java.util.concurrent.FutureTask.run (FutureTask.java:264)\n    java.util.concurrent.ThreadPoolExecutor.runWorker (ThreadPoolExecutor.java:1128)\n    java.util.concurrent.ThreadPoolExecutor$Worker.run (ThreadPoolExecutor.java:628)\n    java.lang.Thread.run (Thread.java:829)\nCaused by: java.io.IOException: error=2, No such file or directory\n at java.lang.ProcessImpl.forkAndExec (ProcessImpl.java:-2)\n    java.lang.ProcessImpl.<init> (ProcessImpl.java:340)\n    java.lang.ProcessImpl.start (ProcessImpl.java:271)\n    java.lang.ProcessBuilder.start (ProcessBuilder.java:1107)\n    java.lang.ProcessBuilder.start (ProcessBuilder.java:1071)\n    java.lang.Runtime.exec (Runtime.java:592)\n    clojure.java.shell$sh.invokeStatic (shell.clj:113)\n    clojure.java.shell$sh.doInvoke (shell.clj:79)\n    clojure.lang.RestFn.invoke (RestFn.java:512)\n    gnuplot.core$run_BANG_.invokeStatic (core.clj:76)\n    gnuplot.core$run_BANG_.invoke (core.clj:66)\n    gnuplot.core$raw_plot_BANG_.invokeStatic (core.clj:106)\n    gnuplot.core$raw_plot_BANG_.invoke (core.clj:91)\n    jepsen.checker.perf$plot_BANG_.invokeStatic (perf.clj:480)\n    jepsen.checker.perf$plot_BANG_.invoke (perf.clj:417)\n    jepsen.checker.perf$point_graph_BANG_.invokeStatic (perf.clj:511)\n    jepsen.checker.perf$point_graph_BANG_.invoke (perf.clj:484)\n    jepsen.checker$latency_graph$reify__8824.check (checker.clj:803)\n    jepsen.checker$check_safe.invokeStatic (checker.clj:78)\n    jepsen.checker$check_safe.invoke (checker.clj:71)\n    jepsen.checker$compose$reify__8612$fn__8614.invoke (checker.clj:94)\n    clojure.core$pmap$fn__8447$fn__8448.invoke (core.clj:7022)\n    clojure.core$binding_conveyor_fn$fn__5739.invoke (core.clj:2030)\n    clojure.lang.AFn.call (AFn.java:18)\n    java.util.concurrent.FutureTask.run (FutureTask.java:264)\n    java.util.concurrent.ThreadPoolExecutor.runWorker (ThreadPoolExecutor.java:1128)\n    java.util.concurrent.ThreadPoolExecutor$Worker.run (ThreadPoolExecutor.java:628)\n    java.lang.Thread.run (Thread.java:829)\n"},
+        :rate-graph {:valid? true},
+        :valid? :unknown},
+ :timeline {:valid? true},
+ :exceptions {:valid? true},
+ :stats {:valid? false,
+         :count 14,
+         :ok-count 0,
+         :fail-count 2,
+         :info-count 12,
+         :by-f {:cas {:valid? false,
+                      :count 7,
+                      :ok-count 0,
+                      :fail-count 0,
+                      :info-count 7},
+                :read {:valid? false,
+                       :count 2,
+                       :ok-count 0,
+                       :fail-count 2,
+                       :info-count 0},
+                :write {:valid? false,
+                        :count 5,
+                        :ok-count 0,
+                        :fail-count 0,
+                        :info-count 5}}},
+ :net {:stats {:all {:send-count 60,
+                     :recv-count 60,
+                     :msg-count 60,
+                     :msgs-per-op 4.285714},
+               :clients {:send-count 36,
+                         :recv-count 36,
+                         :msg-count 36},
+               :servers {:send-count 24,
+                         :recv-count 24,
+                         :msg-count 24,
+                         :msgs-per-op 1.7142857}},
+       :valid? true},
+ :workload {:valid? true,
+            :results {0 {:linearizable {:valid? true,
+                                        :configs ({:model #knossos.model.CASRegister{:value nil},
+                                                   :last-op nil,
+                                                   :pending [{:process 5,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [0
+                                                                      0],
+                                                              :index 19,
+                                                              :time 1568458900}
+                                                             {:process 6,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 0,
+                                                              :index 2,
+                                                              :time 144019944}
+                                                             {:process 8,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 3,
+                                                              :index 10,
+                                                              :time 907370252}
+                                                             {:process 9,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [1
+                                                                      2],
+                                                              :index 4,
+                                                              :time 426392244}
+                                                             {:process 26,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [3
+                                                                      2],
+                                                              :index 16,
+                                                              :time 1259110660}]}),
+                                        :final-paths ()},
+                         :timeline {:valid? true},
+                         :valid? true},
+                      1 {:linearizable {:valid? true,
+                                        :configs ({:model #knossos.model.CASRegister{:value nil},
+                                                   :last-op nil,
+                                                   :pending [{:process 10,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [0
+                                                                      2],
+                                                              :index 18,
+                                                              :time 1307913217}
+                                                             {:process 11,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 1,
+                                                              :index 0,
+                                                              :time 24346132}
+                                                             {:process 12,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 6,
+                                                              :time 466323885}
+                                                             {:process 14,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      4],
+                                                              :index 20,
+                                                              :time 1654868806}
+                                                             {:process 32,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [1
+                                                                      2],
+                                                              :index 8,
+                                                              :time 604509389}
+                                                             {:process 52,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [3
+                                                                      2],
+                                                              :index 12,
+                                                              :time 964668420}
+                                                             {:process 72,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 3,
+                                                              :index 22,
+                                                              :time 1787989130}]}),
+                                        :final-paths ()},
+                         :timeline {:valid? true},
+                         :valid? true}},
+            :failures []},
+ :valid? false}
+
+
+Analysis invalid! (ﾉಥ益ಥ）ﾉ ┻━┻

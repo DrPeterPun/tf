@@ -1,0 +1,19 @@
+DEBUG:root:received {"dest":"n5","body":{"type":"init","node_id":"n5","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c1","id":1}
+INFO:root:node n5 initialized
+DEBUG:root:sending {"dest": "c1", "src": "n5", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+ERROR:root:fatal exception in handler
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab3/ms.py", line 27, in exitOnError
+    fn(*args)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 210, in handle
+    leader_alive_checker()
+  File "/home/peter/Documents/tf/lab3/raft.py", line 126, in leader_alive_checker
+    buildString([timeout_dict.items(),MIN_HB,MAX_HB,sec,time.time_ns()])
+  File "/home/peter/Documents/tf/lab3/raft.py", line 58, in buildString
+    raise Exception(s)
+Exception: dict_items([('n1', 1651427548629771174), ('n2', 1651427548629771174), ('n3', 1651427548629771174), ('n4', 1651427548629771174), ('n5', 1651427548629771174)])
+0.02
+0.05
+0.049488585480566644
+1651427548629782066
+

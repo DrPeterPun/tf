@@ -1,0 +1,17 @@
+DEBUG:root:received {"dest":"n4","body":{"type":"init","node_id":"n4","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c2","id":2}
+INFO:root:node n4 initialized
+DEBUG:root:sending {"dest": "c2", "src": "n4", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+/home/peter/Documents/tf/lab3/raft.py:112: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  sec = random.randrange(MIN_HB,MAX_HB)
+DEBUG:root:received {"dest":"n4","body":{"key":1,"from":3,"to":2,"type":"cas","msg_id":1},"src":"c11","id":12}
+DEBUG:root:sending {"dest": "c11", "src": "n4", "body": {"msg_id": 2, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n4","src":"n1","body":{"msg_id":4,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[["cas",[1,[1,1]],0]],"commit":0},"id":21}
+DEBUG:root:sending {"dest": "n1", "src": "n4", "body": {"msg_id": 3, "in_reply_to": 4, "type": "AppendEntriesRes", "res": true, "term": 0, "next": 1}}
+DEBUG:root:received {"dest":"n4","src":"n1","body":{"msg_id":8,"type":"AppendEntries","term":0,"prevIndex":1,"prevTerm":[1,[1,1]],"entries":[["write",[1,4],0]],"commit":0},"id":42}
+ERROR:root:fatal exception in handler
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab3/ms.py", line 27, in exitOnError
+    fn(*args)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 262, in handle
+    elif log[msg.body.prevIndex][1]!=msg.body.prevTerm:
+IndexError: list index out of range

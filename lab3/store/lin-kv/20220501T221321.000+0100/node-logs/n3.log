@@ -1,0 +1,35 @@
+DEBUG:root:received {"dest":"n3","body":{"type":"init","node_id":"n3","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c0","id":0}
+INFO:root:node n3 initialized
+DEBUG:root:sending {"dest": "c0", "src": "n3", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:sending {"dest": "n1", "src": "n3", "body": {"msg_id": 2, "type": "RequestVote", "term": 1, "prevLogIndex": 2, "lastLogTerm": 0, "candidateId": "n3"}}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 3, "type": "RequestVote", "term": 1, "prevLogIndex": 2, "lastLogTerm": 0, "candidateId": "n3"}}
+DEBUG:root:sending {"dest": "n3", "src": "n3", "body": {"msg_id": 4, "type": "RequestVote", "term": 1, "prevLogIndex": 2, "lastLogTerm": 0, "candidateId": "n3"}}
+DEBUG:root:sending {"dest": "n4", "src": "n3", "body": {"msg_id": 5, "type": "RequestVote", "term": 1, "prevLogIndex": 2, "lastLogTerm": 0, "candidateId": "n3"}}
+DEBUG:root:sending {"dest": "n5", "src": "n3", "body": {"msg_id": 6, "type": "RequestVote", "term": 1, "prevLogIndex": 2, "lastLogTerm": 0, "candidateId": "n3"}}
+DEBUG:root:received {"dest":"n3","src":"n3","body":{"msg_id":4,"type":"RequestVote","term":1,"prevLogIndex":2,"lastLogTerm":0,"candidateId":"n3"},"id":14}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":4,"type":"RequestVote","term":1,"prevLogIndex":2,"lastLogTerm":0,"candidateId":"n2"},"id":15}
+DEBUG:root:received {"dest":"n3","src":"n5","body":{"msg_id":4,"type":"RequestVote","term":1,"prevLogIndex":2,"lastLogTerm":0,"candidateId":"n5"},"id":21}
+DEBUG:root:received {"dest":"n3","src":"n4","body":{"msg_id":4,"type":"RequestVote","term":1,"prevLogIndex":2,"lastLogTerm":0,"candidateId":"n4"},"id":26}
+DEBUG:root:received {"dest":"n3","src":"n1","body":{"msg_id":3,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":31}
+DEBUG:root:sending {"dest": "n1", "src": "n3", "body": {"msg_id": 7, "in_reply_to": 3, "type": "AppendEntriesRes", "res": false, "term": 1}}
+DEBUG:root:received {"dest":"n3","src":"n1","body":{"msg_id":7,"in_reply_to":7,"type":"error","code":11,"text":"Not Leader"},"id":39}
+WARNING:root:unknown message type error
+DEBUG:root:received {"dest":"n3","body":{"key":1,"from":1,"to":2,"type":"cas","msg_id":1},"src":"c10","id":42}
+DEBUG:root:sending {"dest": "c10", "src": "n3", "body": {"msg_id": 8, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1009, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 1371, in run
+    self.function(*self.args, **self.kwargs)
+TypeError: election_checker() missing 2 required positional arguments: 'min_time' and 'max_time'
+DEBUG:root:received {"dest":"n3","body":{"key":1,"from":3,"to":4,"type":"cas","msg_id":1},"src":"c15","id":52}
+DEBUG:root:sending {"dest": "c15", "src": "n3", "body": {"msg_id": 9, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n3","body":{"key":0,"type":"read","msg_id":1},"src":"c17","id":56}
+DEBUG:root:sending {"dest": "c17", "src": "n3", "body": {"msg_id": 10, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n3","body":{"key":1,"from":3,"to":1,"type":"cas","msg_id":2},"src":"c15","id":82}
+DEBUG:root:sending {"dest": "c15", "src": "n3", "body": {"msg_id": 11, "in_reply_to": 2, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n3","body":{"key":2,"from":1,"to":2,"type":"cas","msg_id":3},"src":"c15","id":90}
+DEBUG:root:sending {"dest": "c15", "src": "n3", "body": {"msg_id": 12, "in_reply_to": 3, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n3","body":{"key":2,"from":0,"to":1,"type":"cas","msg_id":4},"src":"c15","id":94}
+DEBUG:root:sending {"dest": "c15", "src": "n3", "body": {"msg_id": 13, "in_reply_to": 4, "type": "error", "code": 11, "text": "Not Leader"}}

@@ -1,0 +1,27 @@
+DEBUG:root:received {"dest":"n2","body":{"type":"init","node_id":"n2","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c0","id":0}
+INFO:root:node n2 initialized
+DEBUG:root:sending {"dest": "c0", "src": "n2", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:sending {"dest": "n1", "src": "n2", "body": {"msg_id": 2, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n2"}}
+DEBUG:root:sending {"dest": "n2", "src": "n2", "body": {"msg_id": 3, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n2"}}
+DEBUG:root:sending {"dest": "n3", "src": "n2", "body": {"msg_id": 4, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n2"}}
+DEBUG:root:sending {"dest": "n4", "src": "n2", "body": {"msg_id": 5, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n2"}}
+DEBUG:root:sending {"dest": "n5", "src": "n2", "body": {"msg_id": 6, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n2"}}
+DEBUG:root:received {"dest":"n2","src":"n3","body":{"msg_id":3,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":6}
+DEBUG:root:sending {"dest": "n3", "src": "n2", "body": {"msg_id": 7, "in_reply_to": 3, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n2","src":"n5","body":{"msg_id":3,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n5"},"id":13}
+DEBUG:root:sending {"dest": "n5", "src": "n2", "body": {"msg_id": 8, "in_reply_to": 3, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n2","src":"n2","body":{"msg_id":3,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":20}
+DEBUG:root:sending {"dest": "n2", "src": "n2", "body": {"msg_id": 9, "in_reply_to": 3, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n2","src":"n3","body":{"msg_id":9,"in_reply_to":4,"type":"RequestVoteRes","term":1,"res":false},"id":27}
+DEBUG:root:received {"dest":"n2","src":"n2","body":{"msg_id":9,"in_reply_to":3,"type":"RequestVoteRes","term":1,"res":false},"id":28}
+DEBUG:root:received {"dest":"n2","src":"n5","body":{"msg_id":9,"in_reply_to":6,"type":"RequestVoteRes","term":1,"res":false},"id":33}
+DEBUG:root:received {"dest":"n2","src":"n4","body":{"msg_id":3,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n4"},"id":34}
+DEBUG:root:sending {"dest": "n4", "src": "n2", "body": {"msg_id": 10, "in_reply_to": 3, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n2","src":"n4","body":{"msg_id":9,"in_reply_to":5,"type":"RequestVoteRes","term":1,"res":false},"id":42}
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1009, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 1371, in run
+    self.function(*self.args, **self.kwargs)
+TypeError: election_checker() missing 2 required positional arguments: 'min_time' and 'max_time'

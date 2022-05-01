@@ -1,0 +1,19 @@
+DEBUG:root:received {"dest":"n2","body":{"type":"init","node_id":"n2","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c3","id":3}
+INFO:root:node n2 initialized
+DEBUG:root:sending {"dest": "c3", "src": "n2", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+ERROR:root:fatal exception in handler
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab3/ms.py", line 27, in exitOnError
+    fn(*args)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 209, in handle
+    leader_alive_checker()
+  File "/home/peter/Documents/tf/lab3/raft.py", line 124, in leader_alive_checker
+    buildString(timeout_dict )
+  File "/home/peter/Documents/tf/lab3/raft.py", line 58, in buildString
+    raise Exception(s)
+Exception: n1
+n2
+n3
+n4
+n5
+

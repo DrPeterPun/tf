@@ -1,0 +1,21 @@
+DEBUG:root:received {"dest":"n2","body":{"type":"init","node_id":"n2","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c3","id":3}
+INFO:root:node n2 initialized
+DEBUG:root:sending {"dest": "c3", "src": "n2", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+/home/peter/Documents/tf/lab3/raft.py:113: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  sec = random.randrange(MIN_HB,MAX_HB)
+DEBUG:root:received {"dest":"n2","src":"n1","body":{"msg_id":2,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[["cas",[1,[4,1]],0]],"commit":0},"id":15}
+DEBUG:root:sending {"dest": "n1", "src": "n2", "body": {"msg_id": 2, "in_reply_to": 2, "type": "AppendEntriesRes", "res": true, "term": 0, "next": 1}}
+DEBUG:root:received {"dest":"n2","body":{"key":1,"from":4,"to":3,"type":"cas","msg_id":1},"src":"c13","id":23}
+DEBUG:root:sending {"dest": "c13", "src": "n2", "body": {"msg_id": 3, "in_reply_to": 1, "type": "error", "code": 11}}
+DEBUG:root:received {"dest":"n2","body":{"key":1,"from":0,"to":1,"type":"cas","msg_id":1},"src":"c15","id":27}
+DEBUG:root:sending {"dest": "c15", "src": "n2", "body": {"msg_id": 4, "in_reply_to": 1, "type": "error", "code": 11}}
+DEBUG:root:received {"dest":"n2","body":{"key":1,"from":0,"to":4,"type":"cas","msg_id":2},"src":"c15","id":31}
+DEBUG:root:sending {"dest": "c15", "src": "n2", "body": {"msg_id": 5, "in_reply_to": 2, "type": "error", "code": 11}}
+DEBUG:root:received {"dest":"n2","src":"n1","body":{"msg_id":6,"type":"AppendEntries","term":0,"prevIndex":1,"prevTerm":[1,[4,1]],"entries":[["cas",[0,[0,1]],0]],"commit":0},"id":34}
+ERROR:root:fatal exception in handler
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab3/ms.py", line 27, in exitOnError
+    fn(*args)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 263, in handle
+    elif log[msg.body.prevIndex][1]!=msg.body.prevTerm:
+IndexError: list index out of range

@@ -1,0 +1,11 @@
+DEBUG:root:received {"dest":"n3","body":{"type":"init","node_id":"n3","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c1","id":1}
+INFO:root:node n3 initialized
+DEBUG:root:sending {"dest": "c1", "src": "n3", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+/home/peter/Documents/tf/lab3/raft.py:112: DeprecationWarning: non-integer arguments to randrange() have been deprecated since Python 3.10 and will be removed in a subsequent version
+  sec = random.randrange(MIN_HB,MAX_HB)
+DEBUG:root:received {"dest":"n3","src":"n1","body":{"msg_id":3,"type":"AppendEntries","term":0,"prevLogIndex":0,"entries":[["cas",[0,[4,2]],0]],"commit":0},"id":18}
+DEBUG:root:sending {"dest": "n1", "src": "n3", "body": {"msg_id": 2, "in_reply_to": 3, "type": "AppendEntriesRes", "res": false, "term": 0}}
+DEBUG:root:received {"dest":"n3","body":{"key":0,"type":"read","msg_id":1},"src":"c15","id":28}
+DEBUG:root:sending {"dest": "c15", "src": "n3", "body": {"msg_id": 3, "in_reply_to": 1, "type": "error", "code": 11}}
+DEBUG:root:received {"dest":"n3","body":{"key":1,"from":1,"to":0,"type":"cas","msg_id":1},"src":"c18","id":34}
+DEBUG:root:sending {"dest": "c18", "src": "n3", "body": {"msg_id": 4, "in_reply_to": 1, "type": "error", "code": 11}}

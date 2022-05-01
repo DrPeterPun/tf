@@ -1,0 +1,26 @@
+DEBUG:root:received {"dest":"n4","body":{"type":"init","node_id":"n4","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c1","id":1}
+INFO:root:node n4 initialized
+DEBUG:root:sending {"dest": "c1", "src": "n4", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n4","src":"n1","body":{"msg_id":4,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":12}
+DEBUG:root:sending {"dest": "n1", "src": "n4", "body": {"msg_id": 2, "in_reply_to": 4, "type": "AppendEntriesRes", "res": true, "term": 0, "next": 2, "commit": 0}}
+DEBUG:root:received {"dest":"n4","src":"n1","body":{"msg_id":8,"type":"AppendEntries","term":0,"prevIndex":1,"prevTerm":[0,3],"entries":[["cas",[1,[4,1]],0]],"commit":0},"id":34}
+DEBUG:root:sending {"dest": "n1", "src": "n4", "body": {"msg_id": 3, "in_reply_to": 8, "type": "AppendEntriesRes", "res": false, "term": 0}}
+DEBUG:root:received {"dest":"n4","src":"n1","body":{"msg_id":12,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[["write",[0,3],0],["cas",[1,[4,1]],0]],"commit":0},"id":42}
+ERROR:root:fatal exception in handler
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab3/ms.py", line 27, in exitOnError
+    fn(*args)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 301, in handle
+    buildString([ "301", log,msg.body.entries ,msg.body.prevIndex ,commitIndex ,node_id, log[msg.body.prevIndex+i], msg.body.entries[i-1] ,i ])
+  File "/home/peter/Documents/tf/lab3/raft.py", line 58, in buildString
+    raise Exception(s)
+Exception: 301
+[(('pass', None), 0), [['pass', None], 0]]
+[['write', [0, 3], 0], ['cas', [1, [4, 1]], 0]]
+0
+0
+n4
+[['pass', None], 0]
+['write', [0, 3], 0]
+1
+

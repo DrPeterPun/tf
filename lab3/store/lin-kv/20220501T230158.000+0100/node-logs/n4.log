@@ -1,0 +1,42 @@
+DEBUG:root:received {"dest":"n4","body":{"type":"init","node_id":"n4","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c3","id":3}
+INFO:root:node n4 initialized
+DEBUG:root:received {"dest":"n4","src":"n2","body":{"msg_id":5,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":13}
+DEBUG:root:sending {"dest": "c3", "src": "n4", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n4","src":"n3","body":{"msg_id":5,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":14}
+DEBUG:root:sending {"dest": "n1", "src": "n4", "body": {"msg_id": 2, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n4"}}
+DEBUG:root:sending {"dest": "n2", "src": "n4", "body": {"msg_id": 3, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n4"}}
+DEBUG:root:sending {"dest": "n3", "src": "n4", "body": {"msg_id": 4, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n4"}}
+DEBUG:root:sending {"dest": "n4", "src": "n4", "body": {"msg_id": 5, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n4"}}
+DEBUG:root:sending {"dest": "n5", "src": "n4", "body": {"msg_id": 6, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n4"}}
+DEBUG:root:sending {"dest": "n2", "src": "n4", "body": {"msg_id": 7, "in_reply_to": 5, "type": "RequestVoteRes", "term": 1, "res": true}}
+DEBUG:root:sending {"dest": "n3", "src": "n4", "body": {"msg_id": 8, "in_reply_to": 5, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n4","src":"n4","body":{"msg_id":5,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n4"},"id":25}
+DEBUG:root:sending {"dest": "n4", "src": "n4", "body": {"msg_id": 9, "in_reply_to": 5, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n4","src":"n2","body":{"msg_id":9,"in_reply_to":3,"type":"RequestVoteRes","term":1,"res":false},"id":27}
+DEBUG:root:received {"dest":"n4","src":"n3","body":{"msg_id":9,"in_reply_to":4,"type":"RequestVoteRes","term":1,"res":false},"id":30}
+DEBUG:root:received {"dest":"n4","src":"n4","body":{"msg_id":9,"in_reply_to":5,"type":"RequestVoteRes","term":1,"res":false},"id":31}
+DEBUG:root:received {"dest":"n4","src":"n5","body":{"msg_id":5,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n5"},"id":36}
+DEBUG:root:sending {"dest": "n5", "src": "n4", "body": {"msg_id": 10, "in_reply_to": 5, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n4","src":"n5","body":{"msg_id":9,"in_reply_to":6,"type":"RequestVoteRes","term":1,"res":false},"id":43}
+DEBUG:root:received {"dest":"n4","src":"n1","body":{"msg_id":4,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":48}
+DEBUG:root:sending {"dest": "n1", "src": "n4", "body": {"msg_id": 11, "in_reply_to": 4, "type": "AppendEntriesRes", "res": false, "term": 1}}
+DEBUG:root:received {"dest":"n4","src":"n1","body":{"msg_id":7,"in_reply_to":2,"type":"RequestVoteRes","term":1,"res":false},"id":55}
+DEBUG:root:received {"dest":"n4","src":"n1","body":{"msg_id":11,"in_reply_to":11,"type":"error","code":11,"text":"Not Leader"},"id":59}
+WARNING:root:unknown message type error
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1009, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 1371, in run
+    self.function(*self.args, **self.kwargs)
+TypeError: election_checker() missing 2 required positional arguments: 'min_time' and 'max_time'
+DEBUG:root:received {"dest":"n4","body":{"key":1,"from":4,"to":4,"type":"cas","msg_id":1},"src":"c12","id":65}
+DEBUG:root:sending {"dest": "c12", "src": "n4", "body": {"msg_id": 12, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n4","body":{"key":0,"type":"read","msg_id":1},"src":"c13","id":67}
+DEBUG:root:sending {"dest": "c13", "src": "n4", "body": {"msg_id": 13, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n4","body":{"key":0,"type":"read","msg_id":2},"src":"c13","id":75}
+DEBUG:root:sending {"dest": "c13", "src": "n4", "body": {"msg_id": 14, "in_reply_to": 2, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n4","body":{"key":1,"value":0,"type":"write","msg_id":1},"src":"c18","id":81}
+DEBUG:root:sending {"dest": "c18", "src": "n4", "body": {"msg_id": 15, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n4","body":{"key":0,"type":"read","msg_id":3},"src":"c13","id":99}
+DEBUG:root:sending {"dest": "c13", "src": "n4", "body": {"msg_id": 16, "in_reply_to": 3, "type": "error", "code": 11, "text": "Not Leader"}}
