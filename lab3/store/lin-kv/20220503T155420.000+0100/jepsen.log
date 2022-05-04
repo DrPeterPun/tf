@@ -1,0 +1,253 @@
+2022-05-03 15:54:20,872{GMT}	INFO	[jepsen test runner] jepsen.core: Test version ba6f9e66132a8e6051301f5fc7fd18e877f6bddb (plus uncommitted changes)
+2022-05-03 15:54:20,873{GMT}	INFO	[jepsen test runner] jepsen.core: Command line:
+lein run test --bin raft.py --workload lin-kv --concurrency 4n --time-limit 2
+2022-05-03 15:54:20,937{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+{:remote #jepsen.control.SSHRemote{:session nil}
+ :log-net-send false
+ :node-count nil
+ :max-txn-length 4
+ :concurrency 20
+ :db
+ #object[maelstrom.db$db$reify__16747
+         "0xcf0e8b4"
+         "maelstrom.db$db$reify__16747@cf0e8b4"]
+ :max-writes-per-key 16
+ :leave-db-running? false
+ :name "lin-kv"
+ :logging-json? false
+ :net-journal #object[clojure.lang.Atom "0x51a7ee4e" {:status :ready, :val []}]
+ :start-time
+ #object[org.joda.time.DateTime "0x424c8ebe" "2022-05-03T15:54:20.000+01:00"]
+ :nemesis-interval 10
+ :net
+ #object[maelstrom.net$jepsen_adapter$reify__15560
+         "0x7aafac17"
+         "maelstrom.net$jepsen_adapter$reify__15560@7aafac17"]
+ :client
+ #object[maelstrom.workload.lin_kv$client$reify__17524
+         "0x3054551f"
+         "maelstrom.workload.lin_kv$client$reify__17524@3054551f"]
+ :barrier
+ #object[java.util.concurrent.CyclicBarrier
+         "0x6b8cfbeb"
+         "java.util.concurrent.CyclicBarrier@6b8cfbeb"]
+ :log-stderr false
+ :pure-generators true
+ :ssh {:dummy? true}
+ :rate 5
+ :checker
+ #object[jepsen.checker$compose$reify__8612
+         "0x4603845b"
+         "jepsen.checker$compose$reify__8612@4603845b"]
+ :argv
+ ("test"
+  "--bin"
+  "raft.py"
+  "--workload"
+  "lin-kv"
+  "--concurrency"
+  "4n"
+  "--time-limit"
+  "2")
+ :nemesis
+ (jepsen.nemesis.ReflCompose
+  {:fm {:start-partition 0,
+        :stop-partition 0,
+        :kill 1,
+        :start 1,
+        :pause 1,
+        :resume 1},
+   :nemeses [#unprintable "jepsen.nemesis.combined$partition_nemesis$reify__17019@414b5798"
+             #unprintable "jepsen.nemesis.combined$db_nemesis$reify__17000@53251e03"]})
+ :active-histories
+ #object[clojure.lang.Atom "0x5ffae42f" {:status :ready, :val #{}}]
+ :nodes ["n1" "n2" "n3" "n4" "n5"]
+ :test-count 1
+ :latency {:mean 0, :dist :constant}
+ :bin "raft.py"
+ :generator
+ (jepsen.generator.TimeLimit
+  {:limit 2000000000,
+   :cutoff nil,
+   :gen (jepsen.generator.Any
+         {:gens [(jepsen.generator.OnThreads {:f #{:nemesis}, :gen nil})
+                 (jepsen.generator.OnThreads
+                  {:f #object[clojure.core$complement$fn__5654
+                              "0x3eff5c32"
+                              "clojure.core$complement$fn__5654@3eff5c32"],
+                   :gen (jepsen.generator.Stagger
+                         {:dt 400000000,
+                          :next-time nil,
+                          :gen (jepsen.generator.OnThreads
+                                {:f #object[clojure.core$complement$fn__5654
+                                            "0x79d538c1"
+                                            "clojure.core$complement$fn__5654@79d538c1"],
+                                 :gen (jepsen.independent.ConcurrentGenerator
+                                       {:n 10,
+                                        :fgen #object[jepsen.tests.linearizable_register$test$fn__17324
+                                                      "0x31e08c61"
+                                                      "jepsen.tests.linearizable_register$test$fn__17324@31e08c61"],
+                                        :group->threads nil,
+                                        :thread->group nil,
+                                        :keys (0 1 2 3 4 5 6 7 ...),
+                                        :gens nil})})})})]})})
+ :log-net-recv false
+ :os
+ #object[jepsen.os$reify__2490 "0x2db15764" "jepsen.os$reify__2490@2db15764"]
+ :time-limit 2
+ :workload :lin-kv
+ :consistency-models [:strict-serializable]
+ :topology :grid}
+
+2022-05-03 15:54:20,943{GMT}	INFO	[jepsen test runner] jepsen.db: Tearing down DB
+2022-05-03 15:54:20,945{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up DB
+2022-05-03 15:54:20,946{GMT}	INFO	[jepsen node n4] maelstrom.db: Setting up n4
+2022-05-03 15:54:20,946{GMT}	INFO	[jepsen node n2] maelstrom.db: Setting up n2
+2022-05-03 15:54:20,946{GMT}	INFO	[jepsen node n5] maelstrom.db: Setting up n5
+2022-05-03 15:54:20,947{GMT}	INFO	[jepsen node n4] maelstrom.process: launching raft.py nil
+2022-05-03 15:54:20,946{GMT}	INFO	[jepsen node n3] maelstrom.db: Setting up n3
+2022-05-03 15:54:20,948{GMT}	INFO	[jepsen node n3] maelstrom.process: launching raft.py nil
+2022-05-03 15:54:20,947{GMT}	INFO	[jepsen node n5] maelstrom.process: launching raft.py nil
+2022-05-03 15:54:20,947{GMT}	INFO	[jepsen node n2] maelstrom.process: launching raft.py nil
+2022-05-03 15:54:20,950{GMT}	INFO	[jepsen node n1] maelstrom.service: Starting services: (lin-kv lin-tso lww-kv seq-kv)
+2022-05-03 15:54:20,998{GMT}	INFO	[jepsen node n1] maelstrom.db: Setting up n1
+2022-05-03 15:54:20,998{GMT}	INFO	[jepsen node n1] maelstrom.process: launching raft.py nil
+2022-05-03 15:54:21,041{GMT}	INFO	[jepsen test runner] jepsen.core: Relative time begins now
+2022-05-03 15:54:21,068{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:cas	[1 [3 3]]
+2022-05-03 15:54:21,074{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:info	:cas	[1 [3 3]]	[:unknown "Not Leader"]
+2022-05-03 15:54:21,216{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:write	[1 2]
+2022-05-03 15:54:21,222{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:info	:write	[1 2]	[:unknown "Not Leader"]
+2022-05-03 15:54:21,239{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[0 nil]
+2022-05-03 15:54:21,245{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-05-03 15:54:21,271{GMT}	INFO	[jepsen worker 17] jepsen.util: 37	:invoke	:write	[1 2]
+2022-05-03 15:54:21,278{GMT}	INFO	[jepsen worker 17] jepsen.util: 37	:info	:write	[1 2]	[:unknown "Not Leader"]
+2022-05-03 15:54:21,449{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:read	[0 nil]
+2022-05-03 15:54:21,454{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:fail	:read	[0 nil]	[:unknown "Invalid Key"]
+2022-05-03 15:54:21,761{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:write	[1 4]
+2022-05-03 15:54:21,764{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:info	:write	[1 4]	[:unknown "Not Leader"]
+2022-05-03 15:54:21,910{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	[0 nil]
+2022-05-03 15:54:21,913{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-05-03 15:54:22,179{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:invoke	:write	[1 4]
+2022-05-03 15:54:22,193{GMT}	INFO	[jepsen worker 13] jepsen.util: 13	:info	:write	[1 4]	[:unknown "Not Leader"]
+2022-05-03 15:54:22,233{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:invoke	:read	[0 nil]
+2022-05-03 15:54:22,245{GMT}	INFO	[jepsen worker 2] jepsen.util: 2	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-05-03 15:54:22,264{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[0 nil]
+2022-05-03 15:54:22,272{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-05-03 15:54:22,550{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:invoke	:read	[0 nil]
+2022-05-03 15:54:22,596{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:invoke	:cas	[1 [2 4]]
+2022-05-03 15:54:22,622{GMT}	INFO	[jepsen worker 3] jepsen.util: 3	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-05-03 15:54:22,956{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:invoke	:write	[0 4]
+2022-05-03 15:54:23,108{GMT}	INFO	[jepsen worker 6] jepsen.util: 6	:info	:write	[0 4]	[:unknown "Not Leader"]
+2022-05-03 15:54:23,596{GMT}	INFO	[jepsen worker 15] jepsen.util: 15	:info	:cas	[1 [2 4]]	:net-timeout
+2022-05-03 15:54:23,620{GMT}	INFO	[jepsen node n2] maelstrom.db: Tearing down n2
+2022-05-03 15:54:23,620{GMT}	INFO	[jepsen node n1] maelstrom.db: Tearing down n1
+2022-05-03 15:54:23,623{GMT}	INFO	[jepsen node n3] maelstrom.db: Tearing down n3
+2022-05-03 15:54:23,625{GMT}	INFO	[jepsen node n4] maelstrom.db: Tearing down n4
+2022-05-03 15:54:23,625{GMT}	INFO	[jepsen node n5] maelstrom.db: Tearing down n5
+2022-05-03 15:54:25,002{GMT}	INFO	[jepsen test runner] jepsen.core: Run complete, writing
+2022-05-03 15:54:25,309{GMT}	INFO	[jepsen test runner] jepsen.core: Analyzing...
+2022-05-03 15:54:25,369{GMT}	INFO	[clojure-agent-send-pool-0] jepsen.independent: Wrote /home/peter/Documents/tf/lab3/store/lin-kv/20220503T155420.000+0100/independent/0/results.edn
+2022-05-03 15:54:25,376{GMT}	INFO	[clojure-agent-send-pool-0] jepsen.independent: Wrote /home/peter/Documents/tf/lab3/store/lin-kv/20220503T155420.000+0100/independent/0/history.edn
+2022-05-03 15:54:25,393{GMT}	INFO	[clojure-agent-send-pool-1] jepsen.independent: Wrote /home/peter/Documents/tf/lab3/store/lin-kv/20220503T155420.000+0100/independent/1/results.edn
+2022-05-03 15:54:25,394{GMT}	INFO	[clojure-agent-send-pool-1] jepsen.independent: Wrote /home/peter/Documents/tf/lab3/store/lin-kv/20220503T155420.000+0100/independent/1/history.edn
+2022-05-03 15:54:26,073{GMT}	INFO	[jepsen test runner] jepsen.core: Analysis complete
+2022-05-03 15:54:26,101{GMT}	INFO	[jepsen results] jepsen.store: Wrote /home/peter/Documents/tf/lab3/store/lin-kv/20220503T155420.000+0100/results.edn
+2022-05-03 15:54:26,429{GMT}	INFO	[jepsen test runner] jepsen.core: {:perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :exceptions {:valid? true},
+ :stats {:valid? false,
+         :count 13,
+         :ok-count 0,
+         :fail-count 6,
+         :info-count 7,
+         :by-f {:cas {:valid? false,
+                      :count 2,
+                      :ok-count 0,
+                      :fail-count 0,
+                      :info-count 2},
+                :read {:valid? false,
+                       :count 6,
+                       :ok-count 0,
+                       :fail-count 6,
+                       :info-count 0},
+                :write {:valid? false,
+                        :count 5,
+                        :ok-count 0,
+                        :fail-count 0,
+                        :info-count 5}}},
+ :net {:stats {:all {:send-count 22850,
+                     :recv-count 22850,
+                     :msg-count 22850,
+                     :msgs-per-op 1757.6923},
+               :clients {:send-count 35,
+                         :recv-count 35,
+                         :msg-count 35},
+               :servers {:send-count 22815,
+                         :recv-count 22815,
+                         :msg-count 22815,
+                         :msgs-per-op 1755.0}},
+       :valid? true},
+ :workload {:valid? true,
+            :results {0 {:linearizable {:valid? true,
+                                        :configs ({:model #knossos.model.CASRegister{:value nil},
+                                                   :last-op nil,
+                                                   :pending [{:process 6,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 23,
+                                                              :time 1911509245}]}),
+                                        :final-paths ()},
+                         :timeline {:valid? true},
+                         :valid? true},
+                      1 {:linearizable {:valid? true,
+                                        :configs ({:model #knossos.model.CASRegister{:value nil},
+                                                   :last-op nil,
+                                                   :pending [{:process 13,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 14,
+                                                              :time 1137226069}
+                                                             {:process 14,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 4,
+                                                              :index 10,
+                                                              :time 719476331}
+                                                             {:process 15,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [2
+                                                                      4],
+                                                              :index 21,
+                                                              :time 1554339266}
+                                                             {:process 17,
+                                                              :type :invoke,
+                                                              :f :cas,
+                                                              :value [3
+                                                                      3],
+                                                              :index 0,
+                                                              :time 15554696}
+                                                             {:process 19,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 2,
+                                                              :index 2,
+                                                              :time 174342064}
+                                                             {:process 37,
+                                                              :type :invoke,
+                                                              :f :write,
+                                                              :value 2,
+                                                              :index 6,
+                                                              :time 227886516}]}),
+                                        :final-paths ()},
+                         :timeline {:valid? true},
+                         :valid? true}},
+            :failures []},
+ :valid? false}
+
+
+Analysis invalid! (ﾉಥ益ಥ）ﾉ ┻━┻

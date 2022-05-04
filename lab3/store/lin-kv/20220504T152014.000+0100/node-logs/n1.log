@@ -1,0 +1,217 @@
+DEBUG:root:received {"dest":"n1","body":{"type":"init","node_id":"n1","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c4","id":4}
+INFO:root:node n1 initialized
+DEBUG:root:sending {"dest": "c4", "src": "n1", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":8}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":8,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":18}
+INFO:root:became leader
+log
+[(('pass', None), 0)]
+match index
+{'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0}
+
+INFO:root:vote ended, new leader is
+n1
+
+INFO:root:sending HB
+
+INFO:root:HBdest
+n2
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 2, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n3
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 3, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n4
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 4, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n5
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 5, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:log atual
+[(('pass', None), 0)]
+prevlog index
+0
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 6, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": true}}
+INFO:root:election started and voted vor
+n2
+at time
+1651674015625917479
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 7, "in_reply_to": 8, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":4,"in_reply_to":4,"type":"AppendEntriesRes","res":false,"term":1},"id":32}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":4,"in_reply_to":5,"type":"AppendEntriesRes","res":false,"term":1},"id":33}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 0, 'n5': 1}
+log
+[(('pass', None), 0)]
+dest
+n4
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 8, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 0, 'n5': 0}
+log
+[(('pass', None), 0)]
+dest
+n5
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 9, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":4,"in_reply_to":3,"type":"AppendEntriesRes","res":false,"term":1},"id":34}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":12,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":35}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 1, 'n3': 0, 'n4': 0, 'n5': 0}
+log
+[(('pass', None), 0)]
+dest
+n3
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 10, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 11, "in_reply_to": 12, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":5,"in_reply_to":9,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":44}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":6,"in_reply_to":10,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":46}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":5,"in_reply_to":8,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":47}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":16,"in_reply_to":2,"type":"AppendEntriesRes","res":false,"term":1},"id":49}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 0, 'n3': 2, 'n4': 2, 'n5': 2}
+log
+[(('pass', None), 0)]
+dest
+n2
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 12, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":17,"in_reply_to":12,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":51}
+INFO:root:sending HB
+
+INFO:root:HBdest
+n2
+nextIndex
+{'n1': 1, 'n2': 2, 'n3': 2, 'n4': 2, 'n5': 2}
+log
+[(('pass', None), 0)]
+
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1009, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 1371, in run
+    self.function(*self.args, **self.kwargs)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 136, in recursive_heartbeats
+    heartbeat(dest)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 124, in heartbeat
+    prevTerm=log[nextIndex[dest]-1][1]
+IndexError: list index out of range
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":18,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":52}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 13, "in_reply_to": 18, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":9,"type":"RequestVote","term":2,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n4"},"id":62}
+INFO:root:log atual
+[(('pass', None), 0)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 14, "in_reply_to": 9, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":9,"type":"RequestVote","term":2,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n5"},"id":72}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":9,"type":"RequestVote","term":2,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n3"},"id":77}
+INFO:root:log atual
+[(('pass', None), 0)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 15, "in_reply_to": 9, "type": "RequestVoteRes", "term": 1, "res": false}}
+INFO:root:log atual
+[(('pass', None), 0)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 16, "in_reply_to": 9, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":25,"type":"AppendEntries","term":2,"entries":[[["pass",null],0],[["cas",[1,[1,0]]],2]],"prevIndex":0,"prevTerm":0,"commit":0},"id":92}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":29,"type":"AppendEntries","term":2,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":97}
+INFO:root:vote ended, new leader is
+n1
+
+INFO:root:there is a new leader
+
+INFO:root:node id:
+n1
+leader
+n2
+kvsotr
+{}
+cur term
+1
+log 
+[(('pass', None), 0)]
+commit indez e last applied
+0
+0
+candidate, votes, voted for
+False
+None
+None
+timeout dict
+{'n1': 1651674015621525750, 'n2': 1651674015831977895, 'n3': 1651674015814004534, 'n4': 1651674015786303221, 'n5': 1651674015813032204}
+curr time
+1651674015832478765
+
+INFO:root:355
+[(('pass', None), 0)]
+[[['pass', None], 0], [['cas', [1, [1, 0]]], 2]]
+0
+0
+n1
+1
+
+ERROR:root:fatal exception in handler
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab3/ms.py", line 27, in exitOnError
+    fn(*args)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 356, in handle
+    entry=log[msg.body.prevIndex+i] if len(log)>msg.body.prevIndex+i-1 else None
+IndexError: list index out of range

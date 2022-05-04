@@ -1,0 +1,18 @@
+2	:invoke	:read	[0 nil]
+2	:fail	:read	[0 nil]	[:unknown Not Leader]
+0	:invoke	:read	[0 nil]
+0	:fail	:read	[0 nil]	[:unknown Not Leader]
+12	:invoke	:write	[1 1]
+12	:info	:write	[1 1]	[:unknown Not Leader]
+18	:invoke	:write	[1 3]
+16	:invoke	:cas	[1 [0 0]]
+13	:invoke	:write	[1 2]
+13	:info	:write	[1 2]	[:unknown Not Leader]
+14	:invoke	:cas	[1 [0 0]]
+14	:info	:cas	[1 [0 0]]	[:unknown Not Leader]
+32	:invoke	:cas	[1 [0 0]]
+32	:info	:cas	[1 [0 0]]	[:unknown Not Leader]
+7	:invoke	:write	[0 1]
+7	:info	:write	[0 1]	[:unknown Not Leader]
+18	:info	:write	[1 3]	:net-timeout
+16	:info	:cas	[1 [0 0]]	:net-timeout

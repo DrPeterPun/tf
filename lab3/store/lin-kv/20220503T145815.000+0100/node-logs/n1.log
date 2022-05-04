@@ -1,0 +1,335 @@
+DEBUG:root:received {"dest":"n1","body":{"type":"init","node_id":"n1","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c3","id":3}
+INFO:root:node n1 initialized
+DEBUG:root:sending {"dest": "c3", "src": "n1", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 2, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 3, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 4, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 5, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":9}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n4"},"id":11}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 6, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n5"},"id":15}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":7,"in_reply_to":4,"type":"AppendEntriesRes","res":false,"term":1},"id":29}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":7,"in_reply_to":5,"type":"AppendEntriesRes","res":false,"term":1},"id":31}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":7,"in_reply_to":3,"type":"AppendEntriesRes","res":false,"term":1},"id":33}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 7, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 8, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": false}}
+WARNING:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 0, 'n5': 1}
+log
+[(('pass', None), 0)]
+dest
+n4
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 9, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+WARNING:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 0, 'n5': 0}
+log
+[(('pass', None), 0)]
+dest
+n5
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 10, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+WARNING:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 1, 'n3': 0, 'n4': 0, 'n5': 0}
+log
+[(('pass', None), 0)]
+dest
+n3
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 11, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":47}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":11,"in_reply_to":9,"type":"AppendEntriesRes","res":true,"term":1,"next":1,"commit":0},"id":51}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 12, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":11,"in_reply_to":11,"type":"AppendEntriesRes","res":true,"term":1,"next":1,"commit":0},"id":54}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":11,"in_reply_to":10,"type":"AppendEntriesRes","res":true,"term":1,"next":1,"commit":0},"id":56}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":7,"in_reply_to":2,"type":"AppendEntriesRes","res":false,"term":1},"id":59}
+WARNING:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 0, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+dest
+n2
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 13, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":12,"in_reply_to":13,"type":"AppendEntriesRes","res":true,"term":1,"next":1,"commit":0},"id":65}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":13,"type":"RequestVote","term":2,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":68}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 14, "in_reply_to": 13, "type": "RequestVoteRes", "term": 2, "res": true}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 15, "type": "RequestVote", "term": 3, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 16, "type": "RequestVote", "term": 3, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":13,"type":"RequestVote","term":2,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n4"},"id":69}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 17, "type": "RequestVote", "term": 3, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":13,"type":"RequestVote","term":2,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n5"},"id":74}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":15,"type":"RequestVote","term":3,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n1"},"id":85}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 19, "in_reply_to": 13, "type": "RequestVoteRes", "term": 3, "res": false}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 18, "type": "RequestVote", "term": 3, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":17,"in_reply_to":16,"type":"RequestVoteRes","term":2,"res":false},"id":96}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 20, "in_reply_to": 13, "type": "RequestVoteRes", "term": 3, "res": false}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 22, "in_reply_to": 15, "type": "RequestVoteRes", "term": 3, "res": true}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 21, "type": "RequestVote", "term": 3, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":21,"in_reply_to":17,"type":"RequestVoteRes","term":2,"res":false},"id":104}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":22,"in_reply_to":15,"type":"RequestVoteRes","term":3,"res":true},"id":103}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":21,"in_reply_to":18,"type":"RequestVoteRes","term":2,"res":false},"id":106}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":21,"in_reply_to":21,"type":"RequestVoteRes","term":2,"res":false},"id":107}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":18,"type":"RequestVote","term":3,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":108}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 23, "in_reply_to": 18, "type": "RequestVoteRes", "term": 3, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":23,"type":"RequestVote","term":3,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n5"},"id":118}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":24,"type":"RequestVote","term":4,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":120}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":23,"type":"RequestVote","term":3,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n4"},"id":121}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":23,"type":"RequestVote","term":3,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":123}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 24, "in_reply_to": 23, "type": "RequestVoteRes", "term": 3, "res": false}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 26, "in_reply_to": 24, "type": "RequestVoteRes", "term": 4, "res": true}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 25, "type": "RequestVote", "term": 4, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 27, "in_reply_to": 23, "type": "RequestVoteRes", "term": 4, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":25,"type":"RequestVote","term":4,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n1"},"id":144}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 28, "type": "RequestVote", "term": 4, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 29, "in_reply_to": 23, "type": "RequestVoteRes", "term": 4, "res": false}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 30, "type": "RequestVote", "term": 4, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 31, "in_reply_to": 25, "type": "RequestVoteRes", "term": 4, "res": true}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 32, "type": "RequestVote", "term": 4, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":33,"in_reply_to":28,"type":"RequestVoteRes","term":4,"res":true},"id":159}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 33, "type": "RequestVote", "term": 4, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":31,"in_reply_to":25,"type":"RequestVoteRes","term":4,"res":true},"id":162}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":32,"in_reply_to":30,"type":"RequestVoteRes","term":3,"res":false},"id":164}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 34, "type": "RequestVote", "term": 5, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 35, "type": "RequestVote", "term": 5, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":32,"in_reply_to":32,"type":"RequestVoteRes","term":3,"res":false},"id":166}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 36, "type": "RequestVote", "term": 5, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":32,"in_reply_to":33,"type":"RequestVoteRes","term":3,"res":false},"id":167}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":34,"type":"RequestVote","term":5,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n1"},"id":168}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 37, "in_reply_to": 34, "type": "RequestVoteRes", "term": 5, "res": true}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 38, "type": "RequestVote", "term": 5, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 39, "type": "RequestVote", "term": 5, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":34,"in_reply_to":35,"type":"RequestVoteRes","term":5,"res":true},"id":171}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":33,"in_reply_to":36,"type":"RequestVoteRes","term":3,"res":false},"id":174}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":37,"in_reply_to":34,"type":"RequestVoteRes","term":5,"res":true},"id":175}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":33,"in_reply_to":39,"type":"RequestVoteRes","term":3,"res":false},"id":176}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":33,"in_reply_to":38,"type":"RequestVoteRes","term":3,"res":false},"id":177}
+DEBUG:root:received {"dest":"n1","body":{"key":1,"value":1,"type":"write","msg_id":1},"src":"c11","id":178}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 40, "type": "AppendEntries", "term": 5, "entries": [[["write", [1, 1]], 5]], "prevIndex": 0, "prevTerm": 0, "commit": 0}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 41, "type": "AppendEntries", "term": 5, "entries": [[["write", [1, 1]], 5]], "prevIndex": 0, "prevTerm": 0, "commit": 0}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 42, "type": "AppendEntries", "term": 5, "entries": [[["write", [1, 1]], 5]], "prevIndex": 0, "prevTerm": 0, "commit": 0}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 43, "type": "AppendEntries", "term": 5, "entries": [[["write", [1, 1]], 5]], "prevIndex": 0, "prevTerm": 0, "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":34,"in_reply_to":41,"type":"AppendEntriesRes","res":true,"term":5,"next":1,"commit":0},"id":184}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":35,"in_reply_to":40,"type":"AppendEntriesRes","res":true,"term":5,"next":1,"commit":0},"id":183}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":34,"in_reply_to":42,"type":"AppendEntriesRes","res":true,"term":5,"next":1,"commit":0},"id":185}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":34,"in_reply_to":43,"type":"AppendEntriesRes","res":true,"term":5,"next":1,"commit":0},"id":186}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 44, "type": "RequestVote", "term": 6, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 45, "type": "RequestVote", "term": 6, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 46, "type": "RequestVote", "term": 6, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 47, "type": "RequestVote", "term": 6, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 48, "type": "RequestVote", "term": 6, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":44,"type":"RequestVote","term":6,"prevLogIndex":1,"lastLogTerm":5,"candidateId":"n1"},"id":187}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 49, "in_reply_to": 44, "type": "RequestVoteRes", "term": 6, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":49,"in_reply_to":44,"type":"RequestVoteRes","term":6,"res":true},"id":192}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":35,"in_reply_to":46,"type":"RequestVoteRes","term":6,"res":true},"id":193}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":36,"in_reply_to":45,"type":"RequestVoteRes","term":6,"res":true},"id":194}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":35,"in_reply_to":47,"type":"RequestVoteRes","term":6,"res":true},"id":195}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":37,"type":"RequestVote","term":7,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":196}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":35,"in_reply_to":48,"type":"RequestVoteRes","term":6,"res":true},"id":197}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 50, "in_reply_to": 37, "type": "RequestVoteRes", "term": 6, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":43,"type":"RequestVote","term":8,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":207}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 51, "in_reply_to": 43, "type": "RequestVoteRes", "term": 6, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":49,"type":"RequestVote","term":9,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":217}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 52, "in_reply_to": 49, "type": "RequestVoteRes", "term": 6, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":39,"type":"RequestVote","term":7,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":227}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 53, "in_reply_to": 39, "type": "RequestVoteRes", "term": 6, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":46,"type":"RequestVote","term":8,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":241}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 54, "in_reply_to": 46, "type": "RequestVoteRes", "term": 6, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":41,"type":"RequestVote","term":7,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n5"},"id":242}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":56,"type":"RequestVote","term":10,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":245}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":40,"type":"RequestVote","term":7,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n4"},"id":247}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 55, "in_reply_to": 41, "type": "RequestVoteRes", "term": 6, "res": false}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 56, "in_reply_to": 56, "type": "RequestVoteRes", "term": 6, "res": false}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 57, "in_reply_to": 40, "type": "RequestVoteRes", "term": 6, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":46,"type":"RequestVote","term":8,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n5"},"id":262}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 58, "in_reply_to": 46, "type": "RequestVoteRes", "term": 6, "res": false}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 59, "type": "RequestVote", "term": 7, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 60, "type": "RequestVote", "term": 7, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 61, "type": "RequestVote", "term": 7, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 62, "type": "RequestVote", "term": 7, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 63, "type": "RequestVote", "term": 7, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 64, "type": "RequestVote", "term": 8, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 65, "type": "RequestVote", "term": 8, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 66, "type": "RequestVote", "term": 8, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 67, "type": "RequestVote", "term": 8, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 68, "type": "RequestVote", "term": 8, "prevLogIndex": 1, "lastLogTerm": 5, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":50,"type":"RequestVote","term":9,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n4"},"id":291}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":59,"type":"RequestVote","term":7,"prevLogIndex":1,"lastLogTerm":5,"candidateId":"n1"},"id":295}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":56,"type":"RequestVote","term":11,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n5"},"id":303}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":66,"type":"RequestVote","term":11,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":304}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":72,"in_reply_to":60,"type":"RequestVoteRes","term":11,"res":false},"id":314}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":57,"in_reply_to":61,"type":"RequestVoteRes","term":10,"res":false},"id":315}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 69, "in_reply_to": 50, "type": "RequestVoteRes", "term": 8, "res": false}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 70, "in_reply_to": 59, "type": "RequestVoteRes", "term": 8, "res": false}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 71, "in_reply_to": 56, "type": "RequestVoteRes", "term": 8, "res": false}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 72, "in_reply_to": 66, "type": "RequestVoteRes", "term": 8, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":64,"type":"RequestVote","term":8,"prevLogIndex":1,"lastLogTerm":5,"candidateId":"n1"},"id":317}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":56,"in_reply_to":62,"type":"RequestVoteRes","term":9,"res":false},"id":321}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 73, "in_reply_to": 64, "type": "RequestVoteRes", "term": 8, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":75,"in_reply_to":65,"type":"RequestVoteRes","term":11,"res":false},"id":330}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":70,"in_reply_to":59,"type":"RequestVoteRes","term":8,"res":false},"id":331}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":73,"in_reply_to":64,"type":"RequestVoteRes","term":8,"res":true},"id":334}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":59,"in_reply_to":67,"type":"RequestVoteRes","term":11,"res":false},"id":335}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":64,"in_reply_to":63,"type":"RequestVoteRes","term":11,"res":false},"id":336}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":65,"in_reply_to":68,"type":"RequestVoteRes","term":11,"res":false},"id":337}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":60,"in_reply_to":66,"type":"RequestVoteRes","term":11,"res":false},"id":340}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":61,"type":"RequestVote","term":12,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":341}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 74, "in_reply_to": 61, "type": "RequestVoteRes", "term": 8, "res": false}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 75, "type": "AppendEntries", "term": 8, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0], [["write", [1, 1]], 5]], "commit": 0}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 76, "type": "AppendEntries", "term": 8, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0], [["write", [1, 1]], 5]], "commit": 0}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 77, "type": "AppendEntries", "term": 8, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0], [["write", [1, 1]], 5]], "commit": 0}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 78, "type": "AppendEntries", "term": 8, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0], [["write", [1, 1]], 5]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":61,"in_reply_to":77,"type":"AppendEntriesRes","res":false,"term":11},"id":355}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":77,"in_reply_to":75,"type":"AppendEntriesRes","res":false,"term":11},"id":357}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":67,"in_reply_to":76,"type":"AppendEntriesRes","res":false,"term":12},"id":356}
+WARNING:root:387##########:
+node
+n1
+current term
+8
+next I
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 0, 'n5': 1}
+log
+[(('pass', None), 0), (('write', (1, 1)), 5)]
+dest
+n4
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":67,"in_reply_to":78,"type":"AppendEntriesRes","res":false,"term":11},"id":358}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 79, "type": "AppendEntries", "term": 8, "prevIndex": -1, "prevTerm": 5, "entries": [[["pass", null], 0], [["write", [1, 1]], 5]], "commit": 0}}
+WARNING:root:387##########:
+node
+n1
+current term
+8
+next I
+{'n1': 1, 'n2': 0, 'n3': 1, 'n4': 0, 'n5': 1}
+log
+[(('pass', None), 0), (('write', (1, 1)), 5)]
+dest
+n2
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 80, "type": "AppendEntries", "term": 8, "prevIndex": -1, "prevTerm": 5, "entries": [[["pass", null], 0], [["write", [1, 1]], 5]], "commit": 0}}
+WARNING:root:387##########:
+node
+n1
+current term
+8
+next I
+{'n1': 1, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 1}
+log
+[(('pass', None), 0), (('write', (1, 1)), 5)]
+dest
+n3
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 81, "type": "AppendEntries", "term": 8, "prevIndex": -1, "prevTerm": 5, "entries": [[["pass", null], 0], [["write", [1, 1]], 5]], "commit": 0}}
+WARNING:root:387##########:
+node
+n1
+current term
+8
+next I
+{'n1': 1, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0}
+log
+[(('pass', None), 0), (('write', (1, 1)), 5)]
+dest
+n5
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 82, "type": "AppendEntries", "term": 8, "prevIndex": -1, "prevTerm": 5, "entries": [[["pass", null], 0], [["write", [1, 1]], 5]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":62,"in_reply_to":79,"type":"AppendEntriesRes","res":false,"term":11},"id":363}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":78,"in_reply_to":80,"type":"AppendEntriesRes","res":false,"term":11},"id":364}
+WARNING:root:387##########:
+node
+n1
+current term
+8
+next I
+{'n1': 1, 'n2': 0, 'n3': 0, 'n4': -1, 'n5': 0}
+log
+[(('pass', None), 0), (('write', (1, 1)), 5)]
+dest
+n4
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":68,"in_reply_to":81,"type":"AppendEntriesRes","res":false,"term":12},"id":365}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 83, "type": "AppendEntries", "term": 8, "prevIndex": -2, "prevTerm": 0, "entries": [[["write", [1, 1]], 5]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":68,"in_reply_to":82,"type":"AppendEntriesRes","res":false,"term":11},"id":366}
+WARNING:root:387##########:
+node
+n1
+current term
+8
+next I
+{'n1': 1, 'n2': -1, 'n3': 0, 'n4': -1, 'n5': 0}
+log
+[(('pass', None), 0), (('write', (1, 1)), 5)]
+dest
+n2
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 84, "type": "AppendEntries", "term": 8, "prevIndex": -2, "prevTerm": 0, "entries": [[["write", [1, 1]], 5]], "commit": 0}}
+WARNING:root:387##########:
+node
+n1
+current term
+8
+next I
+{'n1': 1, 'n2': -1, 'n3': -1, 'n4': -1, 'n5': 0}
+log
+[(('pass', None), 0), (('write', (1, 1)), 5)]
+dest
+n3
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 85, "type": "AppendEntries", "term": 8, "prevIndex": -2, "prevTerm": 0, "entries": [[["write", [1, 1]], 5]], "commit": 0}}
+WARNING:root:387##########:
+node
+n1
+current term
+8
+next I
+{'n1': 1, 'n2': -1, 'n3': -1, 'n4': -1, 'n5': -1}
+log
+[(('pass', None), 0), (('write', (1, 1)), 5)]
+dest
+n5
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 86, "type": "AppendEntries", "term": 8, "prevIndex": -2, "prevTerm": 0, "entries": [[["write", [1, 1]], 5]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":63,"in_reply_to":83,"type":"AppendEntriesRes","res":false,"term":11},"id":371}
+WARNING:root:387##########:
+node
+n1
+current term
+8
+next I
+{'n1': 1, 'n2': -1, 'n3': -1, 'n4': -2, 'n5': -1}
+log
+[(('pass', None), 0), (('write', (1, 1)), 5)]
+dest
+n4
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":79,"in_reply_to":84,"type":"AppendEntriesRes","res":false,"term":11},"id":372}
+ERROR:root:fatal exception in handler
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab3/ms.py", line 27, in exitOnError
+    fn(*args)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 388, in handle
+    send(node_id, dest, type='AppendEntries', term=current_term, prevIndex = nextIndex[dest]-1,prevTerm=log[nextIndex[dest]-1][1] ,entries=log[nextIndex[dest]:],commit=commitIndex)
+IndexError: list index out of range

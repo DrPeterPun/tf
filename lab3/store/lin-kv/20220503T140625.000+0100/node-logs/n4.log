@@ -1,0 +1,34 @@
+DEBUG:root:received {"dest":"n4","body":{"type":"init","node_id":"n4","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c3","id":3}
+INFO:root:node n4 initialized
+DEBUG:root:sending {"dest": "c3", "src": "n4", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:sending {"dest": "n1", "src": "n4", "body": {"msg_id": 2, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n4"}}
+DEBUG:root:sending {"dest": "n2", "src": "n4", "body": {"msg_id": 3, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n4"}}
+DEBUG:root:sending {"dest": "n3", "src": "n4", "body": {"msg_id": 4, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n4"}}
+DEBUG:root:sending {"dest": "n4", "src": "n4", "body": {"msg_id": 5, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n4"}}
+DEBUG:root:sending {"dest": "n5", "src": "n4", "body": {"msg_id": 6, "type": "RequestVote", "term": 1, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n4"}}
+DEBUG:root:received {"dest":"n4","src":"n1","body":{"msg_id":4,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":17}
+DEBUG:root:received {"dest":"n4","src":"n2","body":{"msg_id":5,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":18}
+DEBUG:root:received {"dest":"n4","src":"n4","body":{"msg_id":5,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n4"},"id":25}
+DEBUG:root:received {"dest":"n4","src":"n3","body":{"msg_id":5,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":29}
+DEBUG:root:received {"dest":"n4","src":"n1","body":{"msg_id":7,"in_reply_to":2,"type":"RequestVoteRes","term":1,"res":false},"id":34}
+DEBUG:root:received {"dest":"n4","src":"n5","body":{"msg_id":5,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n5"},"id":36}
+DEBUG:root:received {"dest":"n4","src":"n3","body":{"msg_id":9,"in_reply_to":4,"type":"RequestVoteRes","term":1,"res":false},"id":38}
+DEBUG:root:sending {"dest": "n1", "src": "n4", "body": {"msg_id": 7, "in_reply_to": 4, "type": "AppendEntriesRes", "res": false, "term": 1}}
+DEBUG:root:sending {"dest": "n2", "src": "n4", "body": {"msg_id": 8, "in_reply_to": 5, "type": "RequestVoteRes", "term": 1, "res": true}}
+DEBUG:root:sending {"dest": "n4", "src": "n4", "body": {"msg_id": 9, "in_reply_to": 5, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n4","src":"n2","body":{"msg_id":9,"in_reply_to":3,"type":"RequestVoteRes","term":1,"res":false},"id":45}
+DEBUG:root:received {"dest":"n4","src":"n4","body":{"msg_id":9,"in_reply_to":5,"type":"RequestVoteRes","term":1,"res":false},"id":51}
+DEBUG:root:sending {"dest": "n3", "src": "n4", "body": {"msg_id": 10, "in_reply_to": 5, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n4","src":"n2","body":{"msg_id":14,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":54}
+DEBUG:root:sending {"dest": "n5", "src": "n4", "body": {"msg_id": 11, "in_reply_to": 5, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:sending {"dest": "n2", "src": "n4", "body": {"msg_id": 12, "in_reply_to": 14, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+DEBUG:root:received {"dest":"n4","src":"n5","body":{"msg_id":9,"in_reply_to":6,"type":"RequestVoteRes","term":1,"res":false},"id":62}
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1009, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 1371, in run
+    self.function(*self.args, **self.kwargs)
+TypeError: election_checker() missing 2 required positional arguments: 'min_time' and 'max_time'
+DEBUG:root:received {"dest":"n4","body":{"key":0,"type":"read","msg_id":1},"src":"c16","id":76}
+DEBUG:root:sending {"dest": "c16", "src": "n4", "body": {"msg_id": 13, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}

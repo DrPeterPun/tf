@@ -1,0 +1,217 @@
+2022-05-03 14:34:57,346{GMT}	INFO	[jepsen test runner] jepsen.core: Test version ba6f9e66132a8e6051301f5fc7fd18e877f6bddb (plus uncommitted changes)
+2022-05-03 14:34:57,346{GMT}	INFO	[jepsen test runner] jepsen.core: Command line:
+lein run test --bin raft.py --workload lin-kv --concurrency 4n --time-limit 2
+2022-05-03 14:34:57,395{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+{:remote #jepsen.control.SSHRemote{:session nil}
+ :log-net-send false
+ :node-count nil
+ :max-txn-length 4
+ :concurrency 20
+ :db
+ #object[maelstrom.db$db$reify__16747
+         "0xcf0e8b4"
+         "maelstrom.db$db$reify__16747@cf0e8b4"]
+ :max-writes-per-key 16
+ :leave-db-running? false
+ :name "lin-kv"
+ :logging-json? false
+ :net-journal #object[clojure.lang.Atom "0x51a7ee4e" {:status :ready, :val []}]
+ :start-time
+ #object[org.joda.time.DateTime "0x424c8ebe" "2022-05-03T14:34:57.000+01:00"]
+ :nemesis-interval 10
+ :net
+ #object[maelstrom.net$jepsen_adapter$reify__15560
+         "0x7aafac17"
+         "maelstrom.net$jepsen_adapter$reify__15560@7aafac17"]
+ :client
+ #object[maelstrom.workload.lin_kv$client$reify__17524
+         "0x3054551f"
+         "maelstrom.workload.lin_kv$client$reify__17524@3054551f"]
+ :barrier
+ #object[java.util.concurrent.CyclicBarrier
+         "0x6b8cfbeb"
+         "java.util.concurrent.CyclicBarrier@6b8cfbeb"]
+ :log-stderr false
+ :pure-generators true
+ :ssh {:dummy? true}
+ :rate 5
+ :checker
+ #object[jepsen.checker$compose$reify__8612
+         "0x4603845b"
+         "jepsen.checker$compose$reify__8612@4603845b"]
+ :argv
+ ("test"
+  "--bin"
+  "raft.py"
+  "--workload"
+  "lin-kv"
+  "--concurrency"
+  "4n"
+  "--time-limit"
+  "2")
+ :nemesis
+ (jepsen.nemesis.ReflCompose
+  {:fm {:start-partition 0,
+        :stop-partition 0,
+        :kill 1,
+        :start 1,
+        :pause 1,
+        :resume 1},
+   :nemeses [#unprintable "jepsen.nemesis.combined$partition_nemesis$reify__17019@414b5798"
+             #unprintable "jepsen.nemesis.combined$db_nemesis$reify__17000@53251e03"]})
+ :active-histories
+ #object[clojure.lang.Atom "0x5ffae42f" {:status :ready, :val #{}}]
+ :nodes ["n1" "n2" "n3" "n4" "n5"]
+ :test-count 1
+ :latency {:mean 0, :dist :constant}
+ :bin "raft.py"
+ :generator
+ (jepsen.generator.TimeLimit
+  {:limit 2000000000,
+   :cutoff nil,
+   :gen (jepsen.generator.Any
+         {:gens [(jepsen.generator.OnThreads {:f #{:nemesis}, :gen nil})
+                 (jepsen.generator.OnThreads
+                  {:f #object[clojure.core$complement$fn__5654
+                              "0x3eff5c32"
+                              "clojure.core$complement$fn__5654@3eff5c32"],
+                   :gen (jepsen.generator.Stagger
+                         {:dt 400000000,
+                          :next-time nil,
+                          :gen (jepsen.generator.OnThreads
+                                {:f #object[clojure.core$complement$fn__5654
+                                            "0x79d538c1"
+                                            "clojure.core$complement$fn__5654@79d538c1"],
+                                 :gen (jepsen.independent.ConcurrentGenerator
+                                       {:n 10,
+                                        :fgen #object[jepsen.tests.linearizable_register$test$fn__17324
+                                                      "0x31e08c61"
+                                                      "jepsen.tests.linearizable_register$test$fn__17324@31e08c61"],
+                                        :group->threads nil,
+                                        :thread->group nil,
+                                        :keys (0 1 2 3 4 5 6 7 ...),
+                                        :gens nil})})})})]})})
+ :log-net-recv false
+ :os
+ #object[jepsen.os$reify__2490 "0x2db15764" "jepsen.os$reify__2490@2db15764"]
+ :time-limit 2
+ :workload :lin-kv
+ :consistency-models [:strict-serializable]
+ :topology :grid}
+
+2022-05-03 14:34:57,402{GMT}	INFO	[jepsen test runner] jepsen.db: Tearing down DB
+2022-05-03 14:34:57,404{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up DB
+2022-05-03 14:34:57,406{GMT}	INFO	[jepsen node n3] maelstrom.db: Setting up n3
+2022-05-03 14:34:57,406{GMT}	INFO	[jepsen node n5] maelstrom.db: Setting up n5
+2022-05-03 14:34:57,406{GMT}	INFO	[jepsen node n2] maelstrom.db: Setting up n2
+2022-05-03 14:34:57,407{GMT}	INFO	[jepsen node n4] maelstrom.db: Setting up n4
+2022-05-03 14:34:57,407{GMT}	INFO	[jepsen node n5] maelstrom.process: launching raft.py nil
+2022-05-03 14:34:57,407{GMT}	INFO	[jepsen node n3] maelstrom.process: launching raft.py nil
+2022-05-03 14:34:57,407{GMT}	INFO	[jepsen node n4] maelstrom.process: launching raft.py nil
+2022-05-03 14:34:57,407{GMT}	INFO	[jepsen node n2] maelstrom.process: launching raft.py nil
+2022-05-03 14:34:57,410{GMT}	INFO	[jepsen node n1] maelstrom.service: Starting services: (lin-kv lin-tso lww-kv seq-kv)
+2022-05-03 14:34:57,447{GMT}	INFO	[jepsen node n1] maelstrom.db: Setting up n1
+2022-05-03 14:34:57,447{GMT}	INFO	[jepsen node n1] maelstrom.process: launching raft.py nil
+2022-05-03 14:34:57,498{GMT}	INFO	[jepsen test runner] jepsen.core: Relative time begins now
+2022-05-03 14:34:57,565{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:invoke	:write	[0 1]
+2022-05-03 14:34:57,635{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	[0 nil]
+2022-05-03 14:34:57,644{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-05-03 14:34:57,791{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:invoke	:read	[0 nil]
+2022-05-03 14:34:57,793{GMT}	INFO	[jepsen worker 4] jepsen.util: 4	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-05-03 14:34:58,041{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:invoke	:cas	[1 [2 2]]
+2022-05-03 14:34:58,097{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[0 nil]
+2022-05-03 14:34:58,099{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-05-03 14:34:58,142{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:invoke	:write	[1 2]
+2022-05-03 14:34:58,145{GMT}	INFO	[jepsen worker 12] jepsen.util: 12	:info	:write	[1 2]	[:unknown "Not Leader"]
+2022-05-03 14:34:58,476{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:invoke	:cas	[1 [4 2]]
+2022-05-03 14:34:58,478{GMT}	INFO	[jepsen worker 17] jepsen.util: 17	:info	:cas	[1 [4 2]]	[:unknown "Not Leader"]
+2022-05-03 14:34:58,566{GMT}	INFO	[jepsen worker 5] jepsen.util: 5	:info	:write	[0 1]	:net-timeout
+2022-05-03 14:34:58,745{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:invoke	:cas	[1 [1 4]]
+2022-05-03 14:34:58,747{GMT}	INFO	[jepsen worker 14] jepsen.util: 14	:info	:cas	[1 [1 4]]	[:unknown "Not Leader"]
+2022-05-03 14:34:58,794{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:invoke	:read	[0 nil]
+2022-05-03 14:34:58,797{GMT}	INFO	[jepsen worker 1] jepsen.util: 1	:fail	:read	[0 nil]	[:unknown "Not Leader"]
+2022-05-03 14:34:58,883{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:invoke	:cas	[1 [3 4]]
+2022-05-03 14:34:58,886{GMT}	INFO	[jepsen worker 19] jepsen.util: 19	:info	:cas	[1 [3 4]]	[:unknown "Not Leader"]
+2022-05-03 14:34:59,042{GMT}	INFO	[jepsen worker 18] jepsen.util: 18	:info	:cas	[1 [2 2]]	:net-timeout
+2022-05-03 14:34:59,225{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:invoke	:cas	[0 [2 1]]
+2022-05-03 14:35:00,227{GMT}	INFO	[jepsen worker 8] jepsen.util: 8	:info	:cas	[0 [2 1]]	:net-timeout
+2022-05-03 14:35:00,232{GMT}	INFO	[jepsen node n2] maelstrom.db: Tearing down n2
+2022-05-03 14:35:00,232{GMT}	INFO	[jepsen node n1] maelstrom.db: Tearing down n1
+2022-05-03 14:35:00,232{GMT}	INFO	[jepsen node n3] maelstrom.db: Tearing down n3
+2022-05-03 14:35:00,233{GMT}	INFO	[jepsen node n4] maelstrom.db: Tearing down n4
+2022-05-03 14:35:00,233{GMT}	INFO	[jepsen node n5] maelstrom.db: Tearing down n5
+2022-05-03 14:35:00,581{GMT}	WARN	[main] jepsen.core: Test crashed!
+clojure.lang.ExceptionInfo: Node n1 crashed with exit status 1. Before crashing, it wrote to STDOUT:
+
+{"dest": "c2", "src": "n1", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+{"dest": "n2", "src": "n1", "body": {"msg_id": 2, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+{"dest": "n3", "src": "n1", "body": {"msg_id": 3, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+{"dest": "n4", "src": "n1", "body": {"msg_id": 4, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+{"dest": "n5", "src": "n1", "body": {"msg_id": 5, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+{"dest": "n4", "src": "n1", "body": {"msg_id": 6, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": true}}
+{"dest": "n2", "src": "n1", "body": {"msg_id": 7, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": false}}
+{"dest": "n3", "src": "n1", "body": {"msg_id": 8, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": false}}
+{"dest": "n5", "src": "n1", "body": {"msg_id": 9, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": false}}
+{"dest": "n3", "src": "n1", "body": {"msg_id": 10, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+
+And to STDERR:
+
+DEBUG:root:received {"dest":"n1","body":{"type":"init","node_id":"n1","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c2","id":2}
+INFO:root:node n1 initialized
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n4"},"id":9}
+DEBUG:root:sending {"dest": "c2", "src": "n1", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":8}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":10}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n5"},"id":33}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 2, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 3, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 4, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 5, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 6, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": true}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 7, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 8, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 9, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":11,"in_reply_to":3,"type":"AppendEntriesRes","res":false,"term":1},"id":51}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":11,"in_reply_to":5,"type":"AppendEntriesRes","res":false,"term":1},"id":55}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":11,"in_reply_to":4,"type":"AppendEntriesRes","res":false,"term":1},"id":56}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 10, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+ERROR:root:fatal exception in handler
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab3/ms.py", line 27, in exitOnError
+    fn(*args)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 392, in handle
+    majority = len(node_ids())//2+1
+TypeError: 'list' object is not callable
+
+Full STDERR logs are available in /home/peter/Documents/tf/lab3/store/lin-kv/20220503T143457.000+0100/node-logs/n1.log
+	at slingshot.support$stack_trace.invoke(support.clj:201)
+	at maelstrom.process$stop_node_BANG_.invokeStatic(process.clj:239)
+	at maelstrom.process$stop_node_BANG_.invoke(process.clj:217)
+	at maelstrom.db$db$reify__16747.teardown_BANG_(db.clj:75)
+	at jepsen.db$fn__3285$G__3281__3289.invoke(db.clj:11)
+	at jepsen.db$fn__3285$G__3280__3294.invoke(db.clj:11)
+	at clojure.core$partial$fn__5824.invoke(core.clj:2625)
+	at jepsen.control$on_nodes$fn__3165.invoke(control.clj:452)
+	at clojure.lang.AFn.applyToHelper(AFn.java:154)
+	at clojure.lang.AFn.applyTo(AFn.java:144)
+	at clojure.core$apply.invokeStatic(core.clj:665)
+	at clojure.core$with_bindings_STAR_.invokeStatic(core.clj:1973)
+	at clojure.core$with_bindings_STAR_.doInvoke(core.clj:1973)
+	at clojure.lang.RestFn.applyTo(RestFn.java:142)
+	at clojure.core$apply.invokeStatic(core.clj:669)
+	at clojure.core$bound_fn_STAR_$fn__5734.doInvoke(core.clj:2003)
+	at clojure.lang.RestFn.invoke(RestFn.java:408)
+	at dom_top.core$real_pmap_helper$build_thread__213$fn__214.invoke(core.clj:146)
+	at clojure.lang.AFn.applyToHelper(AFn.java:152)
+	at clojure.lang.AFn.applyTo(AFn.java:144)
+	at clojure.core$apply.invokeStatic(core.clj:665)
+	at clojure.core$with_bindings_STAR_.invokeStatic(core.clj:1973)
+	at clojure.core$with_bindings_STAR_.doInvoke(core.clj:1973)
+	at clojure.lang.RestFn.invoke(RestFn.java:425)
+	at clojure.lang.AFn.applyToHelper(AFn.java:156)
+	at clojure.lang.RestFn.applyTo(RestFn.java:132)
+	at clojure.core$apply.invokeStatic(core.clj:669)
+	at clojure.core$bound_fn_STAR_$fn__5734.doInvoke(core.clj:2003)
+	at clojure.lang.RestFn.invoke(RestFn.java:397)
+	at clojure.lang.AFn.run(AFn.java:22)
+	at java.base/java.lang.Thread.run(Thread.java:833)

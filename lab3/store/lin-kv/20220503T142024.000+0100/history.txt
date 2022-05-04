@@ -1,0 +1,20 @@
+2	:invoke	:read	[0 nil]
+2	:fail	:read	[0 nil]	[:unknown Not Leader]
+4	:invoke	:read	[0 nil]
+4	:fail	:read	[0 nil]	[:unknown Not Leader]
+10	:invoke	:cas	[1 [0 2]]
+4	:invoke	:read	[0 nil]
+4	:fail	:read	[0 nil]	[:unknown Not Leader]
+1	:invoke	:read	[0 nil]
+1	:fail	:read	[0 nil]	[:unknown Not Leader]
+15	:invoke	:write	[1 0]
+13	:invoke	:write	[1 2]
+11	:invoke	:write	[1 4]
+11	:info	:write	[1 4]	[:unknown Not Leader]
+4	:invoke	:read	[0 nil]
+4	:fail	:read	[0 nil]	[:unknown Not Leader]
+10	:info	:cas	[1 [0 2]]	:net-timeout
+0	:invoke	:read	[0 nil]
+0	:fail	:read	[0 nil]	[:unknown Invalid Key]
+15	:info	:write	[1 0]	:net-timeout
+13	:info	:write	[1 2]	:net-timeout

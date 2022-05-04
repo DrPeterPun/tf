@@ -1,0 +1,1759 @@
+DEBUG:root:received {"dest":"n1","body":{"type":"init","node_id":"n1","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c2","id":2}
+INFO:root:node n1 initialized
+DEBUG:root:sending {"dest": "c2", "src": "n1", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+INFO:root:became leader
+log
+[(('pass', None), 0)]
+match index
+{'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0}
+
+INFO:root:vote ended, new leader is
+n1
+
+INFO:root:sending HB
+
+INFO:root:HBdest
+n2
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 2, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n3
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 3, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n4
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 4, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n5
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 5, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":9}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 6, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": true}}
+INFO:root:election started and voted vor
+n2
+at time
+1651668038237542065
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":7,"in_reply_to":2,"type":"AppendEntriesRes","res":false,"term":1},"id":17}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":2,"in_reply_to":3,"type":"AppendEntriesRes","res":true,"term":0,"next":1,"commit":0},"id":21}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 0, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+dest
+n2
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 7, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":3,"in_reply_to":4,"type":"AppendEntriesRes","res":false,"term":1},"id":25}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 0, 'n3': 1, 'n4': 0, 'n5': 1}
+log
+[(('pass', None), 0)]
+dest
+n4
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 8, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":9,"in_reply_to":7,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":28}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":3,"in_reply_to":5,"type":"AppendEntriesRes","res":false,"term":1},"id":29}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 2, 'n3': 1, 'n4': 0, 'n5': 0}
+log
+[(('pass', None), 0)]
+dest
+n5
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 9, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":4,"in_reply_to":8,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":32}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":4,"in_reply_to":9,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":33}
+DEBUG:root:received {"dest":"n1","body":{"key":0,"type":"read","msg_id":1},"src":"c10","id":34}
+DEBUG:root:sending {"dest": "c10", "src": "n1", "body": {"msg_id": 10, "in_reply_to": 1, "type": "error", "code": 20, "text": "Invalid Key"}}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+2
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 11, "type": "RequestVote", "term": 2, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 12, "type": "RequestVote", "term": 2, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 13, "type": "RequestVote", "term": 2, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 14, "type": "RequestVote", "term": 2, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 15, "type": "RequestVote", "term": 2, "prevLogIndex": 0, "lastLogTerm": 0, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":11,"type":"RequestVote","term":2,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n1"},"id":36}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038342267217
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 16, "in_reply_to": 11, "type": "RequestVoteRes", "term": 2, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":5,"type":"RequestVote","term":2,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n4"},"id":38}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":4,"type":"RequestVote","term":2,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n3"},"id":40}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 17, "in_reply_to": 5, "type": "RequestVoteRes", "term": 2, "res": true}}
+INFO:root:election started and voted vor
+n4
+at time
+1651668038343009167
+
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":16,"in_reply_to":11,"type":"RequestVoteRes","term":2,"res":true},"id":47}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 18, "in_reply_to": 4, "type": "RequestVoteRes", "term": 2, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":10,"in_reply_to":12,"type":"RequestVoteRes","term":1,"res":false},"id":52}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":5,"type":"RequestVote","term":2,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n5"},"id":55}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":10,"in_reply_to":14,"type":"RequestVoteRes","term":2,"res":false},"id":57}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":9,"in_reply_to":13,"type":"RequestVoteRes","term":2,"res":true},"id":60}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 19, "in_reply_to": 5, "type": "RequestVoteRes", "term": 2, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":10,"in_reply_to":15,"type":"RequestVoteRes","term":2,"res":false},"id":63}
+DEBUG:root:received {"dest":"n1","body":{"key":0,"from":4,"to":2,"type":"cas","msg_id":1},"src":"c11","id":76}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 20, "type": "AppendEntries", "term": 2, "entries": [[["cas", [0, [4, 2]]], 2]], "prevIndex": 0, "prevTerm": 0, "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":13,"in_reply_to":20,"type":"AppendEntriesRes","res":true,"term":2,"next":2,"commit":0},"id":78}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+3
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 21, "type": "RequestVote", "term": 3, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 22, "type": "RequestVote", "term": 3, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 23, "type": "RequestVote", "term": 3, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 24, "type": "RequestVote", "term": 3, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 25, "type": "RequestVote", "term": 3, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":21,"type":"RequestVote","term":3,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":79}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038447333370
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 26, "in_reply_to": 21, "type": "RequestVoteRes", "term": 3, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":14,"type":"RequestVote","term":3,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":82}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":14,"in_reply_to":22,"type":"RequestVoteRes","term":2,"res":false},"id":85}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 27, "in_reply_to": 14, "type": "RequestVoteRes", "term": 3, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038451287403
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":14,"type":"RequestVote","term":3,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n5"},"id":83}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":26,"in_reply_to":21,"type":"RequestVoteRes","term":3,"res":true},"id":91}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":19,"in_reply_to":23,"type":"RequestVoteRes","term":3,"res":true},"id":92}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":15,"type":"RequestVote","term":3,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n2"},"id":94}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 28, "in_reply_to": 14, "type": "RequestVoteRes", "term": 3, "res": false}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 29, "in_reply_to": 15, "type": "RequestVoteRes", "term": 3, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":14,"in_reply_to":24,"type":"RequestVoteRes","term":3,"res":false},"id":103}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":19,"in_reply_to":25,"type":"RequestVoteRes","term":3,"res":true},"id":108}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":18,"type":"RequestVote","term":3,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n4"},"id":116}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 30, "in_reply_to": 18, "type": "RequestVoteRes", "term": 3, "res": false}}
+INFO:root:sending HB
+
+INFO:root:HBdest
+n2
+nextIndex
+{'n1': 1, 'n2': 2, 'n3': 2, 'n4': 2, 'n5': 2}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2)]
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 31, "type": "AppendEntries", "term": 3, "prevIndex": 1, "prevTerm": 2, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n3
+nextIndex
+{'n1': 1, 'n2': 2, 'n3': 2, 'n4': 2, 'n5': 2}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2)]
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 32, "type": "AppendEntries", "term": 3, "prevIndex": 1, "prevTerm": 2, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n4
+nextIndex
+{'n1': 1, 'n2': 2, 'n3': 2, 'n4': 2, 'n5': 2}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2)]
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 33, "type": "AppendEntries", "term": 3, "prevIndex": 1, "prevTerm": 2, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n5
+nextIndex
+{'n1': 1, 'n2': 2, 'n3': 2, 'n4': 2, 'n5': 2}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2)]
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 34, "type": "AppendEntries", "term": 3, "prevIndex": 1, "prevTerm": 2, "entries": [], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":24,"in_reply_to":31,"type":"AppendEntriesRes","res":false,"term":3},"id":133}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":24,"in_reply_to":32,"type":"AppendEntriesRes","res":true,"term":3,"next":2,"commit":0},"id":134}
+INFO:root:387##########:
+node
+n1
+current term
+3
+next I
+{'n1': 1, 'n2': 1, 'n3': 2, 'n4': 2, 'n5': 2}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2)]
+dest
+n2
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 35, "type": "AppendEntries", "term": 3, "prevIndex": 0, "prevTerm": 0, "entries": [[["cas", [0, [4, 2]]], 2]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":24,"in_reply_to":33,"type":"AppendEntriesRes","res":false,"term":3},"id":135}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":24,"in_reply_to":34,"type":"AppendEntriesRes","res":false,"term":3},"id":136}
+INFO:root:387##########:
+node
+n1
+current term
+3
+next I
+{'n1': 1, 'n2': 1, 'n3': 2, 'n4': 1, 'n5': 2}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2)]
+dest
+n4
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 36, "type": "AppendEntries", "term": 3, "prevIndex": 0, "prevTerm": 0, "entries": [[["cas", [0, [4, 2]]], 2]], "commit": 0}}
+INFO:root:387##########:
+node
+n1
+current term
+3
+next I
+{'n1': 1, 'n2': 1, 'n3': 2, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2)]
+dest
+n5
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 37, "type": "AppendEntries", "term": 3, "prevIndex": 0, "prevTerm": 0, "entries": [[["cas", [0, [4, 2]]], 2]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":25,"in_reply_to":35,"type":"AppendEntriesRes","res":true,"term":3,"next":3,"commit":0},"id":140}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":25,"in_reply_to":36,"type":"AppendEntriesRes","res":true,"term":3,"next":3,"commit":0},"id":141}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":25,"in_reply_to":37,"type":"AppendEntriesRes","res":true,"term":3,"next":3,"commit":0},"id":142}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+4
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 38, "type": "RequestVote", "term": 4, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 39, "type": "RequestVote", "term": 4, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 40, "type": "RequestVote", "term": 4, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 41, "type": "RequestVote", "term": 4, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 42, "type": "RequestVote", "term": 4, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":38,"type":"RequestVote","term":4,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":143}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038555696997
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 43, "in_reply_to": 38, "type": "RequestVoteRes", "term": 4, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":25,"type":"RequestVote","term":4,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":146}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":26,"in_reply_to":39,"type":"RequestVoteRes","term":3,"res":false},"id":150}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":43,"in_reply_to":38,"type":"RequestVoteRes","term":4,"res":true},"id":155}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 44, "in_reply_to": 25, "type": "RequestVoteRes", "term": 4, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038561146842
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":27,"in_reply_to":42,"type":"RequestVoteRes","term":3,"res":false},"id":157}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":30,"in_reply_to":40,"type":"RequestVoteRes","term":4,"res":true},"id":158}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":28,"type":"RequestVote","term":4,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":159}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 45, "in_reply_to": 28, "type": "RequestVoteRes", "term": 4, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":28,"type":"RequestVote","term":4,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":162}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":26,"type":"RequestVote","term":4,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":163}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 46, "in_reply_to": 28, "type": "RequestVoteRes", "term": 4, "res": false}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 47, "in_reply_to": 26, "type": "RequestVoteRes", "term": 4, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":31,"in_reply_to":41,"type":"RequestVoteRes","term":4,"res":false},"id":175}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+5
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 48, "type": "RequestVote", "term": 5, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 49, "type": "RequestVote", "term": 5, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 50, "type": "RequestVote", "term": 5, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 51, "type": "RequestVote", "term": 5, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 52, "type": "RequestVote", "term": 5, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":48,"type":"RequestVote","term":5,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":189}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038577607428
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 53, "in_reply_to": 48, "type": "RequestVoteRes", "term": 5, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":53,"in_reply_to":48,"type":"RequestVoteRes","term":5,"res":true},"id":197}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":36,"in_reply_to":49,"type":"RequestVoteRes","term":4,"res":false},"id":198}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":35,"in_reply_to":50,"type":"RequestVoteRes","term":5,"res":true},"id":199}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":36,"in_reply_to":52,"type":"RequestVoteRes","term":4,"res":false},"id":200}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":36,"in_reply_to":51,"type":"RequestVoteRes","term":4,"res":false},"id":202}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":36,"type":"RequestVote","term":6,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":203}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 54, "in_reply_to": 36, "type": "RequestVoteRes", "term": 6, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038606861988
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":38,"type":"RequestVote","term":5,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":213}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 55, "in_reply_to": 38, "type": "RequestVoteRes", "term": 6, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038630710506
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+7
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 56, "type": "RequestVote", "term": 7, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 57, "type": "RequestVote", "term": 7, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 58, "type": "RequestVote", "term": 7, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 59, "type": "RequestVote", "term": 7, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 60, "type": "RequestVote", "term": 7, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":56,"type":"RequestVote","term":7,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":223}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038656702123
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 61, "in_reply_to": 56, "type": "RequestVoteRes", "term": 7, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":61,"in_reply_to":56,"type":"RequestVoteRes","term":7,"res":true},"id":228}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":39,"in_reply_to":57,"type":"RequestVoteRes","term":4,"res":false},"id":229}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":43,"in_reply_to":58,"type":"RequestVoteRes","term":7,"res":true},"id":230}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":44,"in_reply_to":59,"type":"RequestVoteRes","term":5,"res":false},"id":231}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":39,"in_reply_to":60,"type":"RequestVoteRes","term":4,"res":false},"id":232}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+8
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 62, "type": "RequestVote", "term": 8, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 63, "type": "RequestVote", "term": 8, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 64, "type": "RequestVote", "term": 8, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 65, "type": "RequestVote", "term": 8, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 66, "type": "RequestVote", "term": 8, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":62,"type":"RequestVote","term":8,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":233}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038665396911
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 67, "in_reply_to": 62, "type": "RequestVoteRes", "term": 8, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":40,"in_reply_to":63,"type":"RequestVoteRes","term":4,"res":false},"id":237}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":44,"in_reply_to":64,"type":"RequestVoteRes","term":8,"res":true},"id":239}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":45,"in_reply_to":65,"type":"RequestVoteRes","term":5,"res":false},"id":240}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":67,"in_reply_to":62,"type":"RequestVoteRes","term":8,"res":true},"id":241}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":40,"in_reply_to":66,"type":"RequestVoteRes","term":4,"res":false},"id":242}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":45,"type":"RequestVote","term":9,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":243}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 68, "in_reply_to": 45, "type": "RequestVoteRes", "term": 9, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038672693341
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":41,"type":"RequestVote","term":5,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":246}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":41,"type":"RequestVote","term":5,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":254}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 69, "in_reply_to": 41, "type": "RequestVoteRes", "term": 9, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038681685417
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 70, "in_reply_to": 41, "type": "RequestVoteRes", "term": 9, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038682348658
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":53,"type":"RequestVote","term":10,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":268}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":49,"type":"RequestVote","term":6,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":270}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 71, "in_reply_to": 53, "type": "RequestVoteRes", "term": 10, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038694110702
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 72, "in_reply_to": 49, "type": "RequestVoteRes", "term": 10, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038695698101
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":51,"type":"RequestVote","term":6,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":288}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 73, "in_reply_to": 51, "type": "RequestVoteRes", "term": 10, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038698283246
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":51,"type":"RequestVote","term":6,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":299}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 74, "in_reply_to": 51, "type": "RequestVoteRes", "term": 10, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038702536356
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":62,"type":"RequestVote","term":11,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":312}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 75, "in_reply_to": 62, "type": "RequestVoteRes", "term": 11, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038706372449
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+12
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 76, "type": "RequestVote", "term": 12, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 77, "type": "RequestVote", "term": 12, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 78, "type": "RequestVote", "term": 12, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 79, "type": "RequestVote", "term": 12, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 80, "type": "RequestVote", "term": 12, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":76,"type":"RequestVote","term":12,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":323}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038712715764
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 81, "in_reply_to": 76, "type": "RequestVoteRes", "term": 12, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":59,"in_reply_to":77,"type":"RequestVoteRes","term":6,"res":false},"id":328}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":59,"in_reply_to":79,"type":"RequestVoteRes","term":6,"res":false},"id":329}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":81,"in_reply_to":76,"type":"RequestVoteRes","term":12,"res":true},"id":330}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":59,"in_reply_to":80,"type":"RequestVoteRes","term":6,"res":false},"id":331}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":68,"in_reply_to":78,"type":"RequestVoteRes","term":12,"res":true},"id":332}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":60,"type":"RequestVote","term":7,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":333}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 82, "in_reply_to": 60, "type": "RequestVoteRes", "term": 12, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038726318438
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":60,"type":"RequestVote","term":7,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":341}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 83, "in_reply_to": 60, "type": "RequestVoteRes", "term": 12, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038731479156
+
+INFO:root:sending HB
+
+INFO:root:HBdest
+n2
+nextIndex
+{'n1': 1, 'n2': 3, 'n3': 2, 'n4': 3, 'n5': 3}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2)]
+
+Exception in thread Thread-7:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1009, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 1371, in run
+    self.function(*self.args, **self.kwargs)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 133, in recursive_heartbeats
+    heartbeat(dest)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 122, in heartbeat
+    prevTerm=log[nextIndex[dest]-1][1]
+IndexError: list index out of range
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":71,"type":"RequestVote","term":13,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":355}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 84, "in_reply_to": 71, "type": "RequestVoteRes", "term": 13, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038760882817
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":77,"type":"RequestVote","term":14,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":365}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 85, "in_reply_to": 77, "type": "RequestVoteRes", "term": 14, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038768998659
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+15
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 86, "type": "RequestVote", "term": 15, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 87, "type": "RequestVote", "term": 15, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 88, "type": "RequestVote", "term": 15, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 89, "type": "RequestVote", "term": 15, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 90, "type": "RequestVote", "term": 15, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":86,"type":"RequestVote","term":15,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":375}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038774943610
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 91, "in_reply_to": 86, "type": "RequestVoteRes", "term": 15, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":91,"in_reply_to":86,"type":"RequestVoteRes","term":15,"res":true},"id":380}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":69,"in_reply_to":87,"type":"RequestVoteRes","term":7,"res":false},"id":381}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":70,"in_reply_to":89,"type":"RequestVoteRes","term":7,"res":false},"id":382}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":64,"in_reply_to":90,"type":"RequestVoteRes","term":7,"res":false},"id":383}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":83,"in_reply_to":88,"type":"RequestVoteRes","term":15,"res":true},"id":384}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":70,"type":"RequestVote","term":8,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":385}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 92, "in_reply_to": 70, "type": "RequestVoteRes", "term": 15, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038781934859
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":71,"type":"RequestVote","term":8,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":392}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 93, "in_reply_to": 71, "type": "RequestVoteRes", "term": 15, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038783307870
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":67,"type":"RequestVote","term":9,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":405}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 94, "in_reply_to": 67, "type": "RequestVoteRes", "term": 15, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038793143559
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+16
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 95, "type": "RequestVote", "term": 16, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 96, "type": "RequestVote", "term": 16, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 97, "type": "RequestVote", "term": 16, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 98, "type": "RequestVote", "term": 16, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 99, "type": "RequestVote", "term": 16, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":95,"type":"RequestVote","term":16,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":415}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038795884160
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 100, "in_reply_to": 95, "type": "RequestVoteRes", "term": 16, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":100,"in_reply_to":95,"type":"RequestVoteRes","term":16,"res":true},"id":420}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":79,"in_reply_to":98,"type":"RequestVoteRes","term":8,"res":false},"id":421}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":78,"in_reply_to":96,"type":"RequestVoteRes","term":8,"res":false},"id":422}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":87,"in_reply_to":97,"type":"RequestVoteRes","term":16,"res":true},"id":423}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":73,"in_reply_to":99,"type":"RequestVoteRes","term":9,"res":false},"id":424}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":80,"type":"RequestVote","term":9,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":425}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 101, "in_reply_to": 80, "type": "RequestVoteRes", "term": 16, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038801615944
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":80,"type":"RequestVote","term":10,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":435}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 102, "in_reply_to": 80, "type": "RequestVoteRes", "term": 16, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038805769599
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":75,"type":"RequestVote","term":10,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":438}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 103, "in_reply_to": 75, "type": "RequestVoteRes", "term": 16, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038806546589
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+17
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 104, "type": "RequestVote", "term": 17, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 105, "type": "RequestVote", "term": 17, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 106, "type": "RequestVote", "term": 17, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 107, "type": "RequestVote", "term": 17, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 108, "type": "RequestVote", "term": 17, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":104,"type":"RequestVote","term":17,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":452}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+18
+
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038807574788
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 109, "in_reply_to": 104, "type": "RequestVoteRes", "term": 18, "res": true}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 110, "type": "RequestVote", "term": 18, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":87,"in_reply_to":105,"type":"RequestVoteRes","term":10,"res":false},"id":459}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 111, "type": "RequestVote", "term": 18, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":91,"in_reply_to":106,"type":"RequestVoteRes","term":17,"res":true},"id":461}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":88,"in_reply_to":107,"type":"RequestVoteRes","term":10,"res":false},"id":462}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":109,"in_reply_to":104,"type":"RequestVoteRes","term":18,"res":true},"id":463}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 112, "type": "RequestVote", "term": 18, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":82,"in_reply_to":108,"type":"RequestVoteRes","term":10,"res":false},"id":464}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":110,"type":"RequestVote","term":18,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":465}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 113, "type": "RequestVote", "term": 18, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":88,"in_reply_to":111,"type":"RequestVoteRes","term":10,"res":false},"id":468}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038809202755
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 114, "type": "RequestVote", "term": 18, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":92,"in_reply_to":112,"type":"RequestVoteRes","term":18,"res":true},"id":469}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 115, "in_reply_to": 110, "type": "RequestVoteRes", "term": 18, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":89,"in_reply_to":113,"type":"RequestVoteRes","term":10,"res":false},"id":472}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":115,"in_reply_to":110,"type":"RequestVoteRes","term":18,"res":true},"id":473}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":83,"in_reply_to":114,"type":"RequestVoteRes","term":10,"res":false},"id":474}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":84,"type":"RequestVote","term":11,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":475}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 116, "in_reply_to": 84, "type": "RequestVoteRes", "term": 18, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038813210563
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":94,"type":"RequestVote","term":19,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":485}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 117, "in_reply_to": 94, "type": "RequestVoteRes", "term": 19, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038816663241
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":91,"type":"RequestVote","term":12,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":495}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 118, "in_reply_to": 91, "type": "RequestVoteRes", "term": 19, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038832437019
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":93,"type":"RequestVote","term":11,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":505}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":92,"type":"RequestVote","term":13,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":508}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 119, "in_reply_to": 93, "type": "RequestVoteRes", "term": 19, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038834745521
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 120, "in_reply_to": 92, "type": "RequestVoteRes", "term": 19, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038834915224
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+20
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 121, "type": "RequestVote", "term": 20, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 122, "type": "RequestVote", "term": 20, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 123, "type": "RequestVote", "term": 20, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 124, "type": "RequestVote", "term": 20, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 125, "type": "RequestVote", "term": 20, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":121,"type":"RequestVote","term":20,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":525}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038864438866
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 126, "in_reply_to": 121, "type": "RequestVoteRes", "term": 20, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":99,"in_reply_to":122,"type":"RequestVoteRes","term":13,"res":false},"id":530}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":126,"in_reply_to":121,"type":"RequestVoteRes","term":20,"res":true},"id":531}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":103,"in_reply_to":123,"type":"RequestVoteRes","term":20,"res":true},"id":532}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":100,"in_reply_to":124,"type":"RequestVoteRes","term":13,"res":false},"id":533}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":99,"in_reply_to":125,"type":"RequestVoteRes","term":13,"res":false},"id":534}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+21
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 127, "type": "RequestVote", "term": 21, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 128, "type": "RequestVote", "term": 21, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 129, "type": "RequestVote", "term": 21, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 130, "type": "RequestVote", "term": 21, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 131, "type": "RequestVote", "term": 21, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":127,"type":"RequestVote","term":21,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":535}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038871975383
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 132, "in_reply_to": 127, "type": "RequestVoteRes", "term": 21, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":132,"in_reply_to":127,"type":"RequestVoteRes","term":21,"res":true},"id":540}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":104,"in_reply_to":129,"type":"RequestVoteRes","term":21,"res":true},"id":541}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":100,"in_reply_to":128,"type":"RequestVoteRes","term":13,"res":false},"id":542}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":100,"in_reply_to":131,"type":"RequestVoteRes","term":13,"res":false},"id":543}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":101,"in_reply_to":130,"type":"RequestVoteRes","term":13,"res":false},"id":544}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":102,"type":"RequestVote","term":14,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":545}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 133, "in_reply_to": 102, "type": "RequestVoteRes", "term": 21, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038877602849
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":105,"type":"RequestVote","term":22,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":550}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 134, "in_reply_to": 105, "type": "RequestVoteRes", "term": 22, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038880135118
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":103,"type":"RequestVote","term":14,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":564}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 135, "in_reply_to": 103, "type": "RequestVoteRes", "term": 22, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038887022129
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":103,"type":"RequestVote","term":15,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":569}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 136, "in_reply_to": 103, "type": "RequestVoteRes", "term": 22, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038889530993
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":110,"type":"RequestVote","term":15,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":579}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 137, "in_reply_to": 110, "type": "RequestVoteRes", "term": 22, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038892590412
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":110,"type":"RequestVote","term":16,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":593}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 138, "in_reply_to": 110, "type": "RequestVoteRes", "term": 22, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038896902757
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":115,"type":"RequestVote","term":23,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":601}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 139, "in_reply_to": 115, "type": "RequestVoteRes", "term": 23, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038900414687
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":113,"type":"RequestVote","term":16,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":612}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":118,"type":"RequestVote","term":17,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":619}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 140, "in_reply_to": 113, "type": "RequestVoteRes", "term": 23, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038908080844
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 141, "in_reply_to": 118, "type": "RequestVoteRes", "term": 23, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038908674807
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":118,"type":"RequestVote","term":17,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":627}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 142, "in_reply_to": 118, "type": "RequestVoteRes", "term": 23, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038912378274
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":120,"type":"RequestVote","term":17,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":635}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":123,"type":"RequestVote","term":19,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":642}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":125,"type":"RequestVote","term":19,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":643}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":124,"type":"RequestVote","term":25,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":646}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 143, "in_reply_to": 120, "type": "RequestVoteRes", "term": 23, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038916836889
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 144, "in_reply_to": 123, "type": "RequestVoteRes", "term": 23, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038917481387
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 145, "in_reply_to": 125, "type": "RequestVoteRes", "term": 23, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668038918054819
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 146, "in_reply_to": 124, "type": "RequestVoteRes", "term": 25, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038918691435
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":129,"type":"RequestVote","term":26,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":662}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":134,"type":"RequestVote","term":26,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":668}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":124,"type":"RequestVote","term":18,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":674}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+26
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 147, "type": "RequestVote", "term": 26, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 148, "type": "RequestVote", "term": 26, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 149, "type": "RequestVote", "term": 26, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 150, "type": "RequestVote", "term": 26, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 151, "type": "RequestVote", "term": 26, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+27
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 152, "type": "RequestVote", "term": 27, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":147,"type":"RequestVote","term":26,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":686}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 153, "type": "RequestVote", "term": 27, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 154, "in_reply_to": 129, "type": "RequestVoteRes", "term": 27, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038930628913
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 156, "in_reply_to": 134, "type": "RequestVoteRes", "term": 27, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038931256512
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 157, "in_reply_to": 124, "type": "RequestVoteRes", "term": 27, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038931886338
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 158, "in_reply_to": 147, "type": "RequestVoteRes", "term": 27, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038932499786
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 155, "type": "RequestVote", "term": 27, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":152,"type":"RequestVote","term":27,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":692}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 159, "type": "RequestVote", "term": 27, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":158,"in_reply_to":147,"type":"RequestVoteRes","term":27,"res":false},"id":702}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038935241410
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 161, "in_reply_to": 152, "type": "RequestVoteRes", "term": 27, "res": true}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 160, "type": "RequestVote", "term": 27, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":161,"in_reply_to":152,"type":"RequestVoteRes","term":27,"res":true},"id":711}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":130,"type":"RequestVote","term":20,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":713}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":143,"in_reply_to":151,"type":"RequestVoteRes","term":19,"res":false},"id":718}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":133,"type":"RequestVote","term":19,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":720}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":144,"type":"RequestVote","term":20,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":725}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 162, "in_reply_to": 130, "type": "RequestVoteRes", "term": 27, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038944544694
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 163, "in_reply_to": 133, "type": "RequestVoteRes", "term": 27, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038945226836
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 164, "in_reply_to": 144, "type": "RequestVoteRes", "term": 27, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038945716508
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":139,"type":"RequestVote","term":20,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":737}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 165, "in_reply_to": 139, "type": "RequestVoteRes", "term": 27, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038950328224
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":139,"in_reply_to":150,"type":"RequestVoteRes","term":20,"res":false},"id":745}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":140,"in_reply_to":159,"type":"RequestVoteRes","term":20,"res":false},"id":746}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":149,"in_reply_to":160,"type":"RequestVoteRes","term":20,"res":false},"id":748}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":149,"in_reply_to":148,"type":"RequestVoteRes","term":20,"res":false},"id":764}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":150,"in_reply_to":153,"type":"RequestVoteRes","term":20,"res":false},"id":765}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":145,"type":"RequestVote","term":27,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":770}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 166, "in_reply_to": 145, "type": "RequestVoteRes", "term": 27, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038963828252
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":151,"in_reply_to":149,"type":"RequestVoteRes","term":27,"res":false},"id":777}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":153,"type":"RequestVote","term":28,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":780}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 167, "in_reply_to": 153, "type": "RequestVoteRes", "term": 28, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038969230757
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":155,"in_reply_to":155,"type":"RequestVoteRes","term":28,"res":false},"id":786}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":161,"type":"RequestVote","term":29,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":793}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 168, "in_reply_to": 161, "type": "RequestVoteRes", "term": 29, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668038976262726
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":158,"type":"RequestVote","term":21,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":807}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+30
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 169, "type": "RequestVote", "term": 30, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 170, "type": "RequestVote", "term": 30, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 171, "type": "RequestVote", "term": 30, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":169,"type":"RequestVote","term":30,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":815}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 172, "in_reply_to": 158, "type": "RequestVoteRes", "term": 30, "res": false}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 173, "type": "RequestVote", "term": 30, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038982477749
+
+INFO:root:alrady voted in cur election
+None
+at time
+1651668038982632514
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 174, "in_reply_to": 169, "type": "RequestVoteRes", "term": 30, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":172,"in_reply_to":171,"type":"RequestVoteRes","term":30,"res":true},"id":819}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 175, "type": "RequestVote", "term": 30, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":174,"in_reply_to":169,"type":"RequestVoteRes","term":30,"res":true},"id":822}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":164,"in_reply_to":170,"type":"RequestVoteRes","term":21,"res":false},"id":823}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":149,"in_reply_to":173,"type":"RequestVoteRes","term":20,"res":false},"id":824}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":158,"in_reply_to":175,"type":"RequestVoteRes","term":20,"res":false},"id":826}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":150,"type":"RequestVote","term":21,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":827}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 176, "in_reply_to": 150, "type": "RequestVoteRes", "term": 30, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038987818563
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":156,"type":"RequestVote","term":22,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":837}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 177, "in_reply_to": 156, "type": "RequestVoteRes", "term": 30, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038992110972
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":161,"type":"RequestVote","term":23,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":847}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 178, "in_reply_to": 161, "type": "RequestVoteRes", "term": 30, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038995213006
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":162,"type":"RequestVote","term":23,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":852}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 179, "in_reply_to": 162, "type": "RequestVoteRes", "term": 30, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038995803452
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":168,"type":"RequestVote","term":23,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":864}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 180, "in_reply_to": 168, "type": "RequestVoteRes", "term": 30, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668038997208480
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":170,"type":"RequestVote","term":24,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":877}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 181, "in_reply_to": 170, "type": "RequestVoteRes", "term": 30, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668039001780144
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+31
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 182, "type": "RequestVote", "term": 31, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 183, "type": "RequestVote", "term": 31, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 184, "type": "RequestVote", "term": 31, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 185, "type": "RequestVote", "term": 31, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 186, "type": "RequestVote", "term": 31, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":182,"type":"RequestVote","term":31,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":887}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668039003139536
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":179,"in_reply_to":184,"type":"RequestVoteRes","term":31,"res":true},"id":892}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 187, "in_reply_to": 182, "type": "RequestVoteRes", "term": 31, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":170,"in_reply_to":186,"type":"RequestVoteRes","term":24,"res":false},"id":893}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":176,"in_reply_to":185,"type":"RequestVoteRes","term":24,"res":false},"id":894}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":176,"in_reply_to":183,"type":"RequestVoteRes","term":24,"res":false},"id":895}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":187,"in_reply_to":182,"type":"RequestVoteRes","term":31,"res":true},"id":896}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":180,"type":"RequestVote","term":32,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":897}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 188, "in_reply_to": 180, "type": "RequestVoteRes", "term": 32, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668039005838464
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":178,"type":"RequestVote","term":25,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":907}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 189, "in_reply_to": 178, "type": "RequestVoteRes", "term": 32, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039018452474
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+33
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 190, "type": "RequestVote", "term": 33, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 191, "type": "RequestVote", "term": 33, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 192, "type": "RequestVote", "term": 33, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+34
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 194, "type": "RequestVote", "term": 34, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 195, "type": "RequestVote", "term": 34, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 196, "type": "RequestVote", "term": 34, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 197, "type": "RequestVote", "term": 34, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 198, "type": "RequestVote", "term": 34, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 193, "type": "RequestVote", "term": 33, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 199, "type": "RequestVote", "term": 34, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":190,"type":"RequestVote","term":33,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":917}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":184,"type":"RequestVote","term":26,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":918}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":194,"type":"RequestVote","term":34,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":925}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":179,"in_reply_to":191,"type":"RequestVoteRes","term":25,"res":false},"id":930}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 200, "in_reply_to": 190, "type": "RequestVoteRes", "term": 34, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":187,"in_reply_to":192,"type":"RequestVoteRes","term":33,"res":true},"id":932}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668039025939299
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 201, "in_reply_to": 184, "type": "RequestVoteRes", "term": 34, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668039026136438
+
+INFO:root:alrady voted in cur election
+None
+at time
+1651668039026210854
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 202, "in_reply_to": 194, "type": "RequestVoteRes", "term": 34, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":174,"in_reply_to":198,"type":"RequestVoteRes","term":26,"res":false},"id":936}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":175,"in_reply_to":199,"type":"RequestVoteRes","term":26,"res":false},"id":938}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":189,"in_reply_to":196,"type":"RequestVoteRes","term":34,"res":true},"id":939}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":181,"in_reply_to":195,"type":"RequestVoteRes","term":26,"res":false},"id":940}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":200,"in_reply_to":190,"type":"RequestVoteRes","term":34,"res":false},"id":941}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":202,"in_reply_to":194,"type":"RequestVoteRes","term":34,"res":true},"id":944}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":190,"in_reply_to":197,"type":"RequestVoteRes","term":26,"res":false},"id":945}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":191,"in_reply_to":193,"type":"RequestVoteRes","term":26,"res":false},"id":946}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":192,"type":"RequestVote","term":27,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":947}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 203, "in_reply_to": 192, "type": "RequestVoteRes", "term": 34, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668039028778322
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":198,"type":"RequestVote","term":28,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":957}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 204, "in_reply_to": 198, "type": "RequestVoteRes", "term": 34, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668039035394962
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+35
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 205, "type": "RequestVote", "term": 35, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 206, "type": "RequestVote", "term": 35, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 207, "type": "RequestVote", "term": 35, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 208, "type": "RequestVote", "term": 35, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 209, "type": "RequestVote", "term": 35, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":184,"type":"RequestVote","term":29,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":967}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":205,"type":"RequestVote","term":35,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":971}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 210, "in_reply_to": 184, "type": "RequestVoteRes", "term": 35, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668039042437610
+
+INFO:root:alrady voted in cur election
+None
+at time
+1651668039042516340
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 211, "in_reply_to": 205, "type": "RequestVoteRes", "term": 35, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":190,"in_reply_to":206,"type":"RequestVoteRes","term":29,"res":false},"id":977}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":211,"in_reply_to":205,"type":"RequestVoteRes","term":35,"res":true},"id":982}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":193,"in_reply_to":207,"type":"RequestVoteRes","term":35,"res":true},"id":984}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":205,"in_reply_to":208,"type":"RequestVoteRes","term":29,"res":false},"id":985}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":179,"in_reply_to":209,"type":"RequestVoteRes","term":28,"res":false},"id":986}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":194,"type":"RequestVote","term":36,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":987}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 212, "in_reply_to": 194, "type": "RequestVoteRes", "term": 36, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668039047281080
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":207,"type":"RequestVote","term":30,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":997}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 213, "in_reply_to": 207, "type": "RequestVoteRes", "term": 36, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039052492504
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":193,"type":"RequestVote","term":31,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1007}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 214, "in_reply_to": 193, "type": "RequestVoteRes", "term": 36, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039055895444
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":213,"type":"RequestVote","term":31,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":1012}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":182,"type":"RequestVote","term":31,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1017}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 215, "in_reply_to": 213, "type": "RequestVoteRes", "term": 36, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039056436436
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 216, "in_reply_to": 182, "type": "RequestVoteRes", "term": 36, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039056629590
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":201,"type":"RequestVote","term":32,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1037}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 217, "in_reply_to": 201, "type": "RequestVoteRes", "term": 36, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039060879551
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":204,"type":"RequestVote","term":37,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1045}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 218, "in_reply_to": 204, "type": "RequestVoteRes", "term": 37, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668039061683314
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+38
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 219, "type": "RequestVote", "term": 38, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 220, "type": "RequestVote", "term": 38, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 221, "type": "RequestVote", "term": 38, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 222, "type": "RequestVote", "term": 38, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 223, "type": "RequestVote", "term": 38, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":219,"type":"RequestVote","term":38,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":1057}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668039065155751
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 224, "in_reply_to": 219, "type": "RequestVoteRes", "term": 38, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":208,"in_reply_to":220,"type":"RequestVoteRes","term":32,"res":false},"id":1062}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":211,"in_reply_to":221,"type":"RequestVoteRes","term":38,"res":true},"id":1063}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":223,"in_reply_to":222,"type":"RequestVoteRes","term":32,"res":false},"id":1064}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":192,"in_reply_to":223,"type":"RequestVoteRes","term":32,"res":false},"id":1065}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":224,"in_reply_to":219,"type":"RequestVoteRes","term":38,"res":true},"id":1066}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+39
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 225, "type": "RequestVote", "term": 39, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+INFO:root:election timeout, starting new election
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 226, "type": "RequestVote", "term": 39, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+INFO:root:starting new elections, new term
+40
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 227, "type": "RequestVote", "term": 40, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 228, "type": "RequestVote", "term": 40, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":225,"type":"RequestVote","term":39,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":1067}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 229, "type": "RequestVote", "term": 40, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 230, "type": "RequestVote", "term": 40, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 231, "in_reply_to": 225, "type": "RequestVoteRes", "term": 40, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":228,"type":"RequestVote","term":40,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":1070}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 232, "type": "RequestVote", "term": 40, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 233, "type": "RequestVote", "term": 40, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668039070918369
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":209,"in_reply_to":226,"type":"RequestVoteRes","term":32,"res":false},"id":1071}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668039071470399
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 234, "type": "RequestVote", "term": 40, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 236, "type": "RequestVote", "term": 40, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 235, "in_reply_to": 228, "type": "RequestVoteRes", "term": 40, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":212,"in_reply_to":227,"type":"RequestVoteRes","term":40,"res":true},"id":1074}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":231,"in_reply_to":225,"type":"RequestVoteRes","term":40,"res":false},"id":1075}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":224,"in_reply_to":229,"type":"RequestVoteRes","term":32,"res":false},"id":1076}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":210,"in_reply_to":230,"type":"RequestVoteRes","term":32,"res":false},"id":1078}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":193,"in_reply_to":232,"type":"RequestVoteRes","term":32,"res":false},"id":1080}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":213,"in_reply_to":233,"type":"RequestVoteRes","term":40,"res":true},"id":1081}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":235,"in_reply_to":228,"type":"RequestVoteRes","term":40,"res":true},"id":1084}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":194,"in_reply_to":236,"type":"RequestVoteRes","term":32,"res":false},"id":1085}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":225,"in_reply_to":234,"type":"RequestVoteRes","term":32,"res":false},"id":1086}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+41
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 237, "type": "RequestVote", "term": 41, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 238, "type": "RequestVote", "term": 41, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 239, "type": "RequestVote", "term": 41, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 240, "type": "RequestVote", "term": 41, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 241, "type": "RequestVote", "term": 41, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":237,"type":"RequestVote","term":41,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":1087}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668039079625683
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 242, "in_reply_to": 237, "type": "RequestVoteRes", "term": 41, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":214,"in_reply_to":239,"type":"RequestVoteRes","term":41,"res":true},"id":1092}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":242,"in_reply_to":237,"type":"RequestVoteRes","term":41,"res":true},"id":1093}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":211,"in_reply_to":238,"type":"RequestVoteRes","term":32,"res":false},"id":1094}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":226,"in_reply_to":240,"type":"RequestVoteRes","term":32,"res":false},"id":1095}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":195,"in_reply_to":241,"type":"RequestVoteRes","term":32,"res":false},"id":1096}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+42
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 243, "type": "RequestVote", "term": 42, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 244, "type": "RequestVote", "term": 42, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 245, "type": "RequestVote", "term": 42, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 246, "type": "RequestVote", "term": 42, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 247, "type": "RequestVote", "term": 42, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":243,"type":"RequestVote","term":42,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":1097}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668039083138120
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 248, "in_reply_to": 243, "type": "RequestVoteRes", "term": 42, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":212,"in_reply_to":244,"type":"RequestVoteRes","term":32,"res":false},"id":1102}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":227,"in_reply_to":246,"type":"RequestVoteRes","term":32,"res":false},"id":1103}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":215,"in_reply_to":245,"type":"RequestVoteRes","term":42,"res":true},"id":1104}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":196,"in_reply_to":247,"type":"RequestVoteRes","term":32,"res":false},"id":1105}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":248,"in_reply_to":243,"type":"RequestVoteRes","term":42,"res":true},"id":1106}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":216,"type":"RequestVote","term":43,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1107}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 249, "in_reply_to": 216, "type": "RequestVoteRes", "term": 43, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668039084120563
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":214,"type":"RequestVote","term":33,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1118}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":198,"type":"RequestVote","term":33,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1117}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 250, "in_reply_to": 214, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039089613134
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 251, "in_reply_to": 198, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039089760676
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":221,"type":"RequestVote","term":34,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1137}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 252, "in_reply_to": 221, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039093447487
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":205,"type":"RequestVote","term":34,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1142}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 253, "in_reply_to": 205, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039093915438
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":233,"type":"RequestVote","term":35,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":1157}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 254, "in_reply_to": 233, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039097492503
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":212,"type":"RequestVote","term":35,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1165}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 255, "in_reply_to": 212, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039098282117
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":239,"type":"RequestVote","term":36,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":1174}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 256, "in_reply_to": 239, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039099183843
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":230,"type":"RequestVote","term":36,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1176}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 257, "in_reply_to": 230, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039100221592
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":221,"type":"RequestVote","term":37,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1197}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 258, "in_reply_to": 221, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039103212631
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":238,"type":"RequestVote","term":37,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1207}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 259, "in_reply_to": 238, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039103999845
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":244,"type":"RequestVote","term":38,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1217}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 260, "in_reply_to": 244, "type": "RequestVoteRes", "term": 43, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039105818628
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+44
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 261, "type": "RequestVote", "term": 44, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 262, "type": "RequestVote", "term": 44, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 263, "type": "RequestVote", "term": 44, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 264, "type": "RequestVote", "term": 44, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 265, "type": "RequestVote", "term": 44, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":233,"type":"RequestVote","term":44,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1226}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":261,"type":"RequestVote","term":44,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":1231}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 266, "in_reply_to": 233, "type": "RequestVoteRes", "term": 44, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668039107447799
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":251,"in_reply_to":264,"type":"RequestVoteRes","term":38,"res":false},"id":1239}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":230,"in_reply_to":265,"type":"RequestVoteRes","term":38,"res":false},"id":1240}
+INFO:root:alrady voted in cur election
+n3
+at time
+1651668039108066667
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 267, "in_reply_to": 261, "type": "RequestVoteRes", "term": 44, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":239,"in_reply_to":263,"type":"RequestVoteRes","term":44,"res":true},"id":1243}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":267,"in_reply_to":261,"type":"RequestVoteRes","term":44,"res":true},"id":1244}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":251,"in_reply_to":262,"type":"RequestVoteRes","term":38,"res":false},"id":1246}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":252,"type":"RequestVote","term":39,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1247}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 268, "in_reply_to": 252, "type": "RequestVoteRes", "term": 44, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039115514602
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":232,"type":"RequestVote","term":40,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1257}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 269, "in_reply_to": 232, "type": "RequestVoteRes", "term": 44, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039119870356
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":258,"type":"RequestVote","term":40,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1266}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 270, "in_reply_to": 258, "type": "RequestVoteRes", "term": 44, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039120491667
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":243,"type":"RequestVote","term":45,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1277}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 271, "in_reply_to": 243, "type": "RequestVoteRes", "term": 45, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668039125658191
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":239,"type":"RequestVote","term":41,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1284}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":249,"type":"RequestVote","term":46,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1288}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":265,"type":"RequestVote","term":41,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1292}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 272, "in_reply_to": 239, "type": "RequestVoteRes", "term": 45, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039126881685
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 273, "in_reply_to": 249, "type": "RequestVoteRes", "term": 46, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668039127071741
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 274, "in_reply_to": 265, "type": "RequestVoteRes", "term": 46, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039127804654
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":256,"type":"RequestVote","term":47,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1311}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 275, "in_reply_to": 256, "type": "RequestVoteRes", "term": 47, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668039129083157
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":275,"type":"RequestVote","term":42,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1321}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 276, "in_reply_to": 275, "type": "RequestVoteRes", "term": 47, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039130355144
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":250,"type":"RequestVote","term":43,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1337}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 277, "in_reply_to": 250, "type": "RequestVoteRes", "term": 47, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039132377195
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":262,"type":"RequestVote","term":43,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":1347}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 278, "in_reply_to": 262, "type": "RequestVoteRes", "term": 47, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039133702990
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":257,"type":"RequestVote","term":44,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1357}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 279, "in_reply_to": 257, "type": "RequestVoteRes", "term": 47, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":283,"type":"RequestVote","term":44,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1358}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039136543372
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 280, "in_reply_to": 283, "type": "RequestVoteRes", "term": 47, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039136720601
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":270,"type":"RequestVote","term":45,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":1379}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 281, "in_reply_to": 270, "type": "RequestVoteRes", "term": 47, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039143780672
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":268,"type":"RequestVote","term":48,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1384}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 282, "in_reply_to": 268, "type": "RequestVoteRes", "term": 48, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668039144602374
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+49
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 283, "type": "RequestVote", "term": 49, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 284, "type": "RequestVote", "term": 49, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 285, "type": "RequestVote", "term": 49, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 286, "type": "RequestVote", "term": 49, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":283,"type":"RequestVote","term":49,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n1"},"id":1399}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 287, "type": "RequestVote", "term": 49, "prevLogIndex": 1, "lastLogTerm": 2, "candidateId": "n1"}}
+INFO:root:alrady voted in cur election
+None
+at time
+1651668039148388512
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 288, "in_reply_to": 283, "type": "RequestVoteRes", "term": 49, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":293,"in_reply_to":284,"type":"RequestVoteRes","term":44,"res":false},"id":1404}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":275,"in_reply_to":285,"type":"RequestVoteRes","term":49,"res":true},"id":1405}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":277,"in_reply_to":286,"type":"RequestVoteRes","term":45,"res":false},"id":1406}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":288,"in_reply_to":283,"type":"RequestVoteRes","term":49,"res":true},"id":1407}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":266,"in_reply_to":287,"type":"RequestVoteRes","term":44,"res":false},"id":1408}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":276,"type":"RequestVote","term":50,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1409}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 289, "in_reply_to": 276, "type": "RequestVoteRes", "term": 50, "res": true}}
+INFO:root:election started and voted vor
+n3
+at time
+1651668039153030904
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":268,"type":"RequestVote","term":45,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1419}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 290, "in_reply_to": 268, "type": "RequestVoteRes", "term": 50, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039154786601
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":295,"type":"RequestVote","term":45,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1424}
+DEBUG:root:received {"dest":"n1","body":{"key":1,"from":4,"to":1,"type":"cas","msg_id":1},"src":"c15","id":1430}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 291, "in_reply_to": 295, "type": "RequestVoteRes", "term": 50, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039155812588
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 292, "type": "AppendEntries", "term": 50, "entries": [[["cas", [1, [4, 1]]], 50]], "prevIndex": 1, "prevTerm": 2, "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":282,"type":"RequestVote","term":51,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1436}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 293, "in_reply_to": 282, "type": "RequestVoteRes", "term": 50, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":302,"type":"RequestVote","term":46,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1448}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 294, "in_reply_to": 302, "type": "RequestVoteRes", "term": 50, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039157420527
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":282,"type":"RequestVote","term":46,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":1450}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 295, "in_reply_to": 282, "type": "RequestVoteRes", "term": 50, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039158407576
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":303,"type":"RequestVote","term":47,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n2"},"id":1461}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 296, "in_reply_to": 303, "type": "RequestVoteRes", "term": 50, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039158854358
+
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":277,"type":"RequestVote","term":46,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1470}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 297, "in_reply_to": 277, "type": "RequestVoteRes", "term": 50, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039160476885
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":290,"in_reply_to":292,"type":"AppendEntriesRes","res":false,"term":51},"id":1480}
+INFO:root:387##########:
+node
+n1
+current term
+50
+next I
+{'n1': 1, 'n2': 3, 'n3': 1, 'n4': 3, 'n5': 3}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2), (('cas', (1, (4, 1))), 50)]
+dest
+n3
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 298, "type": "AppendEntries", "term": 50, "prevIndex": 0, "prevTerm": 0, "entries": [[["cas", [0, [4, 2]]], 2], [["cas", [1, [4, 1]]], 50]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":282,"type":"RequestVote","term":47,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1481}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 299, "in_reply_to": 282, "type": "RequestVoteRes", "term": 50, "res": false}}
+INFO:root:Bad election request, term is not up to date
+n3
+at time
+1651668039161801169
+
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+51
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 300, "type": "RequestVote", "term": 51, "prevLogIndex": 2, "lastLogTerm": 50, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 301, "type": "RequestVote", "term": 51, "prevLogIndex": 2, "lastLogTerm": 50, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 302, "type": "RequestVote", "term": 51, "prevLogIndex": 2, "lastLogTerm": 50, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 303, "type": "RequestVote", "term": 51, "prevLogIndex": 2, "lastLogTerm": 50, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 304, "type": "RequestVote", "term": 51, "prevLogIndex": 2, "lastLogTerm": 50, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":291,"type":"RequestVote","term":48,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":1491}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":295,"type":"RequestVote","term":52,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1496}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":287,"type":"RequestVote","term":48,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1506}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":300,"type":"RequestVote","term":51,"prevLogIndex":2,"lastLogTerm":50,"candidateId":"n1"},"id":1508}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 305, "in_reply_to": 291, "type": "RequestVoteRes", "term": 51, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668039163990111
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 306, "in_reply_to": 295, "type": "RequestVoteRes", "term": 51, "res": false}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 307, "in_reply_to": 287, "type": "RequestVoteRes", "term": 51, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668039164260650
+
+INFO:root:alrady voted in cur election
+None
+at time
+1651668039164326675
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 308, "in_reply_to": 300, "type": "RequestVoteRes", "term": 51, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":299,"in_reply_to":303,"type":"RequestVoteRes","term":51,"res":true},"id":1519}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":292,"type":"RequestVote","term":49,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n5"},"id":1521}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 309, "in_reply_to": 292, "type": "RequestVoteRes", "term": 51, "res": false}}
+INFO:root:Bad election request, term is not up to date
+None
+at time
+1651668039164964280
+
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":308,"in_reply_to":300,"type":"RequestVoteRes","term":51,"res":true},"id":1529}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":321,"in_reply_to":301,"type":"RequestVoteRes","term":48,"res":false},"id":1531}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":301,"type":"RequestVote","term":53,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1534}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 310, "in_reply_to": 301, "type": "RequestVoteRes", "term": 51, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":306,"in_reply_to":298,"type":"AppendEntriesRes","res":false,"term":53},"id":1546}
+INFO:root:387##########:
+node
+n1
+current term
+51
+next I
+{'n1': 1, 'n2': 3, 'n3': 0, 'n4': 3, 'n5': 3}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2), (('cas', (1, (4, 1))), 50)]
+dest
+n3
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 311, "type": "AppendEntries", "term": 51, "prevIndex": -1, "prevTerm": 50, "entries": [[["pass", null], 0], [["cas", [0, [4, 2]]], 2], [["cas", [1, [4, 1]]], 50]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":309,"in_reply_to":302,"type":"RequestVoteRes","term":53,"res":false},"id":1552}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":303,"in_reply_to":304,"type":"RequestVoteRes","term":51,"res":true},"id":1560}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":313,"in_reply_to":311,"type":"AppendEntriesRes","res":false,"term":53},"id":1562}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":303,"type":"RequestVote","term":52,"prevLogIndex":2,"lastLogTerm":2,"candidateId":"n4"},"id":1563}
+INFO:root:387##########:
+node
+n1
+current term
+51
+next I
+{'n1': 1, 'n2': 3, 'n3': -1, 'n4': 3, 'n5': 3}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2), (('cas', (1, (4, 1))), 50)]
+dest
+n3
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 312, "type": "AppendEntries", "term": 51, "prevIndex": -2, "prevTerm": 2, "entries": [[["cas", [1, [4, 1]]], 50]], "commit": 0}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 313, "in_reply_to": 303, "type": "RequestVoteRes", "term": 51, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":315,"in_reply_to":312,"type":"AppendEntriesRes","res":false,"term":53},"id":1574}
+INFO:root:387##########:
+node
+n1
+current term
+51
+next I
+{'n1': 1, 'n2': 3, 'n3': -2, 'n4': 3, 'n5': 3}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2), (('cas', (1, (4, 1))), 50)]
+dest
+n3
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 314, "type": "AppendEntries", "term": 51, "prevIndex": -3, "prevTerm": 0, "entries": [[["cas", [0, [4, 2]]], 2], [["cas", [1, [4, 1]]], 50]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":316,"type":"RequestVote","term":54,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1578}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 315, "in_reply_to": 316, "type": "RequestVoteRes", "term": 51, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":321,"type":"RequestVote","term":55,"prevLogIndex":1,"lastLogTerm":2,"candidateId":"n3"},"id":1586}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 316, "in_reply_to": 321, "type": "RequestVoteRes", "term": 51, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":328,"in_reply_to":314,"type":"AppendEntriesRes","res":false,"term":55},"id":1599}
+INFO:root:387##########:
+node
+n1
+current term
+51
+next I
+{'n1': 1, 'n2': 3, 'n3': -3, 'n4': 3, 'n5': 3}
+log
+[(('pass', None), 0), (('cas', (0, (4, 2))), 2), (('cas', (1, (4, 1))), 50)]
+dest
+n3
+
+ERROR:root:fatal exception in handler
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab3/ms.py", line 27, in exitOnError
+    fn(*args)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 400, in handle
+    send(node_id, dest, type='AppendEntries', term=current_term, prevIndex = nextIndex[dest]-1,prevTerm=log[nextIndex[dest]-1][1] ,entries=log[nextIndex[dest]:],commit=commitIndex)
+IndexError: list index out of range

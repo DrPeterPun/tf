@@ -50,7 +50,7 @@ unanswered = None
 # hb time varia entre 0.2 e 0.5 ||in sec
 #MAX_TIME_DIF = 100_000
 MAX_TIME_DIF = 100_000_000
-MIN_HB = MAX_TIME_DIF/5*0.00000001
+MIN_HB = MAX_TIME_DIF/3*0.00000001
 MAX_HB = MAX_TIME_DIF/2*0.00000001
 
 
@@ -64,6 +64,8 @@ def buildString(n):
     logging.info(s)
     #raise Exception(s)
 
+def printState():
+    buildString(["node id:",node_id,"leader", leader_id,"kvsotr",kvstore,"cur term", current_term, "log ",log, "commit indez e last applied",commitIndex,lastApplied,"candidate, votes, voted for",candidate,votes,votedFor,"timeout dict", timeout_dict,"curr time", time.time_ns()])
 #//////////////////
 
 #list of active nodes
@@ -95,9 +97,9 @@ def check_timestamp(node):
     ######################################debug
     cur_time = time.time_ns()
     buildString(["node",node,"current time",cur_time,"node_time",timeout_dict[node_id], "dif", cur_time-timeout_dict[node_id], cur_time-timeout_dict[node_id] < MAX_TIME_DIF])
-    #TESTING TESTING DEBUG!!!, trying to make n2 the leader anter a bit
+    #TESTING TESTING DEBUG!!!, trying to makje n2 the leader anter a bit
     if node=='n1' and node_id=='n2' and not is_leader(): 
-            buildString(["LEADER IS DEAD bit of a aldrabation tho",node])
+            buildString(["LEADER IS DEAD bit of a aldrabation tho ",node])
             return False
     elif timeout_dict.get(node,None) != None:
         return cur_time-timeout_dict[node]<MAX_TIME_DIF
@@ -123,15 +125,16 @@ def heartbeat(dest):
     send(node_id, dest, type='AppendEntries', term=current_term, prevIndex = prevIndex,prevTerm=prevTerm ,entries=[],commit=commitIndex)
 
 #while leader, pereodicly sends heartbeats to a node. Period between heartbeats is variable as to not cause network congestion
-def recursive_heartbeats(dests,min_time,max_time):
+def recursive_heartbeats(dests):
     if is_leader():
         buildString(["sending HB"])
-        sec = random.uniform(min_time,max_time)
+        #divido por 5 pq tem de se mandar hbs suficiente para nao dar timeout, senao ta sempre a haver eleicoes
+        sec = random.uniform(MIN_HB,MAX_HB)/5
         #remover o lider para nao ser self msg
         dests= list(filter(lambda elem: elem!=leader_id, node_ids))
         for dest in dests:
             heartbeat(dest)
-        Timer(sec, recursive_heartbeats,[dests,min_time,max_time]).start()
+        Timer(sec, recursive_heartbeats,[dests]).start()
 
 #periodicly checks if the leadder is alive. if its not starts a vote for new leader
 def leader_alive_checker():
@@ -140,13 +143,13 @@ def leader_alive_checker():
             buildString(["lead is dead"])
             start_election()
             sec = random.uniform(MIN_HB,MAX_HB)
-            Timer(sec, leader_alive_checker)
+            Timer(0.5, leader_alive_checker)
         else:
             buildString(["leader alive, resuming timeout checker"])
             #sec = random.uniform(MIN_HB,MAX_HB)
             #buildString([timeout_dict.items(),MIN_HB,MAX_HB,sec,time.time_ns()])
             # como o lider ja faz hb com intervalos random este check nao precisa de ser com intervalos random
-            Timer(0.0001, leader_alive_checker)
+            Timer(0.5, leader_alive_checker)
             #Timer(sec, buildString,[timeout_dict.items()]).start()
 
 #cases: election ended and this node won, this node won, election still ongoing
@@ -159,26 +162,27 @@ def election_checker():
     global votedFor, votes, candidate
     #eleicao ainda nao acabou acabou, entao deu timeout e comecamos uma nova, mas este nodo fica candidado
     if in_election:
+
         buildString(["election timeout, starting new election"])
         start_election()
     #eleicao acabou, comecamos a verificar otura vez se o lider deu timeout
     else:    
         buildString(["election ended"])
-        Timer(0.1, leader_alive_checker).start()
+        Timer(0.5, leader_alive_checker).start()
 
 #starts a new vote
 def start_election():
     global current_term
     current_term += 1
-    buildString(["starting new elections, new term", current_term])
-    request_vote()
     sec = random.uniform(MIN_HB,MAX_HB)
+    buildString(["starting new elections, new term", current_term,"sec, min max hb",sec,MIN_HB,MAX_HB])
+    request_vote()
     #after sec seconds checks if the thelection ended.
-    Timer(sec, election_checker).start()
+    Timer(0.25, election_checker).start()
 
 #starts a new vote and sets itself as candidate
 def request_vote():
-    global current_term, votes, votedFor, in_election
+    global current_term, votes, votedFor, in_election, candidate
     buildString(["Requesting new Vote"])
     votes=0
     in_election = True
@@ -206,7 +210,7 @@ def become_leader():
     leader_id = node_id
     buildString(["became leader","log",log,"match index",matchIndex])
     end_vote()
-    recursive_heartbeats(node_ids,MIN_HB,MAX_HB)
+    recursive_heartbeats(node_ids)
 
 def restore_kv_state():
     for i in range(1,commitIndex):
@@ -308,9 +312,18 @@ def handle(msg):
         add_timestamp(msg.src)
         #raise Exception(log[msg.body.prevIndex])
         #buildString([ msg.body.prevIndex,log,log[msg.body.prevIndex]])    
-
+        #there is a new leader, convert current node to follower
+        if msg.body.term>current_term:
+            end_vote()
+            nextIndex=None
+            matchIndex=None
+            unanswered = None
+            leader_id=msg.src
+            buildString(["there is a new leader"])
+            printState()
+            current_term=msg.body.term
         #term receives less than current term
-        if msg.body.term<current_term:
+        elif msg.body.term<current_term:
             reply(msg,type='AppendEntriesRes',res=False,term=current_term)
             buildString(["msg term",msg.body.term,"current term", current_term, "log",log, "msg entries" ,msg.body.entries  ])
             return
@@ -318,21 +331,15 @@ def handle(msg):
         a=[]
         try:
             a = log[msg.body.prevIndex]
+            if a[1]!=msg.body.prevTerm:
+            #elif log[msg.body.prevIndex][1]!=msg.body.prevTerm:
+                reply(msg,type='AppendEntriesRes',res=False,term=current_term)
+                return
         except:
-            buildString([ "280",log,msg.body.prevIndex,commitIndex,node_id,msg.body.entries])    
-        if a[1]!=msg.body.prevTerm:
-        #elif log[msg.body.prevIndex][1]!=msg.body.prevTerm:
-            reply(msg,type='AppendEntriesRes',res=False,term=current_term)
+            buildString([ "280",log,msg.body.prevIndex,commitIndex,node_id,msg.body.entries])
             return
-
-        #there is a new leader, convert current node to follower
-        elif msg.body.term>current_term:
-            end_vote()
-            nextIndex=None
-            matchIndex=None
-            unanswered = None
-            leader_id=msg.src
-            current_term=msg.body.term
+        
+        
 
 
         ##################### degub
@@ -344,8 +351,13 @@ def handle(msg):
         newstart=0
         if len(msg.body.entries)>0:
             for i in range(1,len(msg.body.entries)):
-                if len(log)-1<=msg.body.prevIndex+i and log[msg.body.prevIndex+i][1]!=msg.body.entries[i-1][1]:
-                    buildString([ "305", log,msg.body.entries ,msg.body.prevIndex ,commitIndex ,node_id, log[msg.body.prevIndex+i], msg.body.entries[i-1] ,i ])
+                buildString([ "355", log,msg.body.entries ,msg.body.prevIndex ,commitIndex ,node_id,i ])
+                #check is there is an entry on that log index
+                entry = None
+                if len(log)>msg.body.prevIndex+i:
+                    entry=log[msg.body.prevIndex+i]
+                #if the indexes dont match
+                if entry!=None and entry[1]!=msg.body.entries[i-1][1]:
                     #delete everything in front
                     log = log[:msg.body.prevIndex+i-1]
                     newstart=i-1
@@ -371,7 +383,7 @@ def handle(msg):
         #log[-1][1] quase a certeza  que isto esta mal, mas nao estou abem a ver oqq devia ser, to be fixed in the future
         if msg.body.commit>commitIndex:
             #commitIndex=min(msg.body.commit, log[-1][1])
-            buildString([ "326",log,msg.body.prevIndex,commitIndex,node_id])
+            buildString([ "379",log,msg.body.prevIndex,commitIndex,node_id])
             commitIndex=min(msg.body.commit, len(log))
             restore_kv_state()
 
@@ -388,16 +400,21 @@ def handle(msg):
             #buildString([ "1",log,unanswered,commitIndex])    
             return
 
-        if (msg.body.res):
+        #nao estamos updated o suficiente para o term desse nodo
+        if msg.body.term > current_term:
+            return
+
+        elif (msg.body.res):
             #update next index and match index
             nextIndex[msg.src] = msg.body.next
             matchIndex[msg.src] = msg.body.commit
-            
+
+        #k 
         else:
             nextIndex[msg.src] -=1
             dest = msg.src
             buildString(["387##########:","node",node_id,"current term" ,current_term,"next I" , nextIndex,"log",log,"dest", dest])
-            send(node_id, dest, type='AppendEntries', term=current_term, prevIndex = nextIndex[dest]-1,prevTerm=log[nextIndex[dest]-1][1] ,entries=log[nextIndex[dest]:],commit=commitIndex)
+            send(node_id, dest, type='AppendEntries', term=current_term, prevIndex = nextIndex[dest]-1,prevTerm=log[nextIndex[dest]-1][1] ,entries=log[nextIndex[dest]:] if len(log)>nextIndex[dest] else [] ,commit=commitIndex)
        
         # verifica se ja ha um consenso de replies
         #buildString([ "2",log,unanswered,commitIndex])    
@@ -412,7 +429,7 @@ def handle(msg):
             #buildString([ "3",log,unanswered,commitIndex,matchIndex,majority,count_commit_index_consensus(maxn+1)])    
             #se ha consenso deste commit, da tbm o lider o commit
             if count_commit_index_consensus(maxn+1)>=majority:
-                buildString([ "3",log,unanswered,commitIndex,matchIndex,majority,count_commit_index_consensus(maxn+1)])    
+                buildString([ "dei commit ao commando ",log[maxn], log, unanswered,commitIndex,matchIndex,majority,count_commit_index_consensus(maxn+1)])    
                 maxn+=1
                 buildString([ "3",log,unanswered,commitIndex])    
                 # aplies the command, changing the local kv_store to reflect the new operation
@@ -446,20 +463,22 @@ def handle(msg):
             reply(msg,type='RequestVoteRes', term=current_term, res= False)
             buildString(["Bad election request, term is not up to date", votedFor, "at time", time.time_ns()])
         elif (node_id==msg.src):
-            current_term=msg.body.term
-            buildString(["alrady voted in cur election", votedFor, "at time", time.time_ns()])
+            #current_term=msg.body.term
+            votedFor=node_id
+            buildString(["voting for myself", votedFor, "at time", time.time_ns(),"nr votes", votes])
             reply(msg,type='RequestVoteRes',term=current_term,res=True)
         else:
-            #if didnt voe yet, or voted in the request src, and the logs are congruent vote in the src
+            #if didnt vote yet, or voted in the request src, and the logs are congruent vote in the src
+            buildString(["log atual",log,"prevlog index",msg.body.prevLogIndex, " last log term", msg.body.lastLogTerm])
             if ( votedFor == None or votedFor==msg.src ) and msg.body.prevLogIndex>=len(log)-1 and msg.body.lastLogTerm >= log[-1][1]:
-                current_term=msg.body.term
+                #current_term=msg.body.term
                 in_election=True
                 votedFor = msg.src
-                current_term=msg.body.term
+                #current_term=msg.body.term
                 reply(msg,type='RequestVoteRes',term=current_term,res=True)
                 buildString(["election started and voted vor", votedFor, "at time", time.time_ns()])
                 #start election timout timer (0.1sec)
-                Timer(0.1, election_checker).start()
+                Timer(0.25, election_checker).start()
             else:
                 #buildString([log,msg.body.prevLogIndex,msg.body.lastLogTerm,votedFor,node_id])
                 reply(msg,type='RequestVoteRes', term=current_term, res= False)
@@ -467,6 +486,9 @@ def handle(msg):
     elif msg.body.type == 'RequestVoteRes':
         add_timestamp(msg.src)
 
+        buildString(["Got a response to the vote Request #475"])
+        printState()
+        buildString(["resposta",msg.body.res,"majority", len(node_ids)//2+1])
         if not in_election:
             #ignorar se nao tiver numa eleicao
             return
@@ -476,11 +498,15 @@ def handle(msg):
             return
 
         if msg.body.res:
+            buildString(["antes do incremento no voto #487",votes])
             votes+=1
+            buildString(["depois  #489",votes])
+        
         majority = len(node_ids)//2+1
         if votes>=majority:
             #become leader
             become_leader()
+        
 
     else:
         logging.warning('unknown message type %s', msg.body.type)

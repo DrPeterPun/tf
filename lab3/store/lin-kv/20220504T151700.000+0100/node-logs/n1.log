@@ -1,0 +1,641 @@
+DEBUG:root:received {"dest":"n1","body":{"type":"init","node_id":"n1","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c4","id":4}
+INFO:root:node n1 initialized
+DEBUG:root:sending {"dest": "c4", "src": "n1", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":2,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":9}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":8,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":18}
+INFO:root:became leader
+log
+[(('pass', None), 0)]
+match index
+{'n1': 0, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0}
+
+INFO:root:vote ended, new leader is
+n1
+
+INFO:root:sending HB
+
+INFO:root:HBdest
+n2
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 2, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n3
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 3, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n4
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 4, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:HBdest
+n5
+nextIndex
+{'n1': 1, 'n2': 1, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 5, "type": "AppendEntries", "term": 0, "prevIndex": 0, "prevTerm": 0, "entries": [], "commit": 0}}
+INFO:root:log atual
+[(('pass', None), 0)]
+prevlog index
+0
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 6, "in_reply_to": 2, "type": "RequestVoteRes", "term": 1, "res": true}}
+INFO:root:election started and voted vor
+n2
+at time
+1651673820767123201
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 7, "in_reply_to": 8, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":12,"in_reply_to":2,"type":"AppendEntriesRes","res":false,"term":1},"id":29}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 0, 'n3': 1, 'n4': 1, 'n5': 1}
+log
+[(('pass', None), 0)]
+dest
+n2
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 8, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":4,"in_reply_to":4,"type":"AppendEntriesRes","res":false,"term":1},"id":31}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":4,"in_reply_to":3,"type":"AppendEntriesRes","res":false,"term":1},"id":33}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 0, 'n3': 1, 'n4': 0, 'n5': 1}
+log
+[(('pass', None), 0)]
+dest
+n4
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 9, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 1}
+log
+[(('pass', None), 0)]
+dest
+n3
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 10, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":4,"in_reply_to":5,"type":"AppendEntriesRes","res":false,"term":1},"id":35}
+INFO:root:387##########:
+node
+n1
+current term
+1
+next I
+{'n1': 1, 'n2': 0, 'n3': 0, 'n4': 0, 'n5': 0}
+log
+[(('pass', None), 0)]
+dest
+n5
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 11, "type": "AppendEntries", "term": 1, "prevIndex": -1, "prevTerm": 0, "entries": [[["pass", null], 0]], "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":13,"in_reply_to":8,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":39}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":5,"in_reply_to":9,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":40}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":5,"in_reply_to":10,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":42}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":5,"in_reply_to":11,"type":"AppendEntriesRes","res":true,"term":1,"next":2,"commit":0},"id":43}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":14,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":44}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 12, "in_reply_to": 14, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+INFO:root:sending HB
+
+INFO:root:HBdest
+n2
+nextIndex
+{'n1': 1, 'n2': 2, 'n3': 2, 'n4': 2, 'n5': 2}
+log
+[(('pass', None), 0)]
+
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/threading.py", line 1009, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.10/threading.py", line 1371, in run
+    self.function(*self.args, **self.kwargs)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 136, in recursive_heartbeats
+    heartbeat(dest)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 124, in heartbeat
+    prevTerm=log[nextIndex[dest]-1][1]
+IndexError: list index out of range
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":18,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":54}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 13, "in_reply_to": 18, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+DEBUG:root:received {"dest":"n1","body":{"key":0,"from":2,"to":0,"type":"cas","msg_id":1},"src":"c11","id":62}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":8,"type":"RequestVote","term":2,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n4"},"id":63}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 14, "in_reply_to": 8, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":8,"type":"RequestVote","term":2,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n5"},"id":67}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 15, "in_reply_to": 8, "type": "RequestVoteRes", "term": 1, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":9,"type":"RequestVote","term":2,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n3"},"id":71}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":23,"type":"AppendEntries","term":2,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":79}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 16, "in_reply_to": 9, "type": "RequestVoteRes", "term": 1, "res": false}}
+INFO:root:vote ended, new leader is
+n1
+
+INFO:root:there is a new leader
+
+INFO:root:node id:
+n1
+leader
+n2
+kvsotr
+{}
+cur term
+1
+log 
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+commit indez e last applied
+0
+0
+candidate, votes, voted for
+False
+None
+None
+timeout dict
+{'n1': 1651673820763564801, 'n2': 1651673821024523845, 'n3': 1651673821011258305, 'n4': 1651673820978728672, 'n5': 1651673820991283356}
+curr time
+1651673821024930497
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 17, "in_reply_to": 23, "type": "AppendEntriesRes", "res": true, "term": 2, "next": 2, "commit": 0}}
+INFO:root:election timeout, starting new election
+
+INFO:root:starting new elections, new term
+3
+sec, min max hb
+0.35658539271910417
+0.3333333333333333
+0.5
+
+INFO:root:Requesting new Vote
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 18, "type": "RequestVote", "term": 3, "prevLogIndex": 1, "lastLogTerm": 1, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 19, "type": "RequestVote", "term": 3, "prevLogIndex": 1, "lastLogTerm": 1, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 20, "type": "RequestVote", "term": 3, "prevLogIndex": 1, "lastLogTerm": 1, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 21, "type": "RequestVote", "term": 3, "prevLogIndex": 1, "lastLogTerm": 1, "candidateId": "n1"}}
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 22, "type": "RequestVote", "term": 3, "prevLogIndex": 1, "lastLogTerm": 1, "candidateId": "n1"}}
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":18,"type":"RequestVote","term":3,"prevLogIndex":1,"lastLogTerm":1,"candidateId":"n1"},"id":99}
+INFO:root:voting for myself
+n1
+at time
+1651673821034910771
+nr votes
+0
+
+DEBUG:root:sending {"dest": "n1", "src": "n1", "body": {"msg_id": 23, "in_reply_to": 18, "type": "RequestVoteRes", "term": 3, "res": true}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":15,"type":"AppendEntries","term":2,"prevIndex":1,"prevTerm":0,"entries":[],"commit":0},"id":104}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":17,"in_reply_to":22,"type":"RequestVoteRes","term":2,"res":false},"id":106}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 24, "in_reply_to": 15, "type": "AppendEntriesRes", "res": false, "term": 3}}
+INFO:root:msg term
+2
+current term
+3
+log
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+msg entries
+[]
+
+INFO:root:Got a response to the vote Request #475
+
+INFO:root:node id:
+n1
+leader
+n2
+kvsotr
+{}
+cur term
+3
+log 
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+commit indez e last applied
+0
+0
+candidate, votes, voted for
+True
+0
+n1
+timeout dict
+{'n1': 1651673821034899315, 'n2': 1651673821024523845, 'n3': 1651673821011258305, 'n4': 1651673821037468965, 'n5': 1651673821038144154}
+curr time
+1651673821038328082
+
+INFO:root:resposta
+False
+majority
+3
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":29,"in_reply_to":19,"type":"RequestVoteRes","term":2,"res":false},"id":107}
+INFO:root:Got a response to the vote Request #475
+
+INFO:root:node id:
+n1
+leader
+n2
+kvsotr
+{}
+cur term
+3
+log 
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+commit indez e last applied
+0
+0
+candidate, votes, voted for
+True
+0
+n1
+timeout dict
+{'n1': 1651673821034899315, 'n2': 1651673821039291490, 'n3': 1651673821011258305, 'n4': 1651673821037468965, 'n5': 1651673821038144154}
+curr time
+1651673821039490041
+
+INFO:root:resposta
+False
+majority
+3
+
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":18,"in_reply_to":20,"type":"RequestVoteRes","term":2,"res":false},"id":108}
+INFO:root:Got a response to the vote Request #475
+
+INFO:root:node id:
+n1
+leader
+n2
+kvsotr
+{}
+cur term
+3
+log 
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+commit indez e last applied
+0
+0
+candidate, votes, voted for
+True
+0
+n1
+timeout dict
+{'n1': 1651673821034899315, 'n2': 1651673821039291490, 'n3': 1651673821040569172, 'n4': 1651673821037468965, 'n5': 1651673821038144154}
+curr time
+1651673821040771508
+
+INFO:root:resposta
+False
+majority
+3
+
+DEBUG:root:received {"dest":"n1","src":"n1","body":{"msg_id":23,"in_reply_to":18,"type":"RequestVoteRes","term":3,"res":true},"id":110}
+INFO:root:Got a response to the vote Request #475
+
+INFO:root:node id:
+n1
+leader
+n2
+kvsotr
+{}
+cur term
+3
+log 
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+commit indez e last applied
+0
+0
+candidate, votes, voted for
+True
+0
+n1
+timeout dict
+{'n1': 1651673821047505341, 'n2': 1651673821039291490, 'n3': 1651673821040569172, 'n4': 1651673821037468965, 'n5': 1651673821038144154}
+curr time
+1651673821047745000
+
+INFO:root:resposta
+True
+majority
+3
+
+INFO:root:antes do incremento no voto #487
+0
+
+INFO:root:depois  #489
+1
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":21,"in_reply_to":21,"type":"RequestVoteRes","term":2,"res":false},"id":118}
+INFO:root:Got a response to the vote Request #475
+
+INFO:root:node id:
+n1
+leader
+n2
+kvsotr
+{}
+cur term
+3
+log 
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+commit indez e last applied
+0
+0
+candidate, votes, voted for
+True
+1
+n1
+timeout dict
+{'n1': 1651673821047505341, 'n2': 1651673821039291490, 'n3': 1651673821040569172, 'n4': 1651673821063979911, 'n5': 1651673821038144154}
+curr time
+1651673821064204889
+
+INFO:root:resposta
+False
+majority
+3
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":31,"type":"AppendEntries","term":2,"prevIndex":1,"prevTerm":0,"entries":[],"commit":0},"id":119}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 25, "in_reply_to": 31, "type": "AppendEntriesRes", "res": false, "term": 3}}
+INFO:root:msg term
+2
+current term
+3
+log
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+msg entries
+[]
+
+DEBUG:root:received {"dest":"n1","body":{"key":0,"type":"read","msg_id":1},"src":"c12","id":127}
+DEBUG:root:sending {"dest": "c12", "src": "n1", "body": {"msg_id": 26, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":23,"type":"AppendEntries","term":2,"prevIndex":1,"prevTerm":0,"entries":[],"commit":0},"id":129}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 27, "in_reply_to": 23, "type": "AppendEntriesRes", "res": false, "term": 3}}
+INFO:root:msg term
+2
+current term
+3
+log
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+msg entries
+[]
+
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":36,"type":"AppendEntries","term":2,"prevIndex":1,"prevTerm":0,"entries":[],"commit":0},"id":137}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 28, "in_reply_to": 36, "type": "AppendEntriesRes", "res": false, "term": 3}}
+INFO:root:msg term
+2
+current term
+3
+log
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+msg entries
+[]
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":28,"type":"AppendEntries","term":2,"prevIndex":1,"prevTerm":0,"entries":[],"commit":0},"id":145}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 29, "in_reply_to": 28, "type": "AppendEntriesRes", "res": false, "term": 3}}
+INFO:root:msg term
+2
+current term
+3
+log
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+msg entries
+[]
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":32,"type":"RequestVote","term":3,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n4"},"id":153}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 30, "in_reply_to": 32, "type": "RequestVoteRes", "term": 3, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":25,"type":"RequestVote","term":4,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n3"},"id":163}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 31, "in_reply_to": 25, "type": "RequestVoteRes", "term": 3, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":27,"type":"RequestVote","term":4,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n3"},"id":165}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":42,"type":"AppendEntries","term":3,"prevIndex":1,"prevTerm":0,"entries":[],"commit":0},"id":174}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 32, "in_reply_to": 27, "type": "RequestVoteRes", "term": 3, "res": false}}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 33, "in_reply_to": 42, "type": "AppendEntriesRes", "res": false, "term": 3}}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":24,"type":"RequestVote","term":3,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n5"},"id":181}
+DEBUG:root:received {"dest":"n1","src":"n5","body":{"msg_id":29,"type":"RequestVote","term":4,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n5"},"id":186}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 34, "in_reply_to": 24, "type": "RequestVoteRes", "term": 3, "res": false}}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1)]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n5", "src": "n1", "body": {"msg_id": 35, "in_reply_to": 29, "type": "RequestVoteRes", "term": 3, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":50,"type":"AppendEntries","term":3,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":202}
+INFO:root:commiting command
+[['pass', None], 0]
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 36, "in_reply_to": 50, "type": "AppendEntriesRes", "res": true, "term": 3, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":51,"type":"RequestVote","term":4,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n2"},"id":209}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":40,"type":"AppendEntries","term":4,"prevIndex":1,"prevTerm":0,"entries":[],"commit":0},"id":212}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1), [['pass', None], 0]]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 37, "in_reply_to": 51, "type": "RequestVoteRes", "term": 3, "res": false}}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 38, "in_reply_to": 40, "type": "AppendEntriesRes", "res": false, "term": 3}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":45,"type":"AppendEntries","term":4,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":231}
+INFO:root:vote ended, new leader is
+n2
+
+INFO:root:there is a new leader
+
+INFO:root:node id:
+n1
+leader
+n3
+kvsotr
+{}
+cur term
+3
+log 
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1), [['pass', None], 0]]
+commit indez e last applied
+0
+0
+candidate, votes, voted for
+False
+None
+None
+timeout dict
+{'n1': 1651673821047505341, 'n2': 1651673821289591747, 'n3': 1651673821296903510, 'n4': 1651673821230208178, 'n5': 1651673821262349866}
+curr time
+1651673821297367532
+
+INFO:root:commiting command
+[['pass', None], 0]
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 39, "in_reply_to": 45, "type": "AppendEntriesRes", "res": true, "term": 4, "next": 4, "commit": 0}}
+INFO:root:election ended
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":44,"type":"AppendEntries","term":3,"prevIndex":1,"prevTerm":0,"entries":[],"commit":0},"id":234}
+DEBUG:root:sending {"dest": "n4", "src": "n1", "body": {"msg_id": 40, "in_reply_to": 44, "type": "AppendEntriesRes", "res": false, "term": 4}}
+INFO:root:msg term
+3
+current term
+4
+log
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1), [['pass', None], 0], [['pass', None], 0]]
+msg entries
+[]
+
+DEBUG:root:received {"dest":"n1","src":"n4","body":{"msg_id":46,"in_reply_to":40,"type":"error","code":11,"text":"Not Leader"},"id":237}
+WARNING:root:unknown message type error
+DEBUG:root:received {"dest":"n1","body":{"key":1,"from":1,"to":3,"type":"cas","msg_id":1},"src":"c13","id":238}
+DEBUG:root:sending {"dest": "c13", "src": "n1", "body": {"msg_id": 41, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":59,"type":"RequestVote","term":5,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n2"},"id":240}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1), [['pass', None], 0], [['pass', None], 0]]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 42, "in_reply_to": 59, "type": "RequestVoteRes", "term": 4, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":65,"type":"AppendEntries","term":5,"prevIndex":1,"prevTerm":0,"entries":[],"commit":0},"id":250}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":47,"type":"RequestVote","term":6,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n3"},"id":251}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":52,"type":"RequestVote","term":7,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n3"},"id":259}
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 43, "in_reply_to": 65, "type": "AppendEntriesRes", "res": false, "term": 4}}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1), [['pass', None], 0], [['pass', None], 0]]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 44, "in_reply_to": 47, "type": "RequestVoteRes", "term": 4, "res": false}}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1), [['pass', None], 0], [['pass', None], 0]]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 45, "in_reply_to": 52, "type": "RequestVoteRes", "term": 4, "res": false}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":72,"type":"AppendEntries","term":7,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0]],"commit":0},"id":279}
+INFO:root:vote ended, new leader is
+n3
+
+INFO:root:there is a new leader
+
+INFO:root:node id:
+n1
+leader
+n2
+kvsotr
+{}
+cur term
+4
+log 
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1), [['pass', None], 0], [['pass', None], 0]]
+commit indez e last applied
+0
+0
+candidate, votes, voted for
+False
+None
+None
+timeout dict
+{'n1': 1651673821047505341, 'n2': 1651673821509364409, 'n3': 1651673821500462451, 'n4': 1651673821301773922, 'n5': 1651673821262349866}
+curr time
+1651673821509828571
+
+INFO:root:commiting command
+[['pass', None], 0]
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 46, "in_reply_to": 72, "type": "AppendEntriesRes", "res": true, "term": 7, "next": 5, "commit": 0}}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":60,"type":"AppendEntries","term":7,"prevIndex":1,"prevTerm":0,"entries":[],"commit":0},"id":280}
+DEBUG:root:sending {"dest": "n3", "src": "n1", "body": {"msg_id": 47, "in_reply_to": 60, "type": "AppendEntriesRes", "res": false, "term": 7}}
+DEBUG:root:received {"dest":"n1","src":"n2","body":{"msg_id":73,"type":"RequestVote","term":8,"prevLogIndex":1,"lastLogTerm":0,"candidateId":"n2"},"id":286}
+DEBUG:root:received {"dest":"n1","src":"n3","body":{"msg_id":65,"type":"AppendEntries","term":7,"prevIndex":0,"prevTerm":0,"entries":[[["pass",null],0],[["pass",null],0]],"commit":0},"id":288}
+INFO:root:log atual
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1), [['pass', None], 0], [['pass', None], 0], [['pass', None], 0]]
+prevlog index
+1
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n2", "src": "n1", "body": {"msg_id": 48, "in_reply_to": 73, "type": "RequestVoteRes", "term": 7, "res": false}}
+INFO:root:355
+[(('pass', None), 0), (('cas', (0, (2, 0))), 1), [['pass', None], 0], [['pass', None], 0], [['pass', None], 0]]
+[[['pass', None], 0], [['pass', None], 0]]
+0
+0
+n1
+1
+
+ERROR:root:fatal exception in handler
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab3/ms.py", line 27, in exitOnError
+    fn(*args)
+  File "/home/peter/Documents/tf/lab3/raft.py", line 356, in handle
+    entry=log.get(msg.body.prevIndex+i, None)
+AttributeError: 'list' object has no attribute 'get'
