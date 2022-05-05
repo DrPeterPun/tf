@@ -1,0 +1,147 @@
+DEBUG:root:received {"dest":"n3","body":{"type":"init","node_id":"n3","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c2","id":2}
+INFO:root:node n3 initialized
+DEBUG:root:sending {"dest": "c2", "src": "n3", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+INFO:root:node
+n1
+current time
+1651678768757893346
+node_time
+1651678768757888597
+dif
+4749
+True
+
+INFO:root:leader alive, resuming timeout checker
+
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":4,"type":"RequestVote","term":1,"prevLogIndex":0,"lastLogTerm":0,"candidateId":"n2"},"id":10}
+INFO:root:log atual
+[(('pass', None), 0)]
+prevlog index
+0
+ last log term
+0
+
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 2, "in_reply_to": 4, "type": "RequestVoteRes", "term": 0, "res": true}}
+INFO:root:election started and voted vor
+n2
+at time
+1651678768772513953
+
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":9,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":19}
+INFO:root:vote ended, new leader is
+n1
+
+INFO:root:there is a new leader
+
+INFO:root:node id:
+n3
+leader
+n2
+kvsotr
+{}
+cur term
+0
+log 
+[(('pass', None), 0)]
+commit indez e last applied
+0
+0
+candidate, votes, voted for
+False
+None
+None
+timeout dict
+{'n1': 1651678768757888597, 'n2': 1651678768782244914, 'n3': 1651678768757888597, 'n4': 1651678768757888597, 'n5': 1651678768757888597}
+curr time
+1651678768782360664
+
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 3, "in_reply_to": 9, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n1","body":{"msg_id":3,"type":"AppendEntries","term":0,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":27}
+DEBUG:root:sending {"dest": "n1", "src": "n3", "body": {"msg_id": 4, "in_reply_to": 3, "type": "AppendEntriesRes", "res": false, "term": 1}}
+INFO:root:msg term
+0
+current term
+1
+log
+[(('pass', None), 0)]
+msg entries
+[]
+
+DEBUG:root:received {"dest":"n3","src":"n1","body":{"msg_id":9,"in_reply_to":4,"type":"error","code":11,"text":"Not Leader"},"id":37}
+WARNING:root:unknown message type error
+DEBUG:root:received {"dest":"n3","body":{"key":1,"from":1,"to":1,"type":"cas","msg_id":1},"src":"c10","id":40}
+DEBUG:root:sending {"dest": "c10", "src": "n3", "body": {"msg_id": 5, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":14,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":43}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 6, "in_reply_to": 14, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":18,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":51}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 7, "in_reply_to": 18, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":22,"type":"AppendEntries","term":1,"prevIndex":0,"prevTerm":0,"entries":[],"commit":0},"id":59}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 8, "in_reply_to": 22, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 1, "commit": 0}}
+INFO:root:election ended
+
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":26,"type":"AppendEntries","term":1,"entries":[[["cas",[1,[0,2]]],1]],"prevIndex":0,"prevTerm":0,"commit":0},"id":68}
+INFO:root:commiting command
+[['cas', [1, [0, 2]]], 1]
+
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 9, "in_reply_to": 26, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 2, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":30,"type":"AppendEntries","term":1,"prevIndex":1,"prevTerm":1,"entries":[],"commit":0},"id":76}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 10, "in_reply_to": 30, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 2, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":34,"type":"AppendEntries","term":1,"prevIndex":1,"prevTerm":1,"entries":[],"commit":0},"id":86}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 11, "in_reply_to": 34, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 2, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":38,"type":"AppendEntries","term":1,"prevIndex":1,"prevTerm":1,"entries":[],"commit":0},"id":98}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 12, "in_reply_to": 38, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 2, "commit": 0}}
+DEBUG:root:received {"dest":"n3","body":{"key":0,"value":2,"type":"write","msg_id":1},"src":"c15","id":105}
+DEBUG:root:sending {"dest": "c15", "src": "n3", "body": {"msg_id": 13, "in_reply_to": 1, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":42,"type":"AppendEntries","term":1,"prevIndex":1,"prevTerm":1,"entries":[],"commit":0},"id":108}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 14, "in_reply_to": 42, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 2, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":46,"type":"AppendEntries","term":1,"prevIndex":1,"prevTerm":1,"entries":[],"commit":0},"id":116}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 15, "in_reply_to": 46, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 2, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":50,"type":"AppendEntries","term":1,"prevIndex":1,"prevTerm":1,"entries":[],"commit":0},"id":124}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 16, "in_reply_to": 50, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 2, "commit": 0}}
+INFO:root:node
+n2
+current time
+1651678769528510258
+node_time
+1651678768757888597
+dif
+770621661
+False
+
+INFO:root:leader alive, resuming timeout checker
+
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":54,"type":"AppendEntries","term":1,"entries":[[["cas",[0,[3,4]]],1]],"prevIndex":1,"prevTerm":1,"commit":0},"id":135}
+INFO:root:commiting command
+[['cas', [0, [3, 4]]], 1]
+
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 17, "in_reply_to": 54, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":58,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":143}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 18, "in_reply_to": 58, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":62,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":151}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 19, "in_reply_to": 62, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":66,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":159}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 20, "in_reply_to": 66, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":71,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":171}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 21, "in_reply_to": 71, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":75,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":179}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 22, "in_reply_to": 75, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","body":{"key":0,"from":3,"to":3,"type":"cas","msg_id":2},"src":"c15","id":186}
+DEBUG:root:sending {"dest": "c15", "src": "n3", "body": {"msg_id": 23, "in_reply_to": 2, "type": "error", "code": 11, "text": "Not Leader"}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":79,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":189}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 24, "in_reply_to": 79, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":83,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":199}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 25, "in_reply_to": 83, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":87,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":207}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 26, "in_reply_to": 87, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":91,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":217}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 27, "in_reply_to": 91, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":95,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":225}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 28, "in_reply_to": 95, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":99,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":233}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 29, "in_reply_to": 99, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":103,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":241}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 30, "in_reply_to": 103, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":108,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":251}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 31, "in_reply_to": 108, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}
+DEBUG:root:received {"dest":"n3","src":"n2","body":{"msg_id":112,"type":"AppendEntries","term":1,"prevIndex":2,"prevTerm":1,"entries":[],"commit":0},"id":260}
+DEBUG:root:sending {"dest": "n2", "src": "n3", "body": {"msg_id": 32, "in_reply_to": 112, "type": "AppendEntriesRes", "res": true, "term": 1, "next": 3, "commit": 0}}

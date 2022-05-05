@@ -94,14 +94,7 @@ def count_commit_index_consensus(n):
 #check if a node is alive
 #returns true if node is alive
 def check_timestamp(node):
-    ######################################debug
-    cur_time = time.time_ns()
-    buildString(["node",node,"current time",cur_time,"node_time",timeout_dict[node_id], "dif", cur_time-timeout_dict[node_id], cur_time-timeout_dict[node_id] < MAX_TIME_DIF])
-    #TESTING TESTING DEBUG!!!, trying to makje n2 the leader anter a bit
-    if node=='n1' and node_id=='n2' and not is_leader(): 
-            buildString(["LEADER IS DEAD bit of a aldrabation tho ",node])
-            return False
-    elif timeout_dict.get(node,None) != None:
+    if timeout_dict.get(node,None) != None:
         return cur_time-timeout_dict[node]<MAX_TIME_DIF
 
 #updates a node's timestamp
@@ -307,7 +300,6 @@ def handle(msg):
     #prevLogIndex; indice do Log imediatamente antes ao primeiro enviado
     #prevLogTerm; termo da primeira entrada do prevLogIndex
     #commit; commitIndex do lider
-    #################################################WRONG######################################
     elif msg.body.type == 'AppendEntries':
         add_timestamp(msg.src)
         #raise Exception(log[msg.body.prevIndex])
@@ -339,14 +331,6 @@ def handle(msg):
             buildString([ "280",log,msg.body.prevIndex,commitIndex,node_id,msg.body.entries])
             return
         
-        
-
-
-        ##################### degub
-        #reply(msg,type='AppendEntriesRes',res=True,term=current_term,next=len(log),commit=commitIndex)
-        #return 
-        #####################
-
         #check if any existing entries have diferent terms than the received ones
         newstart=0
         if len(msg.body.entries)>0:
@@ -424,9 +408,7 @@ def handle(msg):
         #poe em maxn o N maximo tal que existe um consenso de que commitIndex=N
         #aka da commit a tods os comands para os quais existe um consenso.
 
-        #nao faz sentido ver se mudaram cenas se o que recebeu um falso
         while(flag and msg.body.res):
-            #buildString([ "3",log,unanswered,commitIndex,matchIndex,majority,count_commit_index_consensus(maxn+1)])    
             #se ha consenso deste commit, da tbm o lider o commit
             if count_commit_index_consensus(maxn+1)>=majority:
                 buildString([ "dei commit ao commando ",log[maxn], log, unanswered,commitIndex,matchIndex,majority,count_commit_index_consensus(maxn+1)])    
@@ -480,7 +462,6 @@ def handle(msg):
                 #start election timout timer (0.1sec)
                 Timer(0.25, election_checker).start()
             else:
-                #buildString([log,msg.body.prevLogIndex,msg.body.lastLogTerm,votedFor,node_id])
                 reply(msg,type='RequestVoteRes', term=current_term, res= False)
 
     elif msg.body.type == 'RequestVoteRes':
