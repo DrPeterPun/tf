@@ -1,0 +1,10 @@
+DEBUG:root:received {"dest":"n2","body":{"type":"init","node_id":"n2","node_ids":["n0","n1","n2","n3"],"msg_id":1},"src":"c1","id":1}
+INFO:root:node n2 initialized
+DEBUG:root:sending {"dest": "c1", "src": "n2", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n2","body":{"txn":[["r",9,null],["r",8,null],["r",8,null],["append",9,1]],"type":"txn","msg_id":1},"src":"c9","id":9}
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<handle() done, defined at /home/peter/Documents/tf/lab4/cent.py:57> exception=IndexError('list assignment index out of range')>
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab4/cent.py", line 71, in handle
+    msgQ[msg.body.msg_id]= (msg,True)
+IndexError: list assignment index out of range

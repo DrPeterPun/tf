@@ -1,0 +1,16 @@
+1	:invoke	:txn	[[:r 9 nil] [:r 7 nil] [:r 8 nil] [:append 7 1]]
+1	:ok	:txn	[[:r 9 nil] [:r 7 nil] [:r 8 nil] [:append 7 1]]
+1	:invoke	:txn	[[:r 9 nil] [:r 9 nil] [:r 8 nil]]
+2	:invoke	:txn	[[:r 9 nil] [:r 5 nil]]
+3	:invoke	:txn	[[:r 7 nil] [:append 9 1] [:append 6 1] [:append 6 2]]
+2	:ok	:txn	[[:r 9 nil] [:r 5 nil]]
+3	:info	:txn	[[:r 7 nil] [:append 9 1] [:append 6 1] [:append 6 2]]	[:unknown transaction aborted]
+2	:invoke	:txn	[[:append 9 2]]
+0	:invoke	:txn	[[:r 7 nil] [:r 9 nil] [:append 8 1] [:append 9 3]]
+0	:ok	:txn	[[:r 7 nil] [:r 9 nil] [:append 8 1] [:append 9 3]]
+7	:invoke	:txn	[[:r 8 nil]]
+7	:info	:txn	[[:r 8 nil]]	[:unknown transaction aborted]
+0	:invoke	:txn	[[:append 8 2] [:r 9 nil] [:r 9 nil]]
+1	:info	:txn	[[:r 9 nil] [:r 9 nil] [:r 8 nil]]	:net-timeout
+2	:info	:txn	[[:append 9 2]]	:net-timeout
+0	:info	:txn	[[:append 8 2] [:r 9 nil] [:r 9 nil]]	:net-timeout

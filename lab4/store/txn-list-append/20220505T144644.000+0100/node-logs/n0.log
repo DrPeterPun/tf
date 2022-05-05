@@ -1,0 +1,42 @@
+DEBUG:root:received {"dest":"n0","body":{"type":"init","node_id":"n0","node_ids":["n0","n1","n2","n3"],"msg_id":1},"src":"c3","id":3}
+INFO:root:node n0 initialized
+DEBUG:root:sending {"dest": "c3", "src": "n0", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",6,1],["append",7,1]],"type":"txn","msg_id":1},"src":"c9","id":10}
+INFO:root:executing txn
+DEBUG:root:c9-1: locking 6
+DEBUG:root:c9-1: locking 7
+INFO:root:CTX 
+namespace(tid='c9-1', locked=[6, 7])
+ msg id1
+DEBUG:root:c9-1: appending to 6: 1
+DEBUG:root:c9-1: appending to 7: 1
+DEBUG:root:c9-1: updating 6: [1]
+DEBUG:root:c9-1: updating 7: [1]
+DEBUG:root:sending {"dest": "c9", "src": "n0", "body": {"msg_id": 2, "in_reply_to": 1, "type": "txn_ok", "txn": [["append", 6, 1], ["append", 7, 1]]}}
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<handle() done, defined at /home/peter/Documents/tf/lab4/cent.py:15> exception=TypeError("'types.SimpleNamespace' object is not callable")>
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab4/cent.py", line 39, in handle
+    msg(node, type='txnRep',txn=msg.body.txn, originalid=msg.body.msg_id)
+TypeError: 'types.SimpleNamespace' object is not callable
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",8,1],["append",4,1]],"type":"txn","msg_id":2},"src":"c9","id":15}
+INFO:root:executing txn
+DEBUG:root:c9-2: locking 4
+DEBUG:root:c9-2: locking 8
+INFO:root:CTX 
+namespace(tid='c9-2', locked=[4, 8])
+ msg id2
+DEBUG:root:c9-2: appending to 8: 1
+DEBUG:root:c9-2: appending to 4: 1
+DEBUG:root:c9-2: updating 4: [1]
+DEBUG:root:c9-2: updating 8: [1]
+DEBUG:root:sending {"dest": "c9", "src": "n0", "body": {"msg_id": 3, "in_reply_to": 2, "type": "txn_ok", "txn": [["append", 8, 1], ["append", 4, 1]]}}
+ERROR:asyncio:Task exception was never retrieved
+future: <Task finished name='Task-4' coro=<handle() done, defined at /home/peter/Documents/tf/lab4/cent.py:15> exception=TypeError("'types.SimpleNamespace' object is not callable")>
+Traceback (most recent call last):
+  File "/home/peter/Documents/tf/lab4/cent.py", line 39, in handle
+    msg(node, type='txnRep',txn=msg.body.txn, originalid=msg.body.msg_id)
+TypeError: 'types.SimpleNamespace' object is not callable
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",9,5],["append",6,2],["append",7,4]],"type":"txn","msg_id":3},"src":"c9","id":20}
+INFO:root:executing txn
+DEBUG:root:c9-3: locking 6

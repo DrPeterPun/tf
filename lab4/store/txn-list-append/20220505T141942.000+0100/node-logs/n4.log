@@ -1,0 +1,17 @@
+DEBUG:root:received {"dest":"n4","body":{"type":"init","node_id":"n4","node_ids":["n1","n2","n3","n4","n5"],"msg_id":1},"src":"c2","id":2}
+INFO:root:node n4 initialized
+DEBUG:root:sending {"dest": "c2", "src": "n4", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n4","body":{"txn":[["append",9,7],["append",6,1],["r",8,null]],"type":"txn","msg_id":1},"src":"c16","id":26}
+INFO:root:executing txn
+DEBUG:root:c16-1: locking 6
+DEBUG:root:c16-1: locking 8
+DEBUG:root:c16-1: locking 9
+DEBUG:root:c16-1: appending to 9: 7
+DEBUG:root:c16-1: appending to 6: 1
+DEBUG:root:c16-1: reading 8
+DEBUG:root:c16-1: updating 6: [1]
+DEBUG:root:c16-1: updating 9: [7]
+DEBUG:root:sending {"dest": "c16", "src": "n4", "body": {"msg_id": 2, "in_reply_to": 1, "type": "txn_ok", "txn": [["append", 9, 7], ["append", 6, 1], ["r", 8, null]]}}
+DEBUG:root:c16-1: unlocking 6
+DEBUG:root:c16-1: unlocking 8
+DEBUG:root:c16-1: unlocking 9

@@ -1,0 +1,8 @@
+G-single-realtime #0
+Let:
+  T1 = {:type :ok, :f :txn, :value [[:r 7 nil] [:r 9 nil]], :time 585330758, :process 2, :index 8}
+  T2 = {:type :ok, :f :txn, :value [[:append 9 2] [:r 7 nil] [:append 9 3] [:r 9 [2 3]]], :time 291315203, :process 1, :index 3}
+
+Then:
+  - T1 < T2, because T1 observed the initial (nil) state of 9, which T2 created by appending 2.
+  - However, T2 < T1, because T2 completed at index 3, 0.166 seconds before the invocation of T1, at index 6: a contradiction!

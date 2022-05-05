@@ -1,0 +1,135 @@
+DEBUG:root:received {"dest":"n0","body":{"type":"init","node_id":"n0","node_ids":["n0"],"msg_id":1},"src":"c0","id":0}
+INFO:root:node n0 initialized
+DEBUG:root:sending {"dest": "c0", "src": "n0", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n0","body":{"txn":[["r",6,null]],"type":"txn","msg_id":1},"src":"c2","id":2}
+INFO:root:executing txn
+DEBUG:root:c2-1: locking 6
+DEBUG:root:c2-1: reading 6
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 2, "in_reply_to": 1, "type": "txn_ok", "txn": [["r", 6, null]]}}
+DEBUG:root:c2-1: unlocking 6
+DEBUG:root:received {"dest":"n0","body":{"txn":[["r",9,null]],"type":"txn","msg_id":2},"src":"c2","id":4}
+INFO:root:executing txn
+DEBUG:root:c2-2: locking 9
+DEBUG:root:c2-2: reading 9
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 3, "in_reply_to": 2, "type": "txn_ok", "txn": [["r", 9, null]]}}
+DEBUG:root:c2-2: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",7,1],["r",9,null],["r",8,null],["r",9,null]],"type":"txn","msg_id":3},"src":"c2","id":6}
+INFO:root:executing txn
+DEBUG:root:c2-3: locking 7
+DEBUG:root:c2-3: locking 8
+DEBUG:root:c2-3: locking 9
+DEBUG:root:c2-3: appending to 7: 1
+DEBUG:root:c2-3: reading 9
+DEBUG:root:c2-3: reading 8
+DEBUG:root:c2-3: reading 9
+DEBUG:root:c2-3: updating 7: [1]
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 4, "in_reply_to": 3, "type": "txn_ok", "txn": [["append", 7, 1], ["r", 9, null], ["r", 8, null], ["r", 9, null]]}}
+DEBUG:root:c2-3: unlocking 7
+DEBUG:root:c2-3: unlocking 8
+DEBUG:root:c2-3: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",7,2],["append",9,1]],"type":"txn","msg_id":4},"src":"c2","id":8}
+INFO:root:executing txn
+DEBUG:root:c2-4: locking 7
+DEBUG:root:c2-4: locking 9
+DEBUG:root:c2-4: appending to 7: 2
+DEBUG:root:c2-4: appending to 9: 1
+DEBUG:root:c2-4: updating 7: [1, 2]
+DEBUG:root:c2-4: updating 9: [1]
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 5, "in_reply_to": 4, "type": "txn_ok", "txn": [["append", 7, 2], ["append", 9, 1]]}}
+DEBUG:root:c2-4: unlocking 7
+DEBUG:root:c2-4: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",8,1],["r",6,null],["r",9,null]],"type":"txn","msg_id":5},"src":"c2","id":10}
+INFO:root:executing txn
+DEBUG:root:c2-5: locking 6
+DEBUG:root:c2-5: locking 8
+DEBUG:root:c2-5: locking 9
+DEBUG:root:c2-5: appending to 8: 1
+DEBUG:root:c2-5: reading 6
+DEBUG:root:c2-5: reading 9
+DEBUG:root:c2-5: updating 8: [1]
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 6, "in_reply_to": 5, "type": "txn_ok", "txn": [["append", 8, 1], ["r", 6, null], ["r", 9, [1]]]}}
+DEBUG:root:c2-5: unlocking 6
+DEBUG:root:c2-5: unlocking 8
+DEBUG:root:c2-5: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["r",9,null]],"type":"txn","msg_id":6},"src":"c2","id":12}
+INFO:root:executing txn
+DEBUG:root:c2-6: locking 9
+DEBUG:root:c2-6: reading 9
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 7, "in_reply_to": 6, "type": "txn_ok", "txn": [["r", 9, [1]]]}}
+DEBUG:root:c2-6: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",6,1],["r",8,null],["r",9,null]],"type":"txn","msg_id":7},"src":"c2","id":14}
+INFO:root:executing txn
+DEBUG:root:c2-7: locking 6
+DEBUG:root:c2-7: locking 8
+DEBUG:root:c2-7: locking 9
+DEBUG:root:c2-7: appending to 6: 1
+DEBUG:root:c2-7: reading 8
+DEBUG:root:c2-7: reading 9
+DEBUG:root:c2-7: updating 6: [1]
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 8, "in_reply_to": 7, "type": "txn_ok", "txn": [["append", 6, 1], ["r", 8, [1]], ["r", 9, [1]]]}}
+DEBUG:root:c2-7: unlocking 6
+DEBUG:root:c2-7: unlocking 8
+DEBUG:root:c2-7: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",9,2],["append",7,3],["r",7,null]],"type":"txn","msg_id":8},"src":"c2","id":16}
+INFO:root:executing txn
+DEBUG:root:c2-8: locking 7
+DEBUG:root:c2-8: locking 9
+DEBUG:root:c2-8: appending to 9: 2
+DEBUG:root:c2-8: appending to 7: 3
+DEBUG:root:c2-8: reading 7
+DEBUG:root:c2-8: updating 7: [1, 2, 3]
+DEBUG:root:c2-8: updating 9: [1, 2]
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 9, "in_reply_to": 8, "type": "txn_ok", "txn": [["append", 9, 2], ["append", 7, 3], ["r", 7, [1, 2, 3]]]}}
+DEBUG:root:c2-8: unlocking 7
+DEBUG:root:c2-8: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",8,2],["append",9,3]],"type":"txn","msg_id":9},"src":"c2","id":18}
+INFO:root:executing txn
+DEBUG:root:c2-9: locking 8
+DEBUG:root:c2-9: locking 9
+DEBUG:root:c2-9: appending to 8: 2
+DEBUG:root:c2-9: appending to 9: 3
+DEBUG:root:c2-9: updating 8: [1, 2]
+DEBUG:root:c2-9: updating 9: [1, 2, 3]
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 10, "in_reply_to": 9, "type": "txn_ok", "txn": [["append", 8, 2], ["append", 9, 3]]}}
+DEBUG:root:c2-9: unlocking 8
+DEBUG:root:c2-9: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",9,4]],"type":"txn","msg_id":10},"src":"c2","id":20}
+INFO:root:executing txn
+DEBUG:root:c2-10: locking 9
+DEBUG:root:c2-10: appending to 9: 4
+DEBUG:root:c2-10: updating 9: [1, 2, 3, 4]
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 11, "in_reply_to": 10, "type": "txn_ok", "txn": [["append", 9, 4]]}}
+DEBUG:root:c2-10: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["append",9,5],["r",9,null]],"type":"txn","msg_id":11},"src":"c2","id":22}
+INFO:root:executing txn
+DEBUG:root:c2-11: locking 9
+DEBUG:root:c2-11: appending to 9: 5
+DEBUG:root:c2-11: reading 9
+DEBUG:root:c2-11: updating 9: [1, 2, 3, 4, 5]
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 12, "in_reply_to": 11, "type": "txn_ok", "txn": [["append", 9, 5], ["r", 9, [1, 2, 3, 4, 5]]]}}
+DEBUG:root:c2-11: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["r",9,null],["append",9,6]],"type":"txn","msg_id":12},"src":"c2","id":24}
+INFO:root:executing txn
+DEBUG:root:c2-12: locking 9
+INFO:root:c2-12: aborted
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 13, "in_reply_to": 12, "type": "error", "code": 14, "text": "transaction aborted"}}
+DEBUG:root:c2-12: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["r",9,null],["r",7,null],["r",9,null]],"type":"txn","msg_id":13},"src":"c2","id":26}
+INFO:root:executing txn
+DEBUG:root:c2-13: locking 7
+DEBUG:root:c2-13: locking 9
+DEBUG:root:c2-13: reading 9
+DEBUG:root:c2-13: reading 7
+DEBUG:root:c2-13: reading 9
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 14, "in_reply_to": 13, "type": "txn_ok", "txn": [["r", 9, [1, 2, 3, 4, 5]], ["r", 7, [1, 2, 3]], ["r", 9, [1, 2, 3, 4, 5]]]}}
+DEBUG:root:c2-13: unlocking 7
+DEBUG:root:c2-13: unlocking 9
+DEBUG:root:received {"dest":"n0","body":{"txn":[["r",9,null],["r",6,null]],"type":"txn","msg_id":14},"src":"c2","id":28}
+INFO:root:executing txn
+DEBUG:root:c2-14: locking 6
+DEBUG:root:c2-14: locking 9
+DEBUG:root:c2-14: reading 9
+DEBUG:root:c2-14: reading 6
+DEBUG:root:sending {"dest": "c2", "src": "n0", "body": {"msg_id": 15, "in_reply_to": 14, "type": "txn_ok", "txn": [["r", 9, [1, 2, 3, 4, 5]], ["r", 6, [1]]]}}
+DEBUG:root:c2-14: unlocking 6
+DEBUG:root:c2-14: unlocking 9

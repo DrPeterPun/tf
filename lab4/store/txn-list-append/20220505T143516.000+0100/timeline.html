@@ -1,0 +1,109 @@
+<html><head><style>.ops        { position: absolute; }
+.op         { position: absolute; padding: 2px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); transition: all 0.3s cubic-bezier(.25,.8,.25,1); overflow: hidden; }
+.op.invoke  { background: #eeeeee; }
+.op.ok      { background: #6DB6FE; }
+.op.info    { background: #FFAA26; }
+.op.fail    { background: #FEB5DA; }
+.op:target  { box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22); }
+</style></head><body><div><a href="/">jepsen</a> / <a href="/files/txn-list-append">txn-list-append</a> / <a href="/files/txn-list-append/20220505T143516.000+0100">20220505T143516.000+0100</a> / <a href="/files/txn-list-append/20220505T143516.000+0100/">independent</a> / <a href="/files/txn-list-append/20220505T143516.000+0100/independent/"></a></div><h1>txn-list-append key </h1><div class="ops"><a href="#i1"><div class="op ok" id="i1" style="width:100;left:106;top:0;height:16" title="Dur: 152 ms
+Err: nil
+Wall-clock Time: 2022-05-05T13:35:16.161Z
+
+Op:
+{:type :ok,
+ :f :txn,
+ :value [[:r 9 nil] [:r 7 nil] [:r 8 nil] [:append 7 1]],
+ :time 161912254,
+ :process 1,
+ :index 1,
+ :sub-index 1}
+">1 txn [[:r 9 nil] [:r 7 nil] [:r 8 nil] [:append 7 1]]</div></a><a href="#i5"><div class="op ok" id="i5" style="width:100;left:212;top:48;height:32" title="Dur: 128 ms
+Err: nil
+Wall-clock Time: 2022-05-05T13:35:16.654Z
+
+Op:
+{:type :ok,
+ :f :txn,
+ :value [[:r 9 nil] [:r 5 nil]],
+ :time 654866197,
+ :process 2,
+ :index 5,
+ :sub-index 5}
+">2 txn [[:r 9 nil] [:r 5 nil]]</div></a><a href="#i6"><div class="op info" id="i6" style="width:100;left:318;top:64;height:208" title="Dur: 57 ms
+Err: [:unknown &quot;transaction aborted&quot;]
+Wall-clock Time: 2022-05-05T13:35:16.710Z
+
+Op:
+{:type :info,
+ :f :txn,
+ :value [[:r 7 nil] [:append 9 1] [:append 6 1] [:append 6 2]],
+ :time 710593776,
+ :process 3,
+ :error [:unknown &quot;transaction aborted&quot;],
+ :index 6,
+ :sub-index 6}
+">3 txn [[:r 7 nil] [:append 9 1] [:append 6 1] [:append 6 2]]</div></a><a href="#i9"><div class="op ok" id="i9" style="width:100;left:0;top:128;height:16" title="Dur: 150 ms
+Err: nil
+Wall-clock Time: 2022-05-05T13:35:17.190Z
+
+Op:
+{:type :ok,
+ :f :txn,
+ :value [[:r 7 nil] [:r 9 nil] [:append 8 1] [:append 9 3]],
+ :time 1190637042,
+ :process 0,
+ :index 9,
+ :sub-index 9}
+">0 txn [[:r 7 nil] [:r 9 nil] [:append 8 1] [:append 9 3]]</div></a><a href="#i11"><div class="op info" id="i11" style="width:100;left:424;top:160;height:112" title="Dur: 17 ms
+Err: [:unknown &quot;transaction aborted&quot;]
+Wall-clock Time: 2022-05-05T13:35:17.451Z
+
+Op:
+{:type :info,
+ :f :txn,
+ :value [[:r 8 nil]],
+ :time 1451851179,
+ :process 7,
+ :error [:unknown &quot;transaction aborted&quot;],
+ :index 11,
+ :sub-index 11}
+">7 txn [[:r 8 nil]]</div></a><a href="#i13"><div class="op info" id="i13" style="width:100;left:106;top:32;height:240" title="Dur: 5003 ms
+Err: :net-timeout
+Wall-clock Time: 2022-05-05T13:35:21.234Z
+
+Op:
+{:type :info,
+ :f :txn,
+ :value [[:r 9 nil] [:r 9 nil] [:r 8 nil]],
+ :time 5234192230,
+ :process 1,
+ :error :net-timeout,
+ :index 13,
+ :sub-index 13}
+">1 txn [[:r 9 nil] [:r 9 nil] [:r 8 nil]]</div></a><a href="#i14"><div class="op info" id="i14" style="width:100;left:212;top:112;height:160" title="Dur: 5003 ms
+Err: :net-timeout
+Wall-clock Time: 2022-05-05T13:35:21.996Z
+
+Op:
+{:type :info,
+ :f :txn,
+ :value [[:append 9 2]],
+ :time 5996826107,
+ :process 2,
+ :error :net-timeout,
+ :index 14,
+ :sub-index 14}
+">2 txn [[:append 9 2]]</div></a><a href="#i15"><div class="op info" id="i15" style="width:100;left:0;top:192;height:80" title="Dur: 5002 ms
+Err: :net-timeout
+Wall-clock Time: 2022-05-05T13:35:22.821Z
+
+Op:
+{:type :info,
+ :f :txn,
+ :value [[:append 8 2] [:r 9 nil] [:r 9 nil]],
+ :time 6821515350,
+ :process 0,
+ :error :net-timeout,
+ :index 15,
+ :sub-index 15}
+">0 txn [[:append 8 2] [:r 9 nil] [:r 9 nil]]</div></a></div></body></html>

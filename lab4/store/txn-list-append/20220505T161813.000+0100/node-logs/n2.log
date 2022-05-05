@@ -1,0 +1,17 @@
+DEBUG:root:received {"dest":"n2","body":{"type":"init","node_id":"n2","node_ids":["n0","n1","n2","n3"],"msg_id":1},"src":"c0","id":0}
+INFO:root:node n2 initialized
+DEBUG:root:sending {"dest": "c0", "src": "n2", "body": {"msg_id": 1, "in_reply_to": 1, "type": "init_ok"}}
+DEBUG:root:received {"dest":"n2","src":"n0","body":{"msg_id":3,"type":"txnRep","msg":{"dest":"n0","body":{"txn":[["r",9,null],["r",9,null],["r",5,null],["append",8,1]],"type":"txn","msg_id":1},"src":"c8","id":8}},"id":10}
+INFO:root:cehcking if we can commit the msg: 0
+DEBUG:root:received {"dest":"n2","src":"n3","body":{"msg_id":4,"type":"txnRep","msg":{"dest":"n3","body":{"txn":[["append",9,1],["r",9,null]],"type":"txn","msg_id":1},"src":"c9","id":12}},"id":15}
+INFO:root:cehcking if we can commit the msg: 0
+DEBUG:root:received {"dest":"n2","body":{"txn":[["append",9,2],["append",7,1],["r",6,null],["r",9,null]],"type":"txn","msg_id":1},"src":"c10","id":16}
+INFO:root:Sending msg to be replicated, destn0
+DEBUG:root:sending {"dest": "n0", "src": "n2", "body": {"msg_id": 2, "type": "txnRep", "msg": {"dest": "n2", "body": {"txn": [["append", 9, 2], ["append", 7, 1], ["r", 6, null], ["r", 9, null]], "type": "txn", "msg_id": 1}, "src": "c10", "id": 16}}}
+INFO:root:Sending msg to be replicated, destn1
+DEBUG:root:sending {"dest": "n1", "src": "n2", "body": {"msg_id": 3, "type": "txnRep", "msg": {"dest": "n2", "body": {"txn": [["append", 9, 2], ["append", 7, 1], ["r", 6, null], ["r", 9, null]], "type": "txn", "msg_id": 1}, "src": "c10", "id": 16}}}
+INFO:root:Sending msg to be replicated, destn3
+DEBUG:root:sending {"dest": "n3", "src": "n2", "body": {"msg_id": 4, "type": "txnRep", "msg": {"dest": "n2", "body": {"txn": [["append", 9, 2], ["append", 7, 1], ["r", 6, null], ["r", 9, null]], "type": "txn", "msg_id": 1}, "src": "c10", "id": 16}}}
+INFO:root:cehcking if we can commit the msg: 0
+DEBUG:root:received {"dest":"n2","src":"n1","body":{"msg_id":3,"type":"txnRep","msg":{"dest":"n1","body":{"txn":[["r",9,null]],"type":"txn","msg_id":1},"src":"c11","id":20}},"id":22}
+INFO:root:cehcking if we can commit the msg: 0

@@ -1,0 +1,181 @@
+2022-05-05 14:20:16,482{GMT}	INFO	[jepsen test runner] jepsen.core: Test version 6febe5a1f668e2662c4320709bf01696ca7cdd1d (plus uncommitted changes)
+2022-05-05 14:20:16,482{GMT}	INFO	[jepsen test runner] jepsen.core: Command line:
+lein run test --bin cent.py --workload txn-list-append --time-limit 2 --node-count 1
+2022-05-05 14:20:16,556{GMT}	INFO	[jepsen test runner] jepsen.core: Running test:
+{:remote #jepsen.control.SSHRemote{:session nil}
+ :log-net-send false
+ :node-count 1
+ :max-txn-length 4
+ :concurrency 1
+ :db
+ #object[maelstrom.db$db$reify__16747
+         "0x7e168d90"
+         "maelstrom.db$db$reify__16747@7e168d90"]
+ :max-writes-per-key 16
+ :leave-db-running? false
+ :name "txn-list-append"
+ :logging-json? false
+ :net-journal #object[clojure.lang.Atom "0x5e435f0d" {:status :ready, :val []}]
+ :start-time
+ #object[org.joda.time.DateTime "0x51a7ee4e" "2022-05-05T14:20:16.000+01:00"]
+ :nemesis-interval 10
+ :net
+ #object[maelstrom.net$jepsen_adapter$reify__15560
+         "0x1f664881"
+         "maelstrom.net$jepsen_adapter$reify__15560@1f664881"]
+ :client
+ #object[maelstrom.workload.txn_list_append$client$reify__18442
+         "0x7aafac17"
+         "maelstrom.workload.txn_list_append$client$reify__18442@7aafac17"]
+ :barrier
+ #object[java.util.concurrent.CyclicBarrier
+         "0x3054551f"
+         "java.util.concurrent.CyclicBarrier@3054551f"]
+ :log-stderr false
+ :pure-generators true
+ :ssh {:dummy? true}
+ :rate 5
+ :checker
+ #object[jepsen.checker$compose$reify__8612
+         "0x6b8cfbeb"
+         "jepsen.checker$compose$reify__8612@6b8cfbeb"]
+ :argv
+ ("test"
+  "--bin"
+  "cent.py"
+  "--workload"
+  "txn-list-append"
+  "--time-limit"
+  "2"
+  "--node-count"
+  "1")
+ :nemesis
+ (jepsen.nemesis.ReflCompose
+  {:fm {:start-partition 0,
+        :stop-partition 0,
+        :kill 1,
+        :start 1,
+        :pause 1,
+        :resume 1},
+   :nemeses [#unprintable "jepsen.nemesis.combined$partition_nemesis$reify__17019@4603845b"
+             #unprintable "jepsen.nemesis.combined$db_nemesis$reify__17000@414b5798"]})
+ :active-histories
+ #object[clojure.lang.Atom "0x53251e03" {:status :ready, :val #{}}]
+ :nodes ["n0"]
+ :test-count 1
+ :latency {:mean 0, :dist :constant}
+ :bin "cent.py"
+ :generator
+ (jepsen.generator.TimeLimit
+  {:limit 2000000000,
+   :cutoff nil,
+   :gen (jepsen.generator.Any
+         {:gens [(jepsen.generator.OnThreads {:f #{:nemesis}, :gen nil})
+                 (jepsen.generator.OnThreads
+                  {:f #object[clojure.core$complement$fn__5654
+                              "0x81a193b"
+                              "clojure.core$complement$fn__5654@81a193b"],
+                   :gen (jepsen.generator.Stagger
+                         {:dt 400000000,
+                          :next-time nil,
+                          :gen ({:type :invoke, :f :txn, :value [[:r 6 nil]]}
+                                {:type :invoke, :f :txn, :value [[:r 9 nil]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:append 7 1]
+                                         [:r 9 nil]
+                                         [:r 8 nil]
+                                         [:r 9 nil]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:append 7 2] [:append 9 1]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:append 8 1] [:r 6 nil] [:r 9 nil]]}
+                                {:type :invoke, :f :txn, :value [[:r 9 nil]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:append 6 1] [:r 8 nil] [:r 9 nil]]}
+                                {:type :invoke,
+                                 :f :txn,
+                                 :value [[:append 9 2] [:append 7 3] [:r 7 nil]]}
+                                ...)})})]})})
+ :log-net-recv false
+ :os
+ #object[jepsen.os$reify__2490 "0x7d727123" "jepsen.os$reify__2490@7d727123"]
+ :time-limit 2
+ :workload :txn-list-append
+ :consistency-models [:strict-serializable]
+ :topology :grid}
+
+2022-05-05 14:20:16,561{GMT}	INFO	[jepsen test runner] jepsen.db: Tearing down DB
+2022-05-05 14:20:16,563{GMT}	INFO	[jepsen test runner] jepsen.db: Setting up DB
+2022-05-05 14:20:16,567{GMT}	INFO	[jepsen node n0] maelstrom.service: Starting services: (lin-kv lin-tso lww-kv seq-kv)
+2022-05-05 14:20:16,568{GMT}	INFO	[jepsen node n0] maelstrom.db: Setting up n0
+2022-05-05 14:20:16,569{GMT}	INFO	[jepsen node n0] maelstrom.process: launching cent.py nil
+2022-05-05 14:20:16,631{GMT}	INFO	[jepsen test runner] jepsen.core: Relative time begins now
+2022-05-05 14:20:16,641{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 6 nil]]
+2022-05-05 14:20:16,758{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 6 nil]]
+2022-05-05 14:20:16,758{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 9 nil]]
+2022-05-05 14:20:16,873{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 9 nil]]
+2022-05-05 14:20:16,875{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:append 7 1] [:r 9 nil] [:r 8 nil] [:r 9 nil]]
+2022-05-05 14:20:17,028{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:append 7 1] [:r 9 nil] [:r 8 nil] [:r 9 nil]]
+2022-05-05 14:20:17,029{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:append 7 2] [:append 9 1]]
+2022-05-05 14:20:17,154{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:append 7 2] [:append 9 1]]
+2022-05-05 14:20:17,154{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:append 8 1] [:r 6 nil] [:r 9 nil]]
+2022-05-05 14:20:17,291{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:append 8 1] [:r 6 nil] [:r 9 [1]]]
+2022-05-05 14:20:17,358{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 9 nil]]
+2022-05-05 14:20:17,475{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:r 9 [1]]]
+2022-05-05 14:20:17,476{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:append 6 1] [:r 8 nil] [:r 9 nil]]
+2022-05-05 14:20:17,616{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:append 6 1] [:r 8 [1]] [:r 9 [1]]]
+2022-05-05 14:20:17,617{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:append 9 2] [:append 7 3] [:r 7 nil]]
+2022-05-05 14:20:17,756{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:append 9 2] [:append 7 3] [:r 7 [1 2 3]]]
+2022-05-05 14:20:17,758{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:append 8 2] [:append 9 3]]
+2022-05-05 14:20:17,886{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:append 8 2] [:append 9 3]]
+2022-05-05 14:20:18,109{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:append 9 4]]
+2022-05-05 14:20:18,226{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:append 9 4]]
+2022-05-05 14:20:18,299{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:append 9 5] [:r 9 nil]]
+2022-05-05 14:20:18,427{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:ok	:txn	[[:append 9 5] [:r 9 [1 2 3 4 5]]]
+2022-05-05 14:20:18,428{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:invoke	:txn	[[:r 9 nil] [:append 9 6]]
+2022-05-05 14:20:18,461{GMT}	INFO	[jepsen worker 0] jepsen.util: 0	:info	:txn	[[:r 9 nil] [:append 9 6]]	[:unknown "transaction aborted"]
+2022-05-05 14:20:18,462{GMT}	INFO	[jepsen worker 0] jepsen.util: 1	:invoke	:txn	[[:r 9 nil] [:r 7 nil] [:r 9 nil]]
+2022-05-05 14:20:18,597{GMT}	INFO	[jepsen worker 0] jepsen.util: 1	:ok	:txn	[[:r 9 [1 2 3 4 5]] [:r 7 [1 2 3]] [:r 9 [1 2 3 4 5]]]
+2022-05-05 14:20:18,598{GMT}	INFO	[jepsen worker 0] jepsen.util: 1	:invoke	:txn	[[:r 9 nil] [:r 6 nil]]
+2022-05-05 14:20:18,725{GMT}	INFO	[jepsen worker 0] jepsen.util: 1	:ok	:txn	[[:r 9 [1 2 3 4 5]] [:r 6 [1]]]
+2022-05-05 14:20:18,735{GMT}	INFO	[jepsen node n0] maelstrom.db: Tearing down n0
+2022-05-05 14:20:20,573{GMT}	INFO	[jepsen test runner] jepsen.core: Run complete, writing
+2022-05-05 14:20:20,604{GMT}	INFO	[jepsen test runner] jepsen.core: Analyzing...
+2022-05-05 14:20:20,776{GMT}	INFO	[jepsen test runner] jepsen.core: Analysis complete
+2022-05-05 14:20:20,785{GMT}	INFO	[jepsen results] jepsen.store: Wrote /home/peter/Documents/tf/lab4/store/txn-list-append/20220505T142016.000+0100/results.edn
+2022-05-05 14:20:20,795{GMT}	INFO	[jepsen test runner] jepsen.core: {:perf {:latency-graph {:valid? true},
+        :rate-graph {:valid? true},
+        :valid? true},
+ :timeline {:valid? true},
+ :exceptions {:valid? true},
+ :stats {:valid? true,
+         :count 14,
+         :ok-count 13,
+         :fail-count 0,
+         :info-count 1,
+         :by-f {:txn {:valid? true,
+                      :count 14,
+                      :ok-count 13,
+                      :fail-count 0,
+                      :info-count 1}}},
+ :net {:stats {:all {:send-count 30,
+                     :recv-count 30,
+                     :msg-count 30,
+                     :msgs-per-op 2.142857},
+               :clients {:send-count 30,
+                         :recv-count 30,
+                         :msg-count 30},
+               :servers {:send-count 0,
+                         :recv-count 0,
+                         :msg-count 0,
+                         :msgs-per-op 0.0}},
+       :valid? true},
+ :workload {:valid? true},
+ :valid? true}
+
+
+Everything looks good! ヽ(‘ー`)ノ
