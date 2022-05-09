@@ -8,21 +8,17 @@ from db import DB
 
 logging.getLogger().setLevel(logging.DEBUG)
 
+#master node
+
 db = DB()
 #dict saving uncommited commands ( origianl msg id : (msg, originalnode ) ) 
 msgQ = {}
 # nr of the last commited msg, id is "id" + msgn
 msgn = 0
 
-#
-def numtoid(num):
-    return "id"+str(num)
-
-def idtonum(id):
-    return id[2:]
 
 #da commit a uma instrucao
-#se og=True, envia a mensagem de confirmacao ao
+#se og=True, envia a mensagem de confirmacao ao cliente
 async def commit(msg,db,og=False):
     logging.info('commiting msg nr'+ str(msg.body.msg_id) )
 
@@ -61,19 +57,24 @@ async def handle(msg):
     # State
     global node_id, node_ids
     global db
+    global master
 
     # Message handlers
     if msg.body.type == 'init':
         node_id = msg.body.node_id
         node_ids = msg.body.node_ids
+        master = node_ids[0]
         logging.info('node %s initialized', node_id)
 
         reply(msg, type='init_ok')
 
     elif msg.body.type == 'txn':
-        msgQ[msg.body.msg_id]= (msg,True)
         #msgs de replicacao
-        for node in filter(lambda n: n!=node_id,node_ids):
+        #check if its master node
+        if not node_id==master:
+            send(msg.src,master,txn=msg.body.txn,type='txn')
+        #for node in filter(lambda n: n!=node_id,node_ids):
+        for node in node_ids:
             logging.info("Sending msg to be replicated, dest" + node)
             send(node_id, node, type='txnRep',msg=msg)
         await trycommits(msgQ,db)
@@ -82,7 +83,7 @@ async def handle(msg):
     #ads command to q then tries to execute 
     elif msg.body.type == 'txnRep':
         #added msg to the Q
-        msgQ[msg.body.msg.body.msg_id]= (msg.body.msg,False)
+        msgQ[msg.body.msg.body.msg_id]= (msg.body.msg,node_id==msg.src)
         await trycommits(msgQ,db)
 
     else:
