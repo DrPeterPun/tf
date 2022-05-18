@@ -20,7 +20,6 @@ msgQ = {}
 # nr of the last commited msg, id is "id" + msgn
 msgn = -1
 
-
 #da commit a uma instrucao
 #se og=True, envia a mensagem de confirmacao ao cliente
 async def commit(msg,db,og=False):
@@ -38,6 +37,7 @@ async def commit(msg,db,og=False):
         if og:
             reply(msg, type='error', code=14, text='transaction aborted')
         logging.warning("transaction aborted by node" + node_id)
+        logging.warning("rs,wv,res"+ rs +"\\" + wv + "\\" +res)
         db.cleanup(ctx)
         return False
 
