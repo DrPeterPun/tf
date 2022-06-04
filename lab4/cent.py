@@ -15,7 +15,7 @@ queue = []
 
 #database manager
 db = DB()
-#dict saving uncommited commands ( origianl msg id : (msg, originalnode ) ) 
+#dict saving uncommited commands ( origianl msg id : (msg, originalnode,result from execution ) ) 
 msgQ = {}
 # nr of the last commited msg, id is "id" + msgn
 msgn = -1
@@ -40,6 +40,60 @@ async def commit(msg,db,og=False):
         logging.warning("rs,wv,res"+ rs +"\\" + wv + "\\" +res)
         db.cleanup(ctx)
         return False
+
+def divide_dict(msgQ,msgn):
+    before = {}
+    after = {}
+    for m in msgQ.items():
+        if msgn<m[0]:
+            before[m[0]]=m[1]
+        elif msgn>m[0]:
+            after[m[0]]=m[1]
+        else:
+            logging.warning("something went wrong with the message queue")
+    return(before,after)
+
+#lista de pares k,v -> lista de k
+def wvtok(wv):
+    return list(map(lambda a: a[0],wv))
+      
+#true if unions is not empty
+def compare_sets(a,b):
+    return len([value for value in a if value in b])>0
+
+#checks if a command can be executed
+def check_before(msg,msgQ):
+    before,=divide_dict(msg.body.ts,msgQ)
+    msgk=[k for op,k,v in msg.body.txn]
+    for m in before:
+        #se houver intecessao nos sets retornamos falso
+        if compate_sets(wvtok(m[2][1]),msgk):
+            return False
+    return True
+
+#verifica se a execucao de um comando inalida a execucao dos comandos
+#posteriores
+def check_after(wv,msgQ):
+    wk = wvtok(wv)
+    _,after=divide_dict(msg.body.ts,msgQ)
+    for n,msg in after.items():
+        msgk=[k for op,k,v in msg.body.txn]
+        # caso o comando futuro utilize de um valor que foi escrito pelo comando
+        # que estamos agora a analisar, mudamos a execucao para False
+        if compare_sets(wk,msgk):
+            m,og,res = msgQ[n]
+            msgQ[n]= (m,og,None)
+
+#executes a the comands for a given message
+async def execute(msg,db):
+    logging.info('commiting msg nr'+ str(msg.body.msg_id) )
+
+    ctx = await db.begin([k for op,k,v in msg.body.txn], msg.src+'-'+str(msg.body.msg_id))
+    rs,wv,res = await db.execute(ctx, msg.body.txn)
+    if res:
+        return (rs,wv,res)
+    else:
+        return None
 
 # faz o maximo numero de commits possivel.
 async def trycommits(msgQ,db):

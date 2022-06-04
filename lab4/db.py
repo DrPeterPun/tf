@@ -1,4 +1,3 @@
-
 import logging
 from asyncio import Lock, sleep
 from types import SimpleNamespace as sn
@@ -9,6 +8,7 @@ class BaseDB:
         self.data = {}
         self.locks = {}
 
+    #cria os locks nas keys, pede id do thread para por no log
     async def begin(self, keys, id):
         locks = list(set(keys))
         locks.sort()
@@ -23,6 +23,11 @@ class BaseDB:
 
         return sn(tid=id,locked=locks)
 
+    #executa uma lista de operacoes
+    #devolve um triplo de:
+    #rs-chaves utilizadas
+    #wv-lista com os pares kv de todas as chaves com valor alterado
+    #res-lista de triplos com(operacao,chave,novo valor)
     async def execute(self, ctx, txn):
         rs = []
         delta = {}
