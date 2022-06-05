@@ -20,7 +20,7 @@ msgQ = {}
 # nr of the last commited msg, id is "id" + msgn
 msgn = -1
 
-#da commit a uma instrucao
+#executa e da commit a uma instrucao
 #se og=True, envia a mensagem de confirmacao ao cliente
 async def commit(msg,db,og=False):
     logging.info('commiting msg nr'+ str(msg.body.msg_id) )
@@ -41,6 +41,22 @@ async def commit(msg,db,og=False):
         db.cleanup(ctx)
         return False
 
+async def only_commit(exec_result,db,og=False):
+    logging.info('commiting msg nr'+ str(msg.body.msg_id) )
+
+    ctx = await db.begin([k for op,k,v in msg.body.txn], msg.src+'-'+str(msg.body.msg_id))
+    rs,wv,res = exec_result
+    if res:
+        await db.commit(ctx, wv)
+        db.cleanup(ctx)
+        if(og):
+            reply(msg, type='txn_ok',txn=res)
+        return True
+    else:
+        #nao precisa de enviar a mensagem de erro porque ja foi enviada quando a execucao falhou
+        return False
+
+#divides the dictionary in messages that happened before and after
 def divide_dict(msgQ,msgn):
     before = {}
     after = {}
@@ -71,7 +87,7 @@ def check_before(msg,msgQ):
             return False
     return True
 
-#verifica se a execucao de um comando inalida a execucao dos comandos
+#verifica se a execucao de um comando invalida a execucao dos comandos
 #posteriores
 def check_after(wv,msgQ):
     wk = wvtok(wv)
@@ -84,16 +100,18 @@ def check_after(wv,msgQ):
             m,og,res = msgQ[n]
             msgQ[n]= (m,og,None)
 
-#executes a the comands for a given message
+#executes the comands for a given message
+# retuns the result from the execution, None in case it failed
 async def execute(msg,db):
-    logging.info('commiting msg nr'+ str(msg.body.msg_id) )
+    logging.info('executing msg nr'+ str(msg.body.msg_id) )
 
     ctx = await db.begin([k for op,k,v in msg.body.txn], msg.src+'-'+str(msg.body.msg_id))
     rs,wv,res = await db.execute(ctx, msg.body.txn)
+    db.cleanup(ctx)
     if res:
         return (rs,wv,res)
-    else:
-        return None
+    else:     
+        return False
 
 # faz o maximo numero de commits possivel.
 async def trycommits(msgQ,db):
@@ -106,11 +124,50 @@ async def trycommits(msgQ,db):
     if item:
         msg=item[0]
         og=item[1]
-        await commit(msg,db,og)
-        msgn+=1
+        result=item[2]
+        #execucao falhou, devolve erro
+        if result==False:
+            reply(msg, type='error', code=14, text='transaction aborted')
+            logging.warning("transaction aborted by node" + node_id)
+            (rs,wv,res) = result
+            logging.warning("rs,wv,res"+ rs +"\\" + wv + "\\" +res)
+            pass
+        # nao foi executado ainda
+        elif result==None:
+            await commit(msg,db,og)
+            msgn+=1
+        # ja foi executado, so é preciso dar commit
+        else:
+            await only_commit(result, db)
+            msgn+=1 
         await trycommits(msgQ,db)
     else:
-        return
+        # vamos ver oqq pode ser ja execurado
+        await exec_ahead(msgQ,db)
+
+#executa todos os comandos que conseguir
+async def exec_ahead(msgQ,db):
+    ks = []
+    for n,(msg,og,exe) in msgQ.items():
+        #se ja estiver executado, adiciona as chaves alteradas ao resultado
+        if exe:
+            ks.extend(exe[1])
+            pass
+        #ainda nao foi executado
+        elif exe==None:
+            #check se o set de chaves alteradas ate agora e o set de chaves que este comando utiliza nao intercetam
+            if not compare_sets([k for op,k,v in msg.body.txn],ks):
+                #pode: executa e adiciona as chaves a que se alterou o valor a ks
+                result = await execute(msg, db)
+                msgQ[n]=(msg,og,result)
+                ks.extend(result[1])
+            else:
+                #nao pode: adiciona todas as keys dentro do txn ao ks
+                ks.extend([ k for op,k,v in msg.body.txn])
+        #comando falhou a ser executado, podemos ignorar este caso
+        else:
+            pass
+
 
 async def handle(msg):
     # State
@@ -135,15 +192,15 @@ async def handle(msg):
     #ads command to q then tries to execute 
     elif msg.body.type == 'txnRep':
         #added msg to the Q
-        msgQ[msg.body.ts] = (msg.body.msg,node_id==msg.src)
-        await trycommits(msgQ,db)
+        msgQ[msg.body.ts] = (msg.body.msg, node_id==msg.src, None)
+        await trycommits(msgQ, db)
     
     elif msg.body.type == 'ts_ok':
         #for node in filter(lambda n: n!=node_id,node_ids)
         m = queue.pop(0)
         for node in node_ids:
             logging.info("Sending msg to be replicated, to" + node)
-            send(node_id, node, type='txnRep',msg=m,ts=msg.body.ts)
+            send(node_id, node, type='txnRep', msg=m, ts=msg.body.ts)
 
     else:
         logging.warning('unknown message type %s', msg.body.type)
