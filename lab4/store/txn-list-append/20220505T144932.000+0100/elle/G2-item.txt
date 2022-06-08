@@ -1,8 +1,0 @@
-G2-item #0
-Let:
-  T1 = {:type :ok, :f :txn, :value [[:r 8 nil] [:append 9 3] [:r 8 nil] [:r 9 [3]]], :time 967616340, :process 2, :index 6}
-  T2 = {:type :ok, :f :txn, :value [[:r 9 nil] [:append 8 1] [:r 8 [1]]], :time 398389817, :process 0, :index 3}
-
-Then:
-  - T1 < T2, because T1 observed the initial (nil) state of 8, which T2 created by appending 1.
-  - However, T2 < T1, because T2 observed the initial (nil) state of 9, which T1 created by appending 3: a contradiction!
